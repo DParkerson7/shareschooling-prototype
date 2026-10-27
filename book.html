@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Book — ShareSchooling (prototype)</title>
+  <meta name="description" content="The upcoming ShareSchooling book.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="proto-banner" role="note">Prototype — sample data. Every listing on this site is a made-up example.</div>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="index.html">Share<span>Schooling</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Find Local Help</a></li>
+          <li><a href="online.html">Online &amp; Nationwide</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="book.html" aria-current="page">The Book</a></li>
+          <li><a href="list-your-resource.html">List Your Resource</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="page-layout">
+    <main id="main" tabindex="-1">
+      <div class="prose">
+        <h1>The Book</h1>
+        <div class="book-cover" role="img" aria-label="Placeholder book cover">[book title TBD]</div>
+        <p class="placeholder-box"><strong>Placeholder:</strong> [book title TBD]. A description of the book, author information and release details will go here.</p>
+        <p>The book carries the same message as this site: you made the right decision, you don't have to do it all yourself, and help is available.</p>
+        <h2 id="signup-heading">Get updates</h2>
+        <div class="content-card">
+          <p class="form-note"><strong>This signup doesn't work yet.</strong> It's part of the prototype, so nothing you type here is saved or sent.</p>
+          <form class="demo-form" aria-labelledby="signup-heading">
+            <div class="form-row"><label for="signup-name">First name</label><input id="signup-name" name="name" autocomplete="given-name"></div>
+            <div class="form-row"><label for="signup-email">Email</label><input id="signup-email" name="email" type="email" autocomplete="email"></div>
+            <button class="btn" type="submit">Join the mailing list</button>
+            <p class="inline-note" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </main>
+    <aside class="sponsor-slot sponsor-left" aria-label="Sponsor space">
+      <div class="sponsor-box">Sponsor placeholder</div>
+    </aside>
+    <aside class="sponsor-slot sponsor-right" aria-label="Sponsor space">
+      <div class="sponsor-box">Sponsor placeholder</div>
+    </aside>
+  </div>
+  <footer class="site-footer">
+    <div class="inner">
+      <p>ShareSchooling — a book and a nationwide guide to homeschool help. This is a clickable prototype; all listings are examples.</p>
+      <p>Map shapes: US Census Bureau boundaries via the open-source us-atlas project.</p>
+    </div>
+  </footer>
+  <script src="js/common.js"></script>
+  <script src="js/demo-forms.js"></script>
+</body>
+</html>

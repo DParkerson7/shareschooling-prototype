@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>List Your Resource — ShareSchooling (prototype)</title>
+  <meta name="description" content="Add your homeschool resource to ShareSchooling.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="proto-banner" role="note">Prototype — sample data. Every listing on this site is a made-up example.</div>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="index.html">Share<span>Schooling</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Find Local Help</a></li>
+          <li><a href="online.html">Online &amp; Nationwide</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="book.html">The Book</a></li>
+          <li><a href="list-your-resource.html" aria-current="page">List Your Resource</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="page-layout">
+    <main id="main" tabindex="-1">
+      <div class="prose">
+        <h1>List Your Resource</h1>
+        <p>Help families find you. Co-ops, tutors, classes, support groups, field-trip spots and more are all welcome.</p>
+        <ul>
+          <li><strong>Basic listings are free.</strong></li>
+          <li><strong>Always free for volunteer co-ops.</strong></li>
+          <li><strong>Featured placement is available</strong> for organizations that want extra visibility. Featured listings are clearly labeled &ldquo;Featured&rdquo;. [Placeholder — pricing and details to come.]</li>
+        </ul>
+        <h2 id="claim">Claim an existing listing</h2>
+        <p>See your organization already listed? Claiming it lets you keep the details up to date, and listings you manage show a &ldquo;Claimed&rdquo; badge. [Placeholder — the claim process isn't built yet.]</p>
+        <h2 id="form-heading">Tell us about your resource</h2>
+        <div class="content-card">
+          <p class="form-note"><strong>This form doesn't work yet.</strong> It's part of the prototype, so nothing you type here is saved or sent.</p>
+          <form class="demo-form" aria-labelledby="form-heading">
+            <div class="form-grid">
+              <div class="form-row"><label for="r-name">Name of your resource</label><input id="r-name" name="name"></div>
+              <div class="form-row"><label for="r-cat">Category</label>
+              <select id="r-cat" name="category">
+                <option value="">Choose one…</option>
+                <option>Co-ops</option>
+                <option>Microschools</option>
+                <option>Hybrid and university-model schools</option>
+                <option>Tutors</option>
+                <option>Classes and enrichment</option>
+                <option>Support groups and parent meetups</option>
+                <option>Field trips and learning destinations</option>
+                <option>Sports and extracurriculars</option>
+                <option>Testing and evaluation services</option>
+                <option>Special needs and learning-difference support</option>
+                <option>Curriculum and online programs</option>
+                <option>State associations and legal help</option>
+              </select></div>
+              <div class="form-row"><label for="r-reach">Who it serves</label>
+              <select id="r-reach" name="reach"><option>Local</option><option>Statewide</option><option>Nationwide</option></select></div>
+              <div class="form-row"><label for="r-delivery">Delivery</label>
+              <select id="r-delivery" name="delivery"><option>In person</option><option>Online</option><option>Both</option></select></div>
+              <div class="form-row"><label for="r-area">Town, county or state served</label><input id="r-area" name="area"></div>
+              <div class="form-row"><label for="r-web">Website</label><input id="r-web" name="website" type="url"></div>
+              <div class="form-row"><label for="r-email">Email</label><input id="r-email" name="email" type="email"></div>
+              <div class="form-row"><label for="r-phone">Phone</label><input id="r-phone" name="phone" type="tel"></div>
+            </div>
+            <div class="form-row"><label for="r-desc">Short description</label><textarea id="r-desc" name="description"></textarea></div>
+            <div class="form-row"><label><input type="checkbox" name="volunteer" style="width:auto;margin-right:0.4rem">We're a volunteer co-op</label></div>
+            <div class="form-row"><label><input type="checkbox" name="featured" style="width:auto;margin-right:0.4rem">I'm interested in featured placement</label></div>
+            <button class="btn" type="submit">Submit listing</button>
+            <p class="inline-note" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </main>
+    <aside class="sponsor-slot sponsor-left" aria-label="Sponsor space">
+      <div class="sponsor-box">Sponsor placeholder</div>
+    </aside>
+    <aside class="sponsor-slot sponsor-right" aria-label="Sponsor space">
+      <div class="sponsor-box">Sponsor placeholder</div>
+    </aside>
+  </div>
+  <footer class="site-footer">
+    <div class="inner">
+      <p>ShareSchooling — a book and a nationwide guide to homeschool help. This is a clickable prototype; all listings are examples.</p>
+      <p>Map shapes: US Census Bureau boundaries via the open-source us-atlas project.</p>
+    </div>
+  </footer>
+  <script src="js/common.js"></script>
+  <script src="js/demo-forms.js"></script>
+</body>
+</html>

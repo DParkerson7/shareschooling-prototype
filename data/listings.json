@@ -1,0 +1,1638 @@
+{
+  "_about": "SAMPLE DATA ONLY. Every listing here is made up for the ShareSchooling prototype. See README.md for what each field means.",
+  "categories": [
+    {
+      "id": "co-ops",
+      "name": "Co-ops"
+    },
+    {
+      "id": "microschools",
+      "name": "Microschools"
+    },
+    {
+      "id": "hybrid",
+      "name": "Hybrid and university-model schools"
+    },
+    {
+      "id": "tutors",
+      "name": "Tutors"
+    },
+    {
+      "id": "classes",
+      "name": "Classes and enrichment"
+    },
+    {
+      "id": "support-groups",
+      "name": "Support groups and parent meetups"
+    },
+    {
+      "id": "field-trips",
+      "name": "Field trips and learning destinations"
+    },
+    {
+      "id": "sports",
+      "name": "Sports and extracurriculars"
+    },
+    {
+      "id": "testing",
+      "name": "Testing and evaluation services"
+    },
+    {
+      "id": "special-needs",
+      "name": "Special needs and learning-difference support"
+    },
+    {
+      "id": "curriculum",
+      "name": "Curriculum and online programs"
+    },
+    {
+      "id": "associations",
+      "name": "State associations and legal help"
+    }
+  ],
+  "states": [
+    {
+      "id": "tennessee",
+      "name": "Tennessee",
+      "fips": "47",
+      "lawBasics": "[Placeholder] A plain-language summary of Tennessee homeschool law will go here. It has not been written or checked yet, so please don't rely on this page for legal guidance.",
+      "counties": [
+        {
+          "id": "williamson",
+          "fips": "47187",
+          "name": "Williamson County",
+          "towns": [
+            {
+              "id": "franklin",
+              "name": "Franklin",
+              "zips": [
+                "37064",
+                "37067",
+                "37069"
+              ],
+              "lon": -86.869,
+              "lat": 35.925
+            },
+            {
+              "id": "brentwood",
+              "name": "Brentwood",
+              "zips": [
+                "37027"
+              ],
+              "lon": -86.783,
+              "lat": 36.033
+            },
+            {
+              "id": "spring-hill",
+              "name": "Spring Hill",
+              "zips": [
+                "37174"
+              ],
+              "lon": -86.93,
+              "lat": 35.751
+            }
+          ]
+        },
+        {
+          "id": "davidson",
+          "fips": "47037",
+          "name": "Davidson County",
+          "towns": [
+            {
+              "id": "nashville",
+              "name": "Nashville",
+              "zips": [
+                "37203",
+                "37205",
+                "37206",
+                "37209",
+                "37211"
+              ],
+              "lon": -86.781,
+              "lat": 36.163
+            },
+            {
+              "id": "goodlettsville",
+              "name": "Goodlettsville",
+              "zips": [
+                "37072"
+              ],
+              "lon": -86.713,
+              "lat": 36.323
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "colorado",
+      "name": "Colorado",
+      "fips": "08",
+      "lawBasics": "[Placeholder] A plain-language summary of Colorado homeschool law will go here. It has not been written or checked yet, so please don't rely on this page for legal guidance.",
+      "counties": [
+        {
+          "id": "el-paso",
+          "fips": "08041",
+          "name": "El Paso County",
+          "towns": [
+            {
+              "id": "colorado-springs",
+              "name": "Colorado Springs",
+              "zips": [
+                "80903",
+                "80905",
+                "80907",
+                "80909",
+                "80918"
+              ],
+              "lon": -104.821,
+              "lat": 38.834
+            },
+            {
+              "id": "monument",
+              "name": "Monument",
+              "zips": [
+                "80132"
+              ],
+              "lon": -104.873,
+              "lat": 39.092
+            },
+            {
+              "id": "fountain",
+              "name": "Fountain",
+              "zips": [
+                "80817"
+              ],
+              "lon": -104.701,
+              "lat": 38.682
+            }
+          ]
+        },
+        {
+          "id": "larimer",
+          "fips": "08069",
+          "name": "Larimer County",
+          "towns": [
+            {
+              "id": "fort-collins",
+              "name": "Fort Collins",
+              "zips": [
+                "80521",
+                "80524",
+                "80525",
+                "80526"
+              ],
+              "lon": -105.084,
+              "lat": 40.585
+            },
+            {
+              "id": "loveland",
+              "name": "Loveland",
+              "zips": [
+                "80537",
+                "80538"
+              ],
+              "lon": -105.075,
+              "lat": 40.398
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "listings": [
+    {
+      "id": "ex-001",
+      "name": "Example Co-op of Franklin",
+      "exampleListing": true,
+      "category": "co-ops",
+      "description": "This is an example listing used to show how the site will look. A real co-op description would go here.",
+      "website": "https://co-op-of-franklin.example.com",
+      "email": "hello@co-op-of-franklin.example.com",
+      "phone": "555-0101",
+      "image": "img/placeholder-2.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "williamson",
+        "town": "franklin"
+      },
+      "serviceArea": {
+        "towns": [
+          "tennessee/franklin",
+          "tennessee/brentwood"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades K–8",
+        "min": 0,
+        "max": 8
+      },
+      "subjects": [
+        "Science",
+        "History",
+        "Art"
+      ],
+      "worldview": "Faith-based",
+      "cost": {
+        "type": "Paid",
+        "note": "Example: a small fee per semester covers supplies."
+      },
+      "schedule": "Tuesdays, 9am–1pm (example)",
+      "status": "Verified",
+      "lastVerified": "2026-09-14",
+      "featured": true,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-002",
+      "name": "Example Volunteer Co-op of Williamson County",
+      "exampleListing": true,
+      "category": "co-ops",
+      "description": "This is an example listing used to show how the site will look. A real co-op description would go here.",
+      "website": "https://volunteer-co-op-of-williamson.example.com",
+      "email": "hello@volunteer-co-op-of-williamson.example.com",
+      "phone": "555-0102",
+      "image": "img/placeholder-3.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "williamson",
+        "town": "franklin"
+      },
+      "serviceArea": {
+        "counties": [
+          "tennessee/williamson"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "PreK–Grade 12",
+        "min": -1,
+        "max": 12
+      },
+      "subjects": [
+        "Language Arts",
+        "Science",
+        "Music"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Free",
+        "note": "Volunteer-run; parents take turns teaching."
+      },
+      "schedule": "Fridays during the school year (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-08-02",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-003",
+      "name": "Example Microschool of Brentwood",
+      "exampleListing": true,
+      "category": "microschools",
+      "description": "This is an example listing used to show how the site will look. A real microschool description would go here.",
+      "website": "https://microschool-of-brentwood.example.com",
+      "email": "hello@microschool-of-brentwood.example.com",
+      "phone": "555-0103",
+      "image": "img/placeholder-1.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "williamson",
+        "town": "brentwood"
+      },
+      "serviceArea": {
+        "towns": [
+          "tennessee/brentwood"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades 1–6",
+        "min": 1,
+        "max": 6
+      },
+      "subjects": [
+        "Math",
+        "Reading",
+        "Science"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example monthly tuition; details on request."
+      },
+      "schedule": "Monday–Thursday, 8:30am–2pm (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-05-20",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-004",
+      "name": "Example University-Model School",
+      "exampleListing": true,
+      "category": "hybrid",
+      "description": "This is an example listing used to show how the site will look. A real hybrid and university-model school description would go here.",
+      "website": "https://university-model-school.example.com",
+      "email": "hello@university-model-school.example.com",
+      "phone": "555-0104",
+      "image": "img/placeholder-2.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "davidson",
+        "town": "nashville"
+      },
+      "serviceArea": {
+        "counties": [
+          "tennessee/davidson",
+          "tennessee/williamson"
+        ]
+      },
+      "delivery": "Both",
+      "agesGrades": {
+        "label": "Grades K–12",
+        "min": 0,
+        "max": 12
+      },
+      "subjects": [
+        "Math",
+        "Science",
+        "History",
+        "Language Arts"
+      ],
+      "worldview": "Faith-based",
+      "cost": {
+        "type": "Paid",
+        "note": "Example: tuition varies by grade."
+      },
+      "schedule": "On campus Mondays and Wednesdays; home days the rest of the week (example)",
+      "status": "Verified",
+      "lastVerified": "2026-10-01",
+      "featured": true,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-005",
+      "name": "Example Tutoring Center — Nashville",
+      "exampleListing": true,
+      "category": "tutors",
+      "description": "This is an example listing used to show how the site will look. A real tutor description would go here.",
+      "website": "https://tutoring-center-nashville.example.com",
+      "email": "hello@tutoring-center-nashville.example.com",
+      "phone": "555-0105",
+      "image": "img/placeholder-3.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "davidson",
+        "town": "nashville"
+      },
+      "serviceArea": {
+        "towns": [
+          "tennessee/nashville",
+          "tennessee/goodlettsville"
+        ]
+      },
+      "delivery": "Both",
+      "agesGrades": {
+        "label": "Grades 3–12",
+        "min": 3,
+        "max": 12
+      },
+      "subjects": [
+        "Math",
+        "Reading",
+        "Test Prep"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example hourly rate."
+      },
+      "schedule": "By appointment (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-07-11",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-006",
+      "name": "Example Art & Music Classes",
+      "exampleListing": true,
+      "category": "classes",
+      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
+      "website": "https://art-music-classes.example.com",
+      "email": "hello@art-music-classes.example.com",
+      "phone": "555-0106",
+      "image": "img/placeholder-1.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "davidson",
+        "town": "nashville"
+      },
+      "serviceArea": {
+        "towns": [
+          "tennessee/nashville"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Ages 6–14 (about Grades 1–8)",
+        "min": 1,
+        "max": 8
+      },
+      "subjects": [
+        "Art",
+        "Music"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: some free open-studio days, some paid sessions."
+      },
+      "schedule": "Saturday mornings (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-04-03",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-007",
+      "name": "Example Homeschool Parent Meetup — Spring Hill",
+      "exampleListing": true,
+      "category": "support-groups",
+      "description": "This is an example listing used to show how the site will look. A real support groups and parent meetup description would go here.",
+      "website": "https://homeschool-parent-meetup-sprin.example.com",
+      "email": "hello@homeschool-parent-meetup-sprin.example.com",
+      "phone": "555-0107",
+      "image": "img/placeholder-2.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "williamson",
+        "town": "spring-hill"
+      },
+      "serviceArea": {
+        "towns": [
+          "tennessee/spring-hill",
+          "tennessee/franklin"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "For parents (all ages)",
+        "min": null,
+        "max": null
+      },
+      "subjects": [],
+      "worldview": "Faith-based",
+      "cost": {
+        "type": "Free",
+        "note": ""
+      },
+      "schedule": "First Thursday evening of each month (example)",
+      "status": "Verified",
+      "lastVerified": "2026-09-30",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-008",
+      "name": "Example Nature Center Field Trips",
+      "exampleListing": true,
+      "category": "field-trips",
+      "description": "This is an example listing used to show how the site will look. A real field trips and learning destination description would go here.",
+      "website": "https://nature-center-field-trips.example.com",
+      "email": "hello@nature-center-field-trips.example.com",
+      "phone": "555-0108",
+      "image": "img/placeholder-3.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "davidson",
+        "town": "nashville"
+      },
+      "serviceArea": {
+        "counties": [
+          "tennessee/davidson"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades K–8",
+        "min": 0,
+        "max": 8
+      },
+      "subjects": [
+        "Science",
+        "Nature"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: group rates available."
+      },
+      "schedule": "Weekdays by reservation (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-06-18",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-009",
+      "name": "Example Homeschool Sports League",
+      "exampleListing": true,
+      "category": "sports",
+      "description": "This is an example listing used to show how the site will look. A real sports and extracurricular description would go here.",
+      "website": "https://homeschool-sports-league.example.com",
+      "email": "hello@homeschool-sports-league.example.com",
+      "phone": "555-0109",
+      "image": "img/placeholder-1.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "williamson",
+        "town": "franklin"
+      },
+      "serviceArea": {
+        "counties": [
+          "tennessee/williamson",
+          "tennessee/davidson"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades 4–12",
+        "min": 4,
+        "max": 12
+      },
+      "subjects": [
+        "Physical Education"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Paid",
+        "note": "Example season fee."
+      },
+      "schedule": "Fall and spring seasons (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-03-27",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-010",
+      "name": "Example Testing & Evaluation Services",
+      "exampleListing": true,
+      "category": "testing",
+      "description": "This is an example listing used to show how the site will look. A real testing and evaluation service description would go here.",
+      "website": "https://testing-evaluation-services.example.com",
+      "email": "hello@testing-evaluation-services.example.com",
+      "phone": "555-0110",
+      "image": "img/placeholder-2.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "williamson",
+        "town": "brentwood"
+      },
+      "serviceArea": {
+        "counties": [
+          "tennessee/williamson"
+        ]
+      },
+      "delivery": "Both",
+      "agesGrades": {
+        "label": "Grades K–12",
+        "min": 0,
+        "max": 12
+      },
+      "subjects": [
+        "Assessment"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example per-test fee."
+      },
+      "schedule": "Spring testing windows (example)",
+      "status": "Verified",
+      "lastVerified": "2026-09-02",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-011",
+      "name": "Example Learning Support Center",
+      "exampleListing": true,
+      "category": "special-needs",
+      "description": "This is an example listing used to show how the site will look. A real special needs and learning-difference support description would go here.",
+      "website": "https://learning-support-center.example.com",
+      "email": "hello@learning-support-center.example.com",
+      "phone": "555-0111",
+      "image": "img/placeholder-3.svg",
+      "reach": "Local",
+      "location": {
+        "state": "tennessee",
+        "county": "davidson",
+        "town": "goodlettsville"
+      },
+      "serviceArea": {
+        "towns": [
+          "tennessee/goodlettsville",
+          "tennessee/nashville"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades K–12",
+        "min": 0,
+        "max": 12
+      },
+      "subjects": [
+        "Reading",
+        "Learning Differences"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: sliding-scale options."
+      },
+      "schedule": "By appointment (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-08-21",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-012",
+      "name": "Example Statewide Homeschool Association (Tennessee)",
+      "exampleListing": true,
+      "category": "associations",
+      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
+      "website": "https://statewide-homeschool-associati.example.com",
+      "email": "hello@statewide-homeschool-associati.example.com",
+      "phone": "555-0112",
+      "image": "img/placeholder-1.svg",
+      "reach": "Statewide",
+      "location": {
+        "state": "tennessee"
+      },
+      "serviceArea": null,
+      "delivery": "Both",
+      "agesGrades": {
+        "label": "All ages",
+        "min": -1,
+        "max": 12
+      },
+      "subjects": [
+        "Legal Help",
+        "Events"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: free newsletter; optional paid membership."
+      },
+      "schedule": "Events throughout the year (example)",
+      "status": "Verified",
+      "lastVerified": "2026-10-05",
+      "featured": true,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-013",
+      "name": "Example Tennessee Homeschool Legal Q&A",
+      "exampleListing": true,
+      "category": "associations",
+      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
+      "website": "https://tennessee-homeschool-legal-q-a.example.com",
+      "email": "hello@tennessee-homeschool-legal-q-a.example.com",
+      "phone": "555-0113",
+      "image": "img/placeholder-2.svg",
+      "reach": "Statewide",
+      "location": {
+        "state": "tennessee"
+      },
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "All ages",
+        "min": -1,
+        "max": 12
+      },
+      "subjects": [
+        "Legal Help"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Free",
+        "note": ""
+      },
+      "schedule": "Online office hours, monthly (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-02-14",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-014",
+      "name": "Example Tennessee Virtual Science Lab",
+      "exampleListing": true,
+      "category": "curriculum",
+      "description": "This is an example listing used to show how the site will look. A real curriculum and online program description would go here.",
+      "website": "https://tennessee-virtual-science-lab.example.com",
+      "email": "hello@tennessee-virtual-science-lab.example.com",
+      "phone": "555-0114",
+      "image": "img/placeholder-3.svg",
+      "reach": "Statewide",
+      "location": {
+        "state": "tennessee"
+      },
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Grades 6–12",
+        "min": 6,
+        "max": 12
+      },
+      "subjects": [
+        "Science"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example per-course fee."
+      },
+      "schedule": "Self-paced (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-07-29",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-015",
+      "name": "Example Tennessee History Field Day",
+      "exampleListing": true,
+      "category": "field-trips",
+      "description": "This is an example listing used to show how the site will look. A real field trips and learning destination description would go here.",
+      "website": "https://tennessee-history-field-day.example.com",
+      "email": "hello@tennessee-history-field-day.example.com",
+      "phone": "555-0115",
+      "image": "img/placeholder-1.svg",
+      "reach": "Statewide",
+      "location": {
+        "state": "tennessee"
+      },
+      "serviceArea": null,
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades 3–8",
+        "min": 3,
+        "max": 8
+      },
+      "subjects": [
+        "History"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Free",
+        "note": ""
+      },
+      "schedule": "Once a year, in the spring (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-01-30",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-016",
+      "name": "Example Co-op of Colorado Springs",
+      "exampleListing": true,
+      "category": "co-ops",
+      "description": "This is an example listing used to show how the site will look. A real co-op description would go here.",
+      "website": "https://co-op-of-colorado-springs.example.com",
+      "email": "hello@co-op-of-colorado-springs.example.com",
+      "phone": "555-0116",
+      "image": "img/placeholder-2.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "el-paso",
+        "town": "colorado-springs"
+      },
+      "serviceArea": {
+        "towns": [
+          "colorado/colorado-springs",
+          "colorado/fountain"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades K–8",
+        "min": 0,
+        "max": 8
+      },
+      "subjects": [
+        "Science",
+        "History",
+        "Art"
+      ],
+      "worldview": "Faith-based",
+      "cost": {
+        "type": "Paid",
+        "note": "Example semester fee."
+      },
+      "schedule": "Wednesdays, 9am–12pm (example)",
+      "status": "Verified",
+      "lastVerified": "2026-09-22",
+      "featured": true,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-017",
+      "name": "Example Monument Volunteer Co-op",
+      "exampleListing": true,
+      "category": "co-ops",
+      "description": "This is an example listing used to show how the site will look. A real co-op description would go here.",
+      "website": "https://monument-volunteer-co-op.example.com",
+      "email": "hello@monument-volunteer-co-op.example.com",
+      "phone": "555-0117",
+      "image": "img/placeholder-3.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "el-paso",
+        "town": "monument"
+      },
+      "serviceArea": {
+        "towns": [
+          "colorado/monument"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "PreK–Grade 6",
+        "min": -1,
+        "max": 6
+      },
+      "subjects": [
+        "Reading",
+        "Art",
+        "Nature"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Free",
+        "note": "Volunteer-run; families share teaching."
+      },
+      "schedule": "Mondays (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-08-12",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-018",
+      "name": "Example Mountain Microschool",
+      "exampleListing": true,
+      "category": "microschools",
+      "description": "This is an example listing used to show how the site will look. A real microschool description would go here.",
+      "website": "https://mountain-microschool.example.com",
+      "email": "hello@mountain-microschool.example.com",
+      "phone": "555-0118",
+      "image": "img/placeholder-1.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "el-paso",
+        "town": "colorado-springs"
+      },
+      "serviceArea": {
+        "towns": [
+          "colorado/colorado-springs"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades 3–8",
+        "min": 3,
+        "max": 8
+      },
+      "subjects": [
+        "Math",
+        "Science",
+        "Writing"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example monthly tuition."
+      },
+      "schedule": "Tuesday–Thursday (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-05-06",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-019",
+      "name": "Example Hybrid Academy of Fort Collins",
+      "exampleListing": true,
+      "category": "hybrid",
+      "description": "This is an example listing used to show how the site will look. A real hybrid and university-model school description would go here.",
+      "website": "https://hybrid-academy-of-fort-collins.example.com",
+      "email": "hello@hybrid-academy-of-fort-collins.example.com",
+      "phone": "555-0119",
+      "image": "img/placeholder-2.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "larimer",
+        "town": "fort-collins"
+      },
+      "serviceArea": {
+        "counties": [
+          "colorado/larimer"
+        ]
+      },
+      "delivery": "Both",
+      "agesGrades": {
+        "label": "Grades K–12",
+        "min": 0,
+        "max": 12
+      },
+      "subjects": [
+        "Math",
+        "Science",
+        "Language Arts"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Paid",
+        "note": "Example tuition varies by grade."
+      },
+      "schedule": "Two campus days per week (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-07-15",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-020",
+      "name": "Example Tutoring Center — Loveland",
+      "exampleListing": true,
+      "category": "tutors",
+      "description": "This is an example listing used to show how the site will look. A real tutor description would go here.",
+      "website": "https://tutoring-center-loveland.example.com",
+      "email": "hello@tutoring-center-loveland.example.com",
+      "phone": "555-0120",
+      "image": "img/placeholder-3.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "larimer",
+        "town": "loveland"
+      },
+      "serviceArea": {
+        "towns": [
+          "colorado/loveland",
+          "colorado/fort-collins"
+        ]
+      },
+      "delivery": "Both",
+      "agesGrades": {
+        "label": "Grades K–12",
+        "min": 0,
+        "max": 12
+      },
+      "subjects": [
+        "Math",
+        "Writing"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example hourly rate."
+      },
+      "schedule": "By appointment (example)",
+      "status": "Verified",
+      "lastVerified": "2026-09-09",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-021",
+      "name": "Example Outdoor Enrichment Classes",
+      "exampleListing": true,
+      "category": "classes",
+      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
+      "website": "https://outdoor-enrichment-classes.example.com",
+      "email": "hello@outdoor-enrichment-classes.example.com",
+      "phone": "555-0121",
+      "image": "img/placeholder-1.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "el-paso",
+        "town": "colorado-springs"
+      },
+      "serviceArea": {
+        "counties": [
+          "colorado/el-paso"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades 2–10",
+        "min": 2,
+        "max": 10
+      },
+      "subjects": [
+        "Nature",
+        "Science",
+        "Physical Education"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: scholarships available."
+      },
+      "schedule": "Fridays (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-04-22",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-022",
+      "name": "Example Fort Collins Parent Meetup",
+      "exampleListing": true,
+      "category": "support-groups",
+      "description": "This is an example listing used to show how the site will look. A real support groups and parent meetup description would go here.",
+      "website": "https://fort-collins-parent-meetup.example.com",
+      "email": "hello@fort-collins-parent-meetup.example.com",
+      "phone": "555-0122",
+      "image": "img/placeholder-2.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "larimer",
+        "town": "fort-collins"
+      },
+      "serviceArea": {
+        "towns": [
+          "colorado/fort-collins"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "For parents (all ages)",
+        "min": null,
+        "max": null
+      },
+      "subjects": [],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Free",
+        "note": ""
+      },
+      "schedule": "Second Tuesday of each month (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-06-01",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-023",
+      "name": "Example Homeschool Swim & Gym",
+      "exampleListing": true,
+      "category": "sports",
+      "description": "This is an example listing used to show how the site will look. A real sports and extracurricular description would go here.",
+      "website": "https://homeschool-swim-gym.example.com",
+      "email": "hello@homeschool-swim-gym.example.com",
+      "phone": "555-0123",
+      "image": "img/placeholder-3.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "el-paso",
+        "town": "colorado-springs"
+      },
+      "serviceArea": {
+        "towns": [
+          "colorado/colorado-springs",
+          "colorado/monument",
+          "colorado/fountain"
+        ]
+      },
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades K–12",
+        "min": 0,
+        "max": 12
+      },
+      "subjects": [
+        "Physical Education"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Paid",
+        "note": "Example per-session fee."
+      },
+      "schedule": "Weekly (example)",
+      "status": "Verified",
+      "lastVerified": "2026-08-28",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-024",
+      "name": "Example Speech & Learning Support",
+      "exampleListing": true,
+      "category": "special-needs",
+      "description": "This is an example listing used to show how the site will look. A real special needs and learning-difference support description would go here.",
+      "website": "https://speech-learning-support.example.com",
+      "email": "hello@speech-learning-support.example.com",
+      "phone": "555-0124",
+      "image": "img/placeholder-1.svg",
+      "reach": "Local",
+      "location": {
+        "state": "colorado",
+        "county": "larimer",
+        "town": "loveland"
+      },
+      "serviceArea": {
+        "counties": [
+          "colorado/larimer"
+        ]
+      },
+      "delivery": "Both",
+      "agesGrades": {
+        "label": "PreK–Grade 12",
+        "min": -1,
+        "max": 12
+      },
+      "subjects": [
+        "Speech",
+        "Learning Differences"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: depends on services."
+      },
+      "schedule": "By appointment (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-03-10",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-025",
+      "name": "Example Statewide Homeschool Association (Colorado)",
+      "exampleListing": true,
+      "category": "associations",
+      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
+      "website": "https://statewide-homeschool-associati.example.com",
+      "email": "hello@statewide-homeschool-associati.example.com",
+      "phone": "555-0125",
+      "image": "img/placeholder-2.svg",
+      "reach": "Statewide",
+      "location": {
+        "state": "colorado"
+      },
+      "serviceArea": null,
+      "delivery": "Both",
+      "agesGrades": {
+        "label": "All ages",
+        "min": -1,
+        "max": 12
+      },
+      "subjects": [
+        "Legal Help",
+        "Events"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: free newsletter; optional paid membership."
+      },
+      "schedule": "Events throughout the year (example)",
+      "status": "Verified",
+      "lastVerified": "2026-10-08",
+      "featured": true,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-026",
+      "name": "Example Colorado Homeschool Legal Help Line",
+      "exampleListing": true,
+      "category": "associations",
+      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
+      "website": "https://colorado-homeschool-legal-help.example.com",
+      "email": "hello@colorado-homeschool-legal-help.example.com",
+      "phone": "555-0126",
+      "image": "img/placeholder-3.svg",
+      "reach": "Statewide",
+      "location": {
+        "state": "colorado"
+      },
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "All ages",
+        "min": -1,
+        "max": 12
+      },
+      "subjects": [
+        "Legal Help"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Free",
+        "note": ""
+      },
+      "schedule": "Weekday phone and email help (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-07-02",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-027",
+      "name": "Example Colorado Science Olympiad Prep",
+      "exampleListing": true,
+      "category": "classes",
+      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
+      "website": "https://colorado-science-olympiad-prep.example.com",
+      "email": "hello@colorado-science-olympiad-prep.example.com",
+      "phone": "555-0127",
+      "image": "img/placeholder-1.svg",
+      "reach": "Statewide",
+      "location": {
+        "state": "colorado"
+      },
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Grades 6–12",
+        "min": 6,
+        "max": 12
+      },
+      "subjects": [
+        "Science"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example per-season fee."
+      },
+      "schedule": "Live online, Thursday evenings (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-02-25",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-028",
+      "name": "Example Colorado Testing Network",
+      "exampleListing": true,
+      "category": "testing",
+      "description": "This is an example listing used to show how the site will look. A real testing and evaluation service description would go here.",
+      "website": "https://colorado-testing-network.example.com",
+      "email": "hello@colorado-testing-network.example.com",
+      "phone": "555-0128",
+      "image": "img/placeholder-2.svg",
+      "reach": "Statewide",
+      "location": {
+        "state": "colorado"
+      },
+      "serviceArea": null,
+      "delivery": "In person",
+      "agesGrades": {
+        "label": "Grades 3–12",
+        "min": 3,
+        "max": 12
+      },
+      "subjects": [
+        "Assessment"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example per-test fee."
+      },
+      "schedule": "Testing days each spring (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-06-24",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-029",
+      "name": "Example Online Math Academy",
+      "exampleListing": true,
+      "category": "curriculum",
+      "description": "This is an example listing used to show how the site will look. A real curriculum and online program description would go here.",
+      "website": "https://online-math-academy.example.com",
+      "email": "hello@online-math-academy.example.com",
+      "phone": "555-0129",
+      "image": "img/placeholder-3.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Grades 3–12",
+        "min": 3,
+        "max": 12
+      },
+      "subjects": [
+        "Math"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example monthly subscription."
+      },
+      "schedule": "Self-paced, with optional live help (example)",
+      "status": "Verified",
+      "lastVerified": "2026-10-10",
+      "featured": true,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-030",
+      "name": "Example Literature & Writing Classes Online",
+      "exampleListing": true,
+      "category": "classes",
+      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
+      "website": "https://literature-writing-classes-onl.example.com",
+      "email": "hello@literature-writing-classes-onl.example.com",
+      "phone": "555-0130",
+      "image": "img/placeholder-1.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Grades 6–12",
+        "min": 6,
+        "max": 12
+      },
+      "subjects": [
+        "Language Arts",
+        "Writing"
+      ],
+      "worldview": "Faith-based",
+      "cost": {
+        "type": "Paid",
+        "note": "Example per-class fee."
+      },
+      "schedule": "Live weekly classes (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-08-19",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-031",
+      "name": "Example Online Science Labs",
+      "exampleListing": true,
+      "category": "curriculum",
+      "description": "This is an example listing used to show how the site will look. A real curriculum and online program description would go here.",
+      "website": "https://online-science-labs.example.com",
+      "email": "hello@online-science-labs.example.com",
+      "phone": "555-0131",
+      "image": "img/placeholder-2.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Grades K–8",
+        "min": 0,
+        "max": 8
+      },
+      "subjects": [
+        "Science"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: some free lessons."
+      },
+      "schedule": "Self-paced (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-04-14",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-032",
+      "name": "Example Foreign Language Live Classes",
+      "exampleListing": true,
+      "category": "classes",
+      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
+      "website": "https://foreign-language-live-classes.example.com",
+      "email": "hello@foreign-language-live-classes.example.com",
+      "phone": "555-0132",
+      "image": "img/placeholder-3.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Ages 6–14 (about Grades 1–8)",
+        "min": 1,
+        "max": 8
+      },
+      "subjects": [
+        "Spanish",
+        "French"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Paid",
+        "note": "Example per-term fee."
+      },
+      "schedule": "Live classes, several times a week (example)",
+      "status": "Verified",
+      "lastVerified": "2026-09-17",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-033",
+      "name": "Example Homeschool Parent Support Network",
+      "exampleListing": true,
+      "category": "support-groups",
+      "description": "This is an example listing used to show how the site will look. A real support groups and parent meetup description would go here.",
+      "website": "https://homeschool-parent-support-netw.example.com",
+      "email": "hello@homeschool-parent-support-netw.example.com",
+      "phone": "555-0133",
+      "image": "img/placeholder-1.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "For parents (all ages)",
+        "min": null,
+        "max": null
+      },
+      "subjects": [],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Free",
+        "note": ""
+      },
+      "schedule": "Monthly video calls (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-07-23",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-034",
+      "name": "Example Learning Differences Coaching",
+      "exampleListing": true,
+      "category": "special-needs",
+      "description": "This is an example listing used to show how the site will look. A real special needs and learning-difference support description would go here.",
+      "website": "https://learning-differences-coaching.example.com",
+      "email": "hello@learning-differences-coaching.example.com",
+      "phone": "555-0134",
+      "image": "img/placeholder-2.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Grades K–12",
+        "min": 0,
+        "max": 12
+      },
+      "subjects": [
+        "Learning Differences",
+        "Reading"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Varies",
+        "note": "Example: depends on the plan."
+      },
+      "schedule": "By appointment (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-03-03",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-035",
+      "name": "Example Homeschool Legal Info Hub",
+      "exampleListing": true,
+      "category": "associations",
+      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
+      "website": "https://homeschool-legal-info-hub.example.com",
+      "email": "hello@homeschool-legal-info-hub.example.com",
+      "phone": "555-0135",
+      "image": "img/placeholder-3.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "All ages",
+        "min": -1,
+        "max": 12
+      },
+      "subjects": [
+        "Legal Help"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Free",
+        "note": ""
+      },
+      "schedule": "Articles available anytime (example)",
+      "status": "Verified",
+      "lastVerified": "2026-09-25",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-036",
+      "name": "Example Online Standardized Testing",
+      "exampleListing": true,
+      "category": "testing",
+      "description": "This is an example listing used to show how the site will look. A real testing and evaluation service description would go here.",
+      "website": "https://online-standardized-testing.example.com",
+      "email": "hello@online-standardized-testing.example.com",
+      "phone": "555-0136",
+      "image": "img/placeholder-1.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Grades 3–12",
+        "min": 3,
+        "max": 12
+      },
+      "subjects": [
+        "Assessment"
+      ],
+      "worldview": "Secular",
+      "cost": {
+        "type": "Paid",
+        "note": "Example per-test fee."
+      },
+      "schedule": "Test windows each season (example)",
+      "status": "Claimed",
+      "lastVerified": "2026-05-28",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    },
+    {
+      "id": "ex-037",
+      "name": "Example Virtual Field Trip Library",
+      "exampleListing": true,
+      "category": "field-trips",
+      "description": "This is an example listing used to show how the site will look. A real field trips and learning destination description would go here.",
+      "website": "https://virtual-field-trip-library.example.com",
+      "email": "hello@virtual-field-trip-library.example.com",
+      "phone": "555-0137",
+      "image": "img/placeholder-2.svg",
+      "reach": "Nationwide",
+      "location": null,
+      "serviceArea": null,
+      "delivery": "Online",
+      "agesGrades": {
+        "label": "Grades K–8",
+        "min": 0,
+        "max": 8
+      },
+      "subjects": [
+        "History",
+        "Science"
+      ],
+      "worldview": "Inclusive",
+      "cost": {
+        "type": "Free",
+        "note": ""
+      },
+      "schedule": "On demand (example)",
+      "status": "Unclaimed",
+      "lastVerified": "2026-01-19",
+      "featured": false,
+      "source": "Made-up sample data for the prototype"
+    }
+  ]
+}
