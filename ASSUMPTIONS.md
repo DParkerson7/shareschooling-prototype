@@ -1,44 +1,55 @@
-# Assumptions
+# Assumptions: map pilot
 
-Everything I decided that the build brief didn't spell out. Any of these can be changed.
+Choices made while building the West Tennessee + DeSoto County, MS pilot that the brief ([docs/map-pilot/claude-brief.md](docs/map-pilot/claude-brief.md)) didn't spell out. Any of these can be changed.
 
-## Content and data
+## Things to decide soon
 
-1. **Example states:** Tennessee (Williamson and Davidson counties) and Colorado (El Paso and Larimer counties). Chosen only to show two different regions; any states can replace them.
-2. **Towns and zip codes are real places** (e.g. Franklin, TN 37064; Colorado Springs, CO 80903) so the map and zip search feel realistic. Only the *listings* are made up.
-3. **37 example listings**, covering all 12 categories and all three reaches (Local, Statewide, Nationwide). Names all start with "Example", websites use `example.com`, and phone numbers use the reserved fictional range `555-0100`–`555-0199`.
-4. **State law basics** are a clearly marked placeholder, not real legal information.
-5. **Hero line:** "Join the Education Revolution!" plus one encouraging line I wrote from section 1 of the brief ("You made the right decision…").
-6. **Book page and About teaser** use "[book title TBD]" and placeholder text. I didn't invent a title, author or release date.
-7. **"Faith-based, secular, or inclusive"** is stored in a field called `worldview` and shown on the site as "Approach".
-8. **Ages/grades** are stored as a display label plus a numeric grade range (PreK = -1, K = 0), so the grade filter on the Online page can work.
-9. **Location and service area** use the state/county/town ids from the same JSON file, so a Local listing can appear in several towns.
-10. **Map shapes live in a second file,** `data/map.json`. The brief's "one JSON file" rule is about listings; all listing, category, state, county and town data is in `data/listings.json`.
+1. **Search engines are blocked for now.** The brief asks for SEO pages and a sitemap, and they're all built. But every listing is an unconfirmed Draft about a real organization, so each page currently tells search engines not to index it. One setting (`allowSearchEngines` in `data/site.json`) turns indexing on.
+2. **Drafts are shown** on the test site with a "Draft" tag, as the brief allows. `showDrafts: false` hides them.
+3. **The site banner** now reads "Test site: listings are drafts gathered from public pages and not yet confirmed by the organizations." This replaces the old "Prototype — sample data" banner, because the listings are no longer made up.
 
-## How pages behave
+## How the site is built
 
-11. **Town page category filter** filters both the local list and the "Also available to you" column.
-12. **"Also available to you"** shows all of the state's statewide listings and the top 4 nationwide listings (featured first), with a link to see all.
-13. **State page** splits statewide listings into "Statewide associations & legal help" (that category) and "Programs just for [state] families" (all other categories).
-14. **Online & Nationwide page** shows Nationwide listings plus any statewide listing delivered online, with a "Nationwide only" option.
-15. **Featured listings** are sorted to the top of every list and get a yellow border and "★ Featured" label.
-16. **Trust signals:** each card shows a status badge (✓ Verified, ● Claimed, ○ Unclaimed) and "Checked [date]". The detail window explains what each status means.
-17. **"Report outdated info"** shows a "not connected yet" message. **"Claim this listing"** goes to a short Claim section on the List Your Resource page (also a placeholder).
-18. **Forms** (mailing list, List Your Resource) say on the page that they don't work yet and send nothing.
-19. **Clicking a state with no data** opens a friendly "coming soon" page with links to Online & Nationwide and List Your Resource. Counties without data are greyed out and not clickable.
-20. **Listing detail** opens as an accessible pop-up window (closes with Esc, the × button or clicking outside) rather than a separate page.
-21. **Web addresses** use `#/state/…/county/…/town/…` so every view can be bookmarked and the browser Back button works, with no server setup on GitHub Pages.
+4. **Every page is a real, static page** made by `tools/build_site.py` (Python, nothing to install), as the brief's SEO section asks. This replaced the first prototype's single-page map. Old bookmark links like `#/state/tennessee` no longer work.
+5. **Pages exist for all 50 states plus DC, all 95 Tennessee counties and all 82 Mississippi counties.** Non-pilot ones are "coming soon" pages. 21 city pages exist, one for each city that has a listing based in it.
+6. **The 4 DeSoto cities named in the brief** (Olive Branch, Southaven, Hernando, Nesbit) all have pages because each has a listing.
+7. **The Tennessee map is zoomed to West Tennessee** (plus DeSoto County, MS) so small counties stay readable. The rest of Tennessee is cut off at the map's right edge but listed under "Other Tennessee counties".
+8. **County shading** on the state maps uses four steps: 1–2, 3–5, 6–10 and 11+ listings, with the count printed on each county.
+9. **Nearby counties** come from the real county borders. DeSoto County, MS also links to Fayette County, TN, as the brief asks, even though they don't share a border.
+10. **County maps widen to fit pins just over the line.** For example, Shelby County's map includes a Mississippi tutoring center that also serves Shelby.
 
-## Look and feel
+## Filters and sorting
 
-22. **Placeholder palette:** warm cream background, deep teal, terracotta and a sunny yellow for "Featured". **Fonts:** Georgia for headings and the device's system font for text, so nothing extra downloads. All in `css/theme.css`.
-23. **Logo** is just the word "ShareSchooling" in text; the browser-tab icon is a simple placeholder shape.
-24. **Sponsor placeholders** sit in the left and right margins on wide screens (1280px and up). On narrower screens they move below the content; on phones only one shows.
-25. **No dark mode,** since the brand isn't decided yet.
+11. **The delivery filter is inclusive.** "In person" also shows programs offered both in person and online, and "Online" also shows "Both".
+12. **Filters start collapsed** behind a "Filters" button (with a count of active filters) so the sticky bar stays small. They open automatically when the web address already has filters in it.
+13. **The result count** ("Showing X of Y listings") counts the main list only, not the "Also available to you" column.
+14. **Sort order:** Featured first, then confirmed before "still confirming", then by name. With a zip code: Featured first, then confirmed, then nearest. Listings with no pin go last within their group.
+15. **The "No listings here yet for…" note** on county pages lists categories with no local or statewide listing, with a "Suggest a resource" link. Umbrella schools are left out of it in Mississippi.
 
-## Technical
+## Zip search
 
-26. **No libraries or frameworks at all.** The map shapes were pre-converted from the open us-atlas data into plain SVG outlines, so the site downloads nothing from other websites.
-27. **Alaska and Hawaii** appear as small insets in the usual US-map style.
-28. **JavaScript is required** for the map and listings (the page says so if it's turned off). The About, Book, List Your Resource and Contact pages work without it.
-29. The repo has been set up with git on the `main` branch but **nothing has been committed or pushed**.
+16. **Zip lookups use the 2020 Census zip areas.** A zip that crosses a county line goes to the county holding most of its land.
+17. **A zip outside Tennessee and Mississippi** shows a message that it isn't in the pilot yet, with a link to online options. (The lookup file covers only TN and MS, as the brief specifies.)
+
+## Pages and wording
+
+18. **"Online & Nationwide" is now "Online options".** The pilot data has no Nationwide listings, so that page shows the 14 listings delivered online or both ways.
+19. **Statewide listings** appear in "Also available to you" on every county page in their state. HomeLife Academy also gets a pin on the Madison County map, since it's based in Jackson.
+20. **The "Umbrella schools" category** is stored with a `name` (like the other 12 categories), not a `label` as the brief's example shows, so the existing code reads it the same way.
+21. **The state law sections** on the TN and MS pages remain clearly marked placeholders. There's no real legal information on the site.
+22. **"Report an issue"** shows a "not connected yet" message. **"Claim this listing"** opens the List your co-op or tutor page with a placeholder note.
+23. **The listing form** checks required fields (organization name, category, state, your email, and the confirmation box), stops bots with a hidden field, and offers the entry as a downloadable file marked Draft. Nothing is sent.
+24. **The email signup** is in the footer of every page and inside every coming-soon page. It checks the email address and shows "Thanks! You're signed up. (Test site: signups aren't saved yet.)" Nothing is sent, and there are no tracking pixels.
+25. **Listing detail pages** show the full source address, a "Draft (not yet published)" line, and Call / Email / Website buttons when those details exist.
+26. **Search data on listing pages** uses `LocalBusiness` when there's a street address and `Organization` otherwise (for example, P.O. boxes).
+
+## Look
+
+27. **The theme uses the brief's five values** (teal, gold, cream, Playfair Display, system font), plus supporting shades in `css/theme.css`. Gold is used only behind dark text. The two lightest map shades use dark numbers so the counts stay readable.
+28. **Playfair Display loads from Google Fonts**, the only outside file the site uses.
+29. **Sponsor placeholders** stay in the side margins on wide screens and drop below the content on smaller ones.
+
+## Housekeeping
+
+30. **The first prototype's sample listings, Colorado data and placeholder images were removed.** They're still in the git history.
+31. **A copy of the Pearsons Creek mockup** sits in this folder on David's Mac (the app copied it in). It's excluded from git and has never been uploaded.

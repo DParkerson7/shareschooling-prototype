@@ -1,6 +1,6 @@
 # Map pilot handoff (West Tennessee + DeSoto County, MS)
 
-Documentation and draft data for the map-first clearinghouse pilot. These files are not loaded by the site. The prototype still uses the sample data in `data/listings.json`. Do not copy this dataset into that file yet.
+Documentation and draft data for the map-first clearinghouse pilot. These files are not loaded by the site. On Oct 27, 2026 the `listings` array was copied into `data/listings.json` for the map pilot build (branch `map-pilot`).
 
 | File | What it is |
 | --- | --- |
