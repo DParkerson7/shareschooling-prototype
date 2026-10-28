@@ -1,5 +1,5 @@
 {
-  "_about": "SAMPLE DATA ONLY. Every listing here is made up for the ShareSchooling prototype. See README.md for what each field means.",
+  "_about": "Map pilot data: West Tennessee plus DeSoto County, MS. Listings were researched from public pages (see each sourceUrl) and are drafts that the organizations have not confirmed. The listings array is copied from docs/map-pilot/listings.json. See README.md for what each field means.",
   "categories": [
     {
       "id": "co-ops",
@@ -48,1591 +48,3185 @@
     {
       "id": "associations",
       "name": "State associations and legal help"
+    },
+    {
+      "id": "umbrella-schools",
+      "name": "Umbrella schools"
     }
   ],
   "states": [
     {
-      "id": "tennessee",
+      "code": "TN",
       "name": "Tennessee",
       "fips": "47",
-      "lawBasics": "[Placeholder] A plain-language summary of Tennessee homeschool law will go here. It has not been written or checked yet, so please don't rely on this page for legal guidance.",
-      "counties": [
-        {
-          "id": "williamson",
-          "fips": "47187",
-          "name": "Williamson County",
-          "towns": [
-            {
-              "id": "franklin",
-              "name": "Franklin",
-              "zips": [
-                "37064",
-                "37067",
-                "37069"
-              ],
-              "lon": -86.869,
-              "lat": 35.925
-            },
-            {
-              "id": "brentwood",
-              "name": "Brentwood",
-              "zips": [
-                "37027"
-              ],
-              "lon": -86.783,
-              "lat": 36.033
-            },
-            {
-              "id": "spring-hill",
-              "name": "Spring Hill",
-              "zips": [
-                "37174"
-              ],
-              "lon": -86.93,
-              "lat": 35.751
-            }
-          ]
-        },
-        {
-          "id": "davidson",
-          "fips": "47037",
-          "name": "Davidson County",
-          "towns": [
-            {
-              "id": "nashville",
-              "name": "Nashville",
-              "zips": [
-                "37203",
-                "37205",
-                "37206",
-                "37209",
-                "37211"
-              ],
-              "lon": -86.781,
-              "lat": 36.163
-            },
-            {
-              "id": "goodlettsville",
-              "name": "Goodlettsville",
-              "zips": [
-                "37072"
-              ],
-              "lon": -86.713,
-              "lat": 36.323
-            }
-          ]
-        }
-      ]
+      "pilot": true,
+      "pilotLabel": "Live pilot",
+      "pilotCounties": [
+        "Benton",
+        "Carroll",
+        "Chester",
+        "Crockett",
+        "Decatur",
+        "Dyer",
+        "Fayette",
+        "Gibson",
+        "Hardeman",
+        "Hardin",
+        "Haywood",
+        "Henderson",
+        "Henry",
+        "Lake",
+        "Lauderdale",
+        "Madison",
+        "McNairy",
+        "Obion",
+        "Shelby",
+        "Tipton",
+        "Weakley"
+      ],
+      "lawBasics": "[Placeholder] A plain-language summary of Tennessee homeschool law will go here. It hasn't been written or checked yet, so please don't rely on this page for legal guidance."
     },
     {
-      "id": "colorado",
-      "name": "Colorado",
-      "fips": "08",
-      "lawBasics": "[Placeholder] A plain-language summary of Colorado homeschool law will go here. It has not been written or checked yet, so please don't rely on this page for legal guidance.",
-      "counties": [
-        {
-          "id": "el-paso",
-          "fips": "08041",
-          "name": "El Paso County",
-          "towns": [
-            {
-              "id": "colorado-springs",
-              "name": "Colorado Springs",
-              "zips": [
-                "80903",
-                "80905",
-                "80907",
-                "80909",
-                "80918"
-              ],
-              "lon": -104.821,
-              "lat": 38.834
-            },
-            {
-              "id": "monument",
-              "name": "Monument",
-              "zips": [
-                "80132"
-              ],
-              "lon": -104.873,
-              "lat": 39.092
-            },
-            {
-              "id": "fountain",
-              "name": "Fountain",
-              "zips": [
-                "80817"
-              ],
-              "lon": -104.701,
-              "lat": 38.682
-            }
-          ]
-        },
-        {
-          "id": "larimer",
-          "fips": "08069",
-          "name": "Larimer County",
-          "towns": [
-            {
-              "id": "fort-collins",
-              "name": "Fort Collins",
-              "zips": [
-                "80521",
-                "80524",
-                "80525",
-                "80526"
-              ],
-              "lon": -105.084,
-              "lat": 40.585
-            },
-            {
-              "id": "loveland",
-              "name": "Loveland",
-              "zips": [
-                "80537",
-                "80538"
-              ],
-              "lon": -105.075,
-              "lat": 40.398
-            }
-          ]
-        }
-      ]
+      "code": "MS",
+      "name": "Mississippi",
+      "fips": "28",
+      "pilot": true,
+      "pilotLabel": "Pilot: DeSoto County",
+      "pilotCounties": [
+        "DeSoto"
+      ],
+      "lawBasics": "[Placeholder] A plain-language summary of Mississippi homeschool law will go here. It hasn't been written or checked yet, so please don't rely on this page for legal guidance.",
+      "categoryNotes": {
+        "umbrella-schools": "Mississippi doesn't require an umbrella school. See the MS Dept. of Education listing."
+      }
     }
   ],
   "listings": [
     {
-      "id": "ex-001",
-      "name": "Example Co-op of Franklin",
-      "exampleListing": true,
+      "id": "spark-joy-homeschool-co-operative-jackson",
+      "name": "Spark Joy Homeschool Co-operative",
       "category": "co-ops",
-      "description": "This is an example listing used to show how the site will look. A real co-op description would go here.",
-      "website": "https://co-op-of-franklin.example.com",
-      "email": "hello@co-op-of-franklin.example.com",
-      "phone": "555-0101",
-      "image": "img/placeholder-2.svg",
+      "categoryLabel": "Co-ops",
+      "description": "A secular, parent-facilitated nonprofit co-op offering forest school, science and enrichment classes, chess and book clubs, field trips, and community service. Families stay on site; it is not a drop-off program.",
       "reach": "Local",
       "location": {
-        "state": "tennessee",
-        "county": "williamson",
-        "town": "franklin"
-      },
-      "serviceArea": {
-        "towns": [
-          "tennessee/franklin",
-          "tennessee/brentwood"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades K–8",
-        "min": 0,
-        "max": 8
-      },
-      "subjects": [
-        "Science",
-        "History",
-        "Art"
-      ],
-      "worldview": "Faith-based",
-      "cost": {
-        "type": "Paid",
-        "note": "Example: a small fee per semester covers supplies."
-      },
-      "schedule": "Tuesdays, 9am–1pm (example)",
-      "status": "Verified",
-      "lastVerified": "2026-09-14",
-      "featured": true,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-002",
-      "name": "Example Volunteer Co-op of Williamson County",
-      "exampleListing": true,
-      "category": "co-ops",
-      "description": "This is an example listing used to show how the site will look. A real co-op description would go here.",
-      "website": "https://volunteer-co-op-of-williamson.example.com",
-      "email": "hello@volunteer-co-op-of-williamson.example.com",
-      "phone": "555-0102",
-      "image": "img/placeholder-3.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "williamson",
-        "town": "franklin"
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "",
+        "address": ""
       },
       "serviceArea": {
         "counties": [
-          "tennessee/williamson"
+          "Madison",
+          "Henderson"
         ]
       },
+      "latitude": 35.61444,
+      "longitude": -88.81774,
+      "geocodePrecision": "city",
       "delivery": "In person",
-      "agesGrades": {
-        "label": "PreK–Grade 12",
-        "min": -1,
-        "max": 12
-      },
-      "subjects": [
-        "Language Arts",
-        "Science",
-        "Music"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Free",
-        "note": "Volunteer-run; parents take turns teaching."
-      },
-      "schedule": "Fridays during the school year (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-08-02",
+      "website": "https://www.sparkjoyhomeschool.org/",
+      "email": "SparkJoyHsc@gmail.com",
+      "phone": "",
+      "agesGrades": "Kindergarten through high school (graduations held for K and seniors)",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Low-cost membership; some classes open to non-members (e.g., $20 drop-in science session per family, $10 public art class).",
+      "sourceUrl": "https://www.sparkjoyhomeschool.org/posts/spark-joy-newsletter-may-2026",
+      "verificationStatus": "Likely active",
+      "verificationNote": "May 2026 newsletter lists current classes at Beech Bluff Rec Center, Cypress Grove, and Jackson main library.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-003",
-      "name": "Example Microschool of Brentwood",
-      "exampleListing": true,
+      "id": "memphis-homeschool-enrichment-cooperative-mhec-memphis",
+      "name": "Memphis Homeschool Enrichment Cooperative (MHEC)",
+      "category": "co-ops",
+      "categoryLabel": "Co-ops",
+      "description": "A secular, parent-led cooperative that has run for over 13 years, with weekly enrichment classes, field trips, and social activities for homeschooling families.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "38134",
+        "address": "5676 Stage Road, Memphis, TN"
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.20456,
+      "longitude": -89.87396,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.mhecoop.org/",
+      "email": "membership@mhecoop.org",
+      "phone": "",
+      "agesGrades": "",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Membership required; contact for fees.",
+      "sourceUrl": "https://www.mhecoop.org/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site is live; no dated semester info found on the homepage.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "we-empower-homeschool-cooperative-w-e-co-op-memphis",
+      "name": "We Empower Homeschool Cooperative (W.E. Co-op)",
+      "category": "co-ops",
+      "categoryLabel": "Co-ops",
+      "description": "A nonprofit co-op serving Memphis-area families with weekly classes, clubs, creative arts, outdoor meetups, and monthly field trips. It describes itself as inclusive of every family's approach.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://weco-op.org/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Membership; see site.",
+      "sourceUrl": "https://weco-op.org/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Homepage says 'Now enrolling for spring 2026.'",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "stars-homeschool-co-op-paris",
+      "name": "STARS Homeschool Co-op",
+      "category": "co-ops",
+      "categoryLabel": "Co-ops",
+      "description": "A Christian enrichment co-op for Paris and northwest Tennessee that meets two Fridays a month at Grace Bible Fellowship Church, with parent-taught classes and monthly field trips.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Henry",
+        "city": "Paris",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Henry",
+          "Benton",
+          "Weakley",
+          "Carroll"
+        ]
+      },
+      "latitude": 36.30195,
+      "longitude": -88.32586,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://starshomeschool.com/",
+      "email": "starschcoop@gmail.com",
+      "phone": "",
+      "agesGrades": "Pre-K through high school",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "About $140 per family for the first student plus $25 per additional student (per search summary of the FAQ; confirm).",
+      "sourceUrl": "https://starshomeschool.com/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live; fee figures came from a search summary of the FAQ page.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "genesis-homeschool-program-ghp-paris",
+      "name": "Genesis Homeschool Program (GHP)",
+      "category": "co-ops",
+      "categoryLabel": "Co-ops",
+      "description": "A Christ-centered, parent-led co-op meeting at Jones Chapel Baptist Church (JCBC). Classes are supplemental, usually twice a month, and parents stay on campus.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Henry",
+        "city": "Paris",
+        "zip": "38242",
+        "address": "2200 India Rd, Paris, TN 38242"
+      },
+      "serviceArea": {
+        "counties": [
+          "Henry"
+        ]
+      },
+      "latitude": 36.33165,
+      "longitude": -88.26513,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.genesishomeschoolprogram.org/",
+      "email": "board@genesishomeschoolprogram.org",
+      "phone": "(731) 227-4402",
+      "agesGrades": "",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "",
+      "sourceUrl": "https://www.genesishomeschoolprogram.org/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live; no dated content found.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "the-focus-academy-memphis",
+      "name": "The FOCUS Academy",
       "category": "microschools",
-      "description": "This is an example listing used to show how the site will look. A real microschool description would go here.",
-      "website": "https://microschool-of-brentwood.example.com",
-      "email": "hello@microschool-of-brentwood.example.com",
-      "phone": "555-0103",
-      "image": "img/placeholder-1.svg",
+      "categoryLabel": "Microschools",
+      "description": "A microschool for gifted and neurodivergent (twice-exceptional) middle school boys, offering 2-day or 4-day options that blend self-paced academics with hands-on STEM mini-studies. Students are registered as independent homeschoolers or under an umbrella school.",
       "reach": "Local",
       "location": {
-        "state": "tennessee",
-        "county": "williamson",
-        "town": "brentwood"
-      },
-      "serviceArea": {
-        "towns": [
-          "tennessee/brentwood"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades 1–6",
-        "min": 1,
-        "max": 6
-      },
-      "subjects": [
-        "Math",
-        "Reading",
-        "Science"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example monthly tuition; details on request."
-      },
-      "schedule": "Monday–Thursday, 8:30am–2pm (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-05-20",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-004",
-      "name": "Example University-Model School",
-      "exampleListing": true,
-      "category": "hybrid",
-      "description": "This is an example listing used to show how the site will look. A real hybrid and university-model school description would go here.",
-      "website": "https://university-model-school.example.com",
-      "email": "hello@university-model-school.example.com",
-      "phone": "555-0104",
-      "image": "img/placeholder-2.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "davidson",
-        "town": "nashville"
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
       },
       "serviceArea": {
         "counties": [
-          "tennessee/davidson",
-          "tennessee/williamson"
+          "Shelby"
         ]
       },
-      "delivery": "Both",
-      "agesGrades": {
-        "label": "Grades K–12",
-        "min": 0,
-        "max": 12
-      },
-      "subjects": [
-        "Math",
-        "Science",
-        "History",
-        "Language Arts"
-      ],
-      "worldview": "Faith-based",
-      "cost": {
-        "type": "Paid",
-        "note": "Example: tuition varies by grade."
-      },
-      "schedule": "On campus Mondays and Wednesdays; home days the rest of the week (example)",
-      "status": "Verified",
-      "lastVerified": "2026-10-01",
-      "featured": true,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-005",
-      "name": "Example Tutoring Center — Nashville",
-      "exampleListing": true,
-      "category": "tutors",
-      "description": "This is an example listing used to show how the site will look. A real tutor description would go here.",
-      "website": "https://tutoring-center-nashville.example.com",
-      "email": "hello@tutoring-center-nashville.example.com",
-      "phone": "555-0105",
-      "image": "img/placeholder-3.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "davidson",
-        "town": "nashville"
-      },
-      "serviceArea": {
-        "towns": [
-          "tennessee/nashville",
-          "tennessee/goodlettsville"
-        ]
-      },
-      "delivery": "Both",
-      "agesGrades": {
-        "label": "Grades 3–12",
-        "min": 3,
-        "max": 12
-      },
-      "subjects": [
-        "Math",
-        "Reading",
-        "Test Prep"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example hourly rate."
-      },
-      "schedule": "By appointment (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-07-11",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-006",
-      "name": "Example Art & Music Classes",
-      "exampleListing": true,
-      "category": "classes",
-      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
-      "website": "https://art-music-classes.example.com",
-      "email": "hello@art-music-classes.example.com",
-      "phone": "555-0106",
-      "image": "img/placeholder-1.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "davidson",
-        "town": "nashville"
-      },
-      "serviceArea": {
-        "towns": [
-          "tennessee/nashville"
-        ]
-      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
       "delivery": "In person",
-      "agesGrades": {
-        "label": "Ages 6–14 (about Grades 1–8)",
-        "min": 1,
-        "max": 8
-      },
-      "subjects": [
-        "Art",
-        "Music"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: some free open-studio days, some paid sessions."
-      },
-      "schedule": "Saturday mornings (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-04-03",
+      "website": "https://www.thefocusacademy.org/",
+      "email": "info@thefocusacademy.org",
+      "phone": "",
+      "agesGrades": "Middle school (boys)",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Tuition; search summary lists about $9,909 (2-day) or $15,728 (4-day).",
+      "sourceUrl": "https://www.thefocusacademy.org/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Accepting applications for 2026-27. 'Memphis area' only; exact city not stated.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-007",
-      "name": "Example Homeschool Parent Meetup — Spring Hill",
-      "exampleListing": true,
-      "category": "support-groups",
-      "description": "This is an example listing used to show how the site will look. A real support groups and parent meetup description would go here.",
-      "website": "https://homeschool-parent-meetup-sprin.example.com",
-      "email": "hello@homeschool-parent-meetup-sprin.example.com",
-      "phone": "555-0107",
-      "image": "img/placeholder-2.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "williamson",
-        "town": "spring-hill"
-      },
-      "serviceArea": {
-        "towns": [
-          "tennessee/spring-hill",
-          "tennessee/franklin"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "For parents (all ages)",
-        "min": null,
-        "max": null
-      },
-      "subjects": [],
-      "worldview": "Faith-based",
-      "cost": {
-        "type": "Free",
-        "note": ""
-      },
-      "schedule": "First Thursday evening of each month (example)",
-      "status": "Verified",
-      "lastVerified": "2026-09-30",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-008",
-      "name": "Example Nature Center Field Trips",
-      "exampleListing": true,
-      "category": "field-trips",
-      "description": "This is an example listing used to show how the site will look. A real field trips and learning destination description would go here.",
-      "website": "https://nature-center-field-trips.example.com",
-      "email": "hello@nature-center-field-trips.example.com",
-      "phone": "555-0108",
-      "image": "img/placeholder-3.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "davidson",
-        "town": "nashville"
-      },
-      "serviceArea": {
-        "counties": [
-          "tennessee/davidson"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades K–8",
-        "min": 0,
-        "max": 8
-      },
-      "subjects": [
-        "Science",
-        "Nature"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: group rates available."
-      },
-      "schedule": "Weekdays by reservation (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-06-18",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-009",
-      "name": "Example Homeschool Sports League",
-      "exampleListing": true,
-      "category": "sports",
-      "description": "This is an example listing used to show how the site will look. A real sports and extracurricular description would go here.",
-      "website": "https://homeschool-sports-league.example.com",
-      "email": "hello@homeschool-sports-league.example.com",
-      "phone": "555-0109",
-      "image": "img/placeholder-1.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "williamson",
-        "town": "franklin"
-      },
-      "serviceArea": {
-        "counties": [
-          "tennessee/williamson",
-          "tennessee/davidson"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades 4–12",
-        "min": 4,
-        "max": 12
-      },
-      "subjects": [
-        "Physical Education"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Paid",
-        "note": "Example season fee."
-      },
-      "schedule": "Fall and spring seasons (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-03-27",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-010",
-      "name": "Example Testing & Evaluation Services",
-      "exampleListing": true,
-      "category": "testing",
-      "description": "This is an example listing used to show how the site will look. A real testing and evaluation service description would go here.",
-      "website": "https://testing-evaluation-services.example.com",
-      "email": "hello@testing-evaluation-services.example.com",
-      "phone": "555-0110",
-      "image": "img/placeholder-2.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "williamson",
-        "town": "brentwood"
-      },
-      "serviceArea": {
-        "counties": [
-          "tennessee/williamson"
-        ]
-      },
-      "delivery": "Both",
-      "agesGrades": {
-        "label": "Grades K–12",
-        "min": 0,
-        "max": 12
-      },
-      "subjects": [
-        "Assessment"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example per-test fee."
-      },
-      "schedule": "Spring testing windows (example)",
-      "status": "Verified",
-      "lastVerified": "2026-09-02",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-011",
-      "name": "Example Learning Support Center",
-      "exampleListing": true,
-      "category": "special-needs",
-      "description": "This is an example listing used to show how the site will look. A real special needs and learning-difference support description would go here.",
-      "website": "https://learning-support-center.example.com",
-      "email": "hello@learning-support-center.example.com",
-      "phone": "555-0111",
-      "image": "img/placeholder-3.svg",
-      "reach": "Local",
-      "location": {
-        "state": "tennessee",
-        "county": "davidson",
-        "town": "goodlettsville"
-      },
-      "serviceArea": {
-        "towns": [
-          "tennessee/goodlettsville",
-          "tennessee/nashville"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades K–12",
-        "min": 0,
-        "max": 12
-      },
-      "subjects": [
-        "Reading",
-        "Learning Differences"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: sliding-scale options."
-      },
-      "schedule": "By appointment (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-08-21",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-012",
-      "name": "Example Statewide Homeschool Association (Tennessee)",
-      "exampleListing": true,
-      "category": "associations",
-      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
-      "website": "https://statewide-homeschool-associati.example.com",
-      "email": "hello@statewide-homeschool-associati.example.com",
-      "phone": "555-0112",
-      "image": "img/placeholder-1.svg",
-      "reach": "Statewide",
-      "location": {
-        "state": "tennessee"
-      },
-      "serviceArea": null,
-      "delivery": "Both",
-      "agesGrades": {
-        "label": "All ages",
-        "min": -1,
-        "max": 12
-      },
-      "subjects": [
-        "Legal Help",
-        "Events"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: free newsletter; optional paid membership."
-      },
-      "schedule": "Events throughout the year (example)",
-      "status": "Verified",
-      "lastVerified": "2026-10-05",
-      "featured": true,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-013",
-      "name": "Example Tennessee Homeschool Legal Q&A",
-      "exampleListing": true,
-      "category": "associations",
-      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
-      "website": "https://tennessee-homeschool-legal-q-a.example.com",
-      "email": "hello@tennessee-homeschool-legal-q-a.example.com",
-      "phone": "555-0113",
-      "image": "img/placeholder-2.svg",
-      "reach": "Statewide",
-      "location": {
-        "state": "tennessee"
-      },
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "All ages",
-        "min": -1,
-        "max": 12
-      },
-      "subjects": [
-        "Legal Help"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Free",
-        "note": ""
-      },
-      "schedule": "Online office hours, monthly (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-02-14",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-014",
-      "name": "Example Tennessee Virtual Science Lab",
-      "exampleListing": true,
-      "category": "curriculum",
-      "description": "This is an example listing used to show how the site will look. A real curriculum and online program description would go here.",
-      "website": "https://tennessee-virtual-science-lab.example.com",
-      "email": "hello@tennessee-virtual-science-lab.example.com",
-      "phone": "555-0114",
-      "image": "img/placeholder-3.svg",
-      "reach": "Statewide",
-      "location": {
-        "state": "tennessee"
-      },
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Grades 6–12",
-        "min": 6,
-        "max": 12
-      },
-      "subjects": [
-        "Science"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example per-course fee."
-      },
-      "schedule": "Self-paced (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-07-29",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-015",
-      "name": "Example Tennessee History Field Day",
-      "exampleListing": true,
-      "category": "field-trips",
-      "description": "This is an example listing used to show how the site will look. A real field trips and learning destination description would go here.",
-      "website": "https://tennessee-history-field-day.example.com",
-      "email": "hello@tennessee-history-field-day.example.com",
-      "phone": "555-0115",
-      "image": "img/placeholder-1.svg",
-      "reach": "Statewide",
-      "location": {
-        "state": "tennessee"
-      },
-      "serviceArea": null,
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades 3–8",
-        "min": 3,
-        "max": 8
-      },
-      "subjects": [
-        "History"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Free",
-        "note": ""
-      },
-      "schedule": "Once a year, in the spring (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-01-30",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-016",
-      "name": "Example Co-op of Colorado Springs",
-      "exampleListing": true,
-      "category": "co-ops",
-      "description": "This is an example listing used to show how the site will look. A real co-op description would go here.",
-      "website": "https://co-op-of-colorado-springs.example.com",
-      "email": "hello@co-op-of-colorado-springs.example.com",
-      "phone": "555-0116",
-      "image": "img/placeholder-2.svg",
-      "reach": "Local",
-      "location": {
-        "state": "colorado",
-        "county": "el-paso",
-        "town": "colorado-springs"
-      },
-      "serviceArea": {
-        "towns": [
-          "colorado/colorado-springs",
-          "colorado/fountain"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades K–8",
-        "min": 0,
-        "max": 8
-      },
-      "subjects": [
-        "Science",
-        "History",
-        "Art"
-      ],
-      "worldview": "Faith-based",
-      "cost": {
-        "type": "Paid",
-        "note": "Example semester fee."
-      },
-      "schedule": "Wednesdays, 9am–12pm (example)",
-      "status": "Verified",
-      "lastVerified": "2026-09-22",
-      "featured": true,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-017",
-      "name": "Example Monument Volunteer Co-op",
-      "exampleListing": true,
-      "category": "co-ops",
-      "description": "This is an example listing used to show how the site will look. A real co-op description would go here.",
-      "website": "https://monument-volunteer-co-op.example.com",
-      "email": "hello@monument-volunteer-co-op.example.com",
-      "phone": "555-0117",
-      "image": "img/placeholder-3.svg",
-      "reach": "Local",
-      "location": {
-        "state": "colorado",
-        "county": "el-paso",
-        "town": "monument"
-      },
-      "serviceArea": {
-        "towns": [
-          "colorado/monument"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "PreK–Grade 6",
-        "min": -1,
-        "max": 6
-      },
-      "subjects": [
-        "Reading",
-        "Art",
-        "Nature"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Free",
-        "note": "Volunteer-run; families share teaching."
-      },
-      "schedule": "Mondays (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-08-12",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-018",
-      "name": "Example Mountain Microschool",
-      "exampleListing": true,
+      "id": "nova-quest-academy-micro-school-memphis",
+      "name": "Nova Quest Academy Micro-School",
       "category": "microschools",
-      "description": "This is an example listing used to show how the site will look. A real microschool description would go here.",
-      "website": "https://mountain-microschool.example.com",
-      "email": "hello@mountain-microschool.example.com",
-      "phone": "555-0118",
-      "image": "img/placeholder-1.svg",
+      "categoryLabel": "Microschools",
+      "description": "A Memphis micro-school founded by a veteran Memphis educator, organized in small learning pods with drama, outdoor, and garden activities.",
       "reach": "Local",
       "location": {
-        "state": "colorado",
-        "county": "el-paso",
-        "town": "colorado-springs"
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
       },
       "serviceArea": {
-        "towns": [
-          "colorado/colorado-springs"
+        "counties": [
+          "Shelby"
         ]
       },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
       "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades 3–8",
-        "min": 3,
-        "max": 8
-      },
-      "subjects": [
-        "Math",
-        "Science",
-        "Writing"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example monthly tuition."
-      },
-      "schedule": "Tuesday–Thursday (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-05-06",
+      "website": "https://www.novaquestacademyms.org/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Tuition; see site.",
+      "sourceUrl": "https://www.novaquestacademyms.org/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Homepage says 'Now Accepting Applications for 2026-2027.'",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-019",
-      "name": "Example Hybrid Academy of Fort Collins",
-      "exampleListing": true,
+      "id": "endeavor-microschool-collierville",
+      "name": "Endeavor Microschool",
+      "category": "microschools",
+      "categoryLabel": "Microschools",
+      "description": "A learner-centered, project-based microschool that personalizes learning for each student.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Collierville",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby",
+          "Fayette"
+        ]
+      },
+      "latitude": 35.04204,
+      "longitude": -89.66453,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.endeavormicroschool.com/",
+      "email": "",
+      "phone": "(901) 250-3880",
+      "agesGrades": "K-8 (per search summary); high school page also listed",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Tuition; see Tuition & Fees page.",
+      "sourceUrl": "https://www.endeavormicroschool.com/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site shows 2026 content. Check whether students enroll as homeschoolers or as private-school students.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "ridgecrest-academy-jackson",
+      "name": "Ridgecrest Academy",
       "category": "hybrid",
-      "description": "This is an example listing used to show how the site will look. A real hybrid and university-model school description would go here.",
-      "website": "https://hybrid-academy-of-fort-collins.example.com",
-      "email": "hello@hybrid-academy-of-fort-collins.example.com",
-      "phone": "555-0119",
-      "image": "img/placeholder-2.svg",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A Christian co-operative learning center for the greater Jackson area, using Abeka curriculum in a Waldorf-inspired setting. A new 36-acre campus opens for fall 2026.",
       "reach": "Local",
       "location": {
-        "state": "colorado",
-        "county": "larimer",
-        "town": "fort-collins"
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "38301",
+        "address": "130 Old Denmark Rd, Jackson, TN 38301"
       },
       "serviceArea": {
         "counties": [
-          "colorado/larimer"
+          "Madison"
         ]
       },
-      "delivery": "Both",
-      "agesGrades": {
-        "label": "Grades K–12",
-        "min": 0,
-        "max": 12
-      },
-      "subjects": [
-        "Math",
-        "Science",
-        "Language Arts"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Paid",
-        "note": "Example tuition varies by grade."
-      },
-      "schedule": "Two campus days per week (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-07-15",
+      "latitude": 35.60758,
+      "longitude": -88.88005,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.rajackson.org/",
+      "email": "ridgecrestacademy.jackson@gmail.com",
+      "phone": "(731) 215-0494",
+      "agesGrades": "",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition; described as affordable.",
+      "sourceUrl": "https://www.rajackson.org/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Fall 2026 campus announced on homepage.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-020",
-      "name": "Example Tutoring Center — Loveland",
-      "exampleListing": true,
+      "id": "faith-home-school-tutorial-jackson",
+      "name": "Faith Home School Tutorial",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A Christ-centered homeschool tutorial in Jackson with classroom days twice a week, partnering with parents who teach at home the rest of the week.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Madison"
+        ]
+      },
+      "latitude": 35.61444,
+      "longitude": -88.81774,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://faithtutorial.com/",
+      "email": "faithhomeschooltutorial@gmail.com",
+      "phone": "731-225-8172",
+      "agesGrades": "Pre-K through high school",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition and fees (see site).",
+      "sourceUrl": "https://faithtutorial.com/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live; no dated content found. Homeschool Roster's 2023 list said Fridays, but the site now says twice weekly.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "fcs-homeschool-network-somerville",
+      "name": "FCS Homeschool Network",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A homeschool tutorial run as a ministry of Fayette Baptist Church and Fayette Christian School, offering core classes and electives on Tuesdays and Thursdays.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Fayette",
+        "city": "Somerville",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Fayette",
+          "Hardeman"
+        ]
+      },
+      "latitude": 35.2437,
+      "longitude": -89.35007,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://fcswarriors.org/homeschool",
+      "email": "homeschool@fcswarriors.org",
+      "phone": "901.235.6215",
+      "agesGrades": "Pre-K through high school",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition.",
+      "sourceUrl": "https://fcswarriors.org/homeschool",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Page shows 2026-2027 content.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "bellevue-tutorial-cordova",
+      "name": "Bellevue Tutorial",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A Bellevue Baptist Church ministry offering professionally taught homeschool courses on a Christian worldview, plus multi-sensory literacy tutoring.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Cordova",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.18299,
+      "longitude": -89.80766,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://www.bellevue.org/tutorial/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Per-course tuition.",
+      "sourceUrl": "https://www.bellevue.org/tutorial/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "2026-2027 schedules posted. City: Bellevue Baptist is in the Cordova area of Memphis.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "the-bridge-tutorial-arlington",
+      "name": "The Bridge Tutorial",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A Christ-centered tutorial with 20+ years serving Memphis-area homeschoolers, with class sizes capped at 15 and programs from kindergarten through high school.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Arlington",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby",
+          "Tipton",
+          "Fayette"
+        ]
+      },
+      "latitude": 35.29645,
+      "longitude": -89.66178,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://thebridgetutorial.com/",
+      "email": "admin@thebridgetutorial.com",
+      "phone": "(901) 451-9857",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition; 10% sibling discount.",
+      "sourceUrl": "https://thebridgetutorial.com/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Registration for 2026-27 open.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "the-cordova-tutorial-cordova",
+      "name": "The Cordova Tutorial",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A Christian homeschool tutorial offering core classes and tutoring in a classroom setting from the primary grades through high school.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Cordova",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.15565,
+      "longitude": -89.7762,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://thecordovatutorial.com/",
+      "email": "TCTcares4you@gmail.com",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition.",
+      "sourceUrl": "https://thecordovatutorial.com/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live; no dated content found.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "veritas-classical-schools-collierville",
+      "name": "Veritas Classical Schools",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A classical Christian program where students attend classes one or two days a week and complete the rest at home. It also lists dyslexia services.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Collierville",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.04204,
+      "longitude": -89.66453,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.veritasclassicalschools.com/",
+      "email": "",
+      "phone": "901.830.6173",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition.",
+      "sourceUrl": "https://www.veritasclassicalschools.com/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live; no dated content found. Also has a DeSoto County, MS campus (outside TN).",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "holy-family-academy-cordova",
+      "name": "Holy Family Academy",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A classical Catholic hybrid homeschool. Students attend classes on Mondays and Thursdays (and Wednesday mornings for middle school) and learn at home the other days.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Cordova",
+        "zip": "38016",
+        "address": "8151 Chimneyrock Blvd, Cordova, TN 38016"
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.18174,
+      "longitude": -89.79044,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.holyfamilymemphis.com/",
+      "email": "admissions@holyfamilymemphis.com",
+      "phone": "901.472.7811",
+      "agesGrades": "Lower school and middle school",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition (see Tuition page).",
+      "sourceUrl": "https://www.holyfamilymemphis.com/contact",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Meets on the St. Francis of Assisi Catholic Church campus since fall 2024. No 2025-26 dates seen.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "collierville-classical-school-collierville",
+      "name": "Collierville Classical School",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A Central Church ministry running a classical Christian hybrid tutorial: two days of classroom instruction and three days of home learning.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Collierville",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.04204,
+      "longitude": -89.66453,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.centralchurch.com/homeschool/",
+      "email": "",
+      "phone": "901-888-4673",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "",
+      "sourceUrl": "https://www.centralchurch.com/homeschool/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Church page live; no dated content found. The phone number is Central Church's main line.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "ees-success-academy-memphis",
+      "name": "EES Success Academy",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A hybrid K-12 homeschool program from Expanded Educational Services, with one-to-one instruction and à-la-carte options.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "38141",
+        "address": "5270 Riverdale, Memphis, TN 38141"
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.00414,
+      "longitude": -89.83079,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.sablooms.org/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "",
+      "sourceUrl": "https://www.sablooms.org/",
+      "verificationStatus": "Needs verification",
+      "verificationNote": "Footer shows an odd copyright year (2028) and no dated content. Confirm it is operating.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "learning-achievement-center-jackson",
+      "name": "Learning Achievement Center",
       "category": "tutors",
-      "description": "This is an example listing used to show how the site will look. A real tutor description would go here.",
-      "website": "https://tutoring-center-loveland.example.com",
-      "email": "hello@tutoring-center-loveland.example.com",
-      "phone": "555-0120",
-      "image": "img/placeholder-3.svg",
+      "categoryLabel": "Tutors",
+      "description": "A Jackson tutoring and educational consulting center serving students in all grades, including homeschoolers.",
       "reach": "Local",
       "location": {
-        "state": "colorado",
-        "county": "larimer",
-        "town": "loveland"
-      },
-      "serviceArea": {
-        "towns": [
-          "colorado/loveland",
-          "colorado/fort-collins"
-        ]
-      },
-      "delivery": "Both",
-      "agesGrades": {
-        "label": "Grades K–12",
-        "min": 0,
-        "max": 12
-      },
-      "subjects": [
-        "Math",
-        "Writing"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example hourly rate."
-      },
-      "schedule": "By appointment (example)",
-      "status": "Verified",
-      "lastVerified": "2026-09-09",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-021",
-      "name": "Example Outdoor Enrichment Classes",
-      "exampleListing": true,
-      "category": "classes",
-      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
-      "website": "https://outdoor-enrichment-classes.example.com",
-      "email": "hello@outdoor-enrichment-classes.example.com",
-      "phone": "555-0121",
-      "image": "img/placeholder-1.svg",
-      "reach": "Local",
-      "location": {
-        "state": "colorado",
-        "county": "el-paso",
-        "town": "colorado-springs"
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "",
+        "address": ""
       },
       "serviceArea": {
         "counties": [
-          "colorado/el-paso"
+          "Madison"
         ]
       },
+      "latitude": 35.61444,
+      "longitude": -88.81774,
+      "geocodePrecision": "city",
       "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades 2–10",
-        "min": 2,
-        "max": 10
-      },
-      "subjects": [
-        "Nature",
-        "Science",
-        "Physical Education"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: scholarships available."
-      },
-      "schedule": "Fridays (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-04-22",
+      "website": "",
+      "email": "",
+      "phone": "731-668-0881",
+      "agesGrades": "All grades",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "",
+      "sourceUrl": "https://www.yellowpages.com/jackson-tn/mip/learning-achievement-center-14942136",
+      "verificationStatus": "Needs verification",
+      "verificationNote": "Directory listings only (no official site found), and they give two different addresses (47 Murray Guard Dr vs 267A North Pkwy). Address left blank.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-022",
-      "name": "Example Fort Collins Parent Meetup",
-      "exampleListing": true,
-      "category": "support-groups",
-      "description": "This is an example listing used to show how the site will look. A real support groups and parent meetup description would go here.",
-      "website": "https://fort-collins-parent-meetup.example.com",
-      "email": "hello@fort-collins-parent-meetup.example.com",
-      "phone": "555-0122",
-      "image": "img/placeholder-2.svg",
+      "id": "mathnasium-of-germantown-germantown",
+      "name": "Mathnasium of Germantown",
+      "category": "tutors",
+      "categoryLabel": "Tutors",
+      "description": "A K-12 math learning center with in-center and online tutoring that welcomes homeschooled students.",
       "reach": "Local",
       "location": {
-        "state": "colorado",
-        "county": "larimer",
-        "town": "fort-collins"
-      },
-      "serviceArea": {
-        "towns": [
-          "colorado/fort-collins"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "For parents (all ages)",
-        "min": null,
-        "max": null
-      },
-      "subjects": [],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Free",
-        "note": ""
-      },
-      "schedule": "Second Tuesday of each month (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-06-01",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-023",
-      "name": "Example Homeschool Swim & Gym",
-      "exampleListing": true,
-      "category": "sports",
-      "description": "This is an example listing used to show how the site will look. A real sports and extracurricular description would go here.",
-      "website": "https://homeschool-swim-gym.example.com",
-      "email": "hello@homeschool-swim-gym.example.com",
-      "phone": "555-0123",
-      "image": "img/placeholder-3.svg",
-      "reach": "Local",
-      "location": {
-        "state": "colorado",
-        "county": "el-paso",
-        "town": "colorado-springs"
-      },
-      "serviceArea": {
-        "towns": [
-          "colorado/colorado-springs",
-          "colorado/monument",
-          "colorado/fountain"
-        ]
-      },
-      "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades K–12",
-        "min": 0,
-        "max": 12
-      },
-      "subjects": [
-        "Physical Education"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Paid",
-        "note": "Example per-session fee."
-      },
-      "schedule": "Weekly (example)",
-      "status": "Verified",
-      "lastVerified": "2026-08-28",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-024",
-      "name": "Example Speech & Learning Support",
-      "exampleListing": true,
-      "category": "special-needs",
-      "description": "This is an example listing used to show how the site will look. A real special needs and learning-difference support description would go here.",
-      "website": "https://speech-learning-support.example.com",
-      "email": "hello@speech-learning-support.example.com",
-      "phone": "555-0124",
-      "image": "img/placeholder-1.svg",
-      "reach": "Local",
-      "location": {
-        "state": "colorado",
-        "county": "larimer",
-        "town": "loveland"
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Germantown",
+        "zip": "38138",
+        "address": "9289 Poplar Ave, #104, Germantown, TN 38138"
       },
       "serviceArea": {
         "counties": [
-          "colorado/larimer"
+          "Shelby"
         ]
       },
-      "delivery": "Both",
-      "agesGrades": {
-        "label": "PreK–Grade 12",
-        "min": -1,
-        "max": 12
-      },
-      "subjects": [
-        "Speech",
-        "Learning Differences"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: depends on services."
-      },
-      "schedule": "By appointment (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-03-10",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-025",
-      "name": "Example Statewide Homeschool Association (Colorado)",
-      "exampleListing": true,
-      "category": "associations",
-      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
-      "website": "https://statewide-homeschool-associati.example.com",
-      "email": "hello@statewide-homeschool-associati.example.com",
-      "phone": "555-0125",
-      "image": "img/placeholder-2.svg",
-      "reach": "Statewide",
-      "location": {
-        "state": "colorado"
-      },
-      "serviceArea": null,
-      "delivery": "Both",
-      "agesGrades": {
-        "label": "All ages",
-        "min": -1,
-        "max": 12
-      },
-      "subjects": [
-        "Legal Help",
-        "Events"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: free newsletter; optional paid membership."
-      },
-      "schedule": "Events throughout the year (example)",
-      "status": "Verified",
-      "lastVerified": "2026-10-08",
-      "featured": true,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-026",
-      "name": "Example Colorado Homeschool Legal Help Line",
-      "exampleListing": true,
-      "category": "associations",
-      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
-      "website": "https://colorado-homeschool-legal-help.example.com",
-      "email": "hello@colorado-homeschool-legal-help.example.com",
-      "phone": "555-0126",
-      "image": "img/placeholder-3.svg",
-      "reach": "Statewide",
-      "location": {
-        "state": "colorado"
-      },
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "All ages",
-        "min": -1,
-        "max": 12
-      },
-      "subjects": [
-        "Legal Help"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Free",
-        "note": ""
-      },
-      "schedule": "Weekday phone and email help (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-07-02",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-027",
-      "name": "Example Colorado Science Olympiad Prep",
-      "exampleListing": true,
-      "category": "classes",
-      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
-      "website": "https://colorado-science-olympiad-prep.example.com",
-      "email": "hello@colorado-science-olympiad-prep.example.com",
-      "phone": "555-0127",
-      "image": "img/placeholder-1.svg",
-      "reach": "Statewide",
-      "location": {
-        "state": "colorado"
-      },
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Grades 6–12",
-        "min": 6,
-        "max": 12
-      },
-      "subjects": [
-        "Science"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example per-season fee."
-      },
-      "schedule": "Live online, Thursday evenings (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-02-25",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-028",
-      "name": "Example Colorado Testing Network",
-      "exampleListing": true,
-      "category": "testing",
-      "description": "This is an example listing used to show how the site will look. A real testing and evaluation service description would go here.",
-      "website": "https://colorado-testing-network.example.com",
-      "email": "hello@colorado-testing-network.example.com",
-      "phone": "555-0128",
-      "image": "img/placeholder-2.svg",
-      "reach": "Statewide",
-      "location": {
-        "state": "colorado"
-      },
-      "serviceArea": null,
+      "latitude": 35.06511,
+      "longitude": -89.75335,
+      "geocodePrecision": "address",
       "delivery": "In person",
-      "agesGrades": {
-        "label": "Grades 3–12",
-        "min": 3,
-        "max": 12
-      },
-      "subjects": [
-        "Assessment"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example per-test fee."
-      },
-      "schedule": "Testing days each spring (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-06-24",
+      "website": "https://www.mathnasium.com/math-centers/germantown",
+      "email": "",
+      "phone": "(901) 464-3290",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Paid; free assessment offered.",
+      "sourceUrl": "https://www.mathnasium.com/math-centers/germantown",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Center page live with 2026 content.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-029",
-      "name": "Example Online Math Academy",
-      "exampleListing": true,
-      "category": "curriculum",
-      "description": "This is an example listing used to show how the site will look. A real curriculum and online program description would go here.",
-      "website": "https://online-math-academy.example.com",
-      "email": "hello@online-math-academy.example.com",
-      "phone": "555-0129",
-      "image": "img/placeholder-3.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Grades 3–12",
-        "min": 3,
-        "max": 12
+      "id": "brainiac-tutoring-germantown",
+      "name": "Brainiac Tutoring",
+      "category": "tutors",
+      "categoryLabel": "Tutors",
+      "description": "A Germantown tutoring company that teaches selected courses within a homeschooler's curriculum and advises families getting started with homeschooling. It also offers ACT/SAT prep.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Germantown",
+        "zip": "",
+        "address": ""
       },
-      "subjects": [
-        "Math"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example monthly subscription."
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
       },
-      "schedule": "Self-paced, with optional live help (example)",
-      "status": "Verified",
-      "lastVerified": "2026-10-10",
-      "featured": true,
-      "source": "Made-up sample data for the prototype"
+      "latitude": 35.08676,
+      "longitude": -89.81009,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.brainiactutoring.com/home-schooling-support",
+      "email": "",
+      "phone": "(901) 337-2420",
+      "agesGrades": "",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Paid; see Pricing/Fees page.",
+      "sourceUrl": "https://www.brainiactutoring.com/home-schooling-support",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live; no dated content on the page.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-030",
-      "name": "Example Literature & Writing Classes Online",
-      "exampleListing": true,
+      "id": "the-tutors-factory-memphis",
+      "name": "The Tutors Factory",
+      "category": "tutors",
+      "categoryLabel": "Tutors",
+      "description": "In-home and online tutoring and test prep in the Memphis area, with a dedicated homeschool tutoring service.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
+      "delivery": "Both",
+      "website": "https://thetutorsfactory.com/homeschool-tutoring/",
+      "email": "",
+      "phone": "901-295-7404",
+      "agesGrades": "Pre-K through high school",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Paid.",
+      "sourceUrl": "https://thetutorsfactory.com/homeschool-tutoring/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site shows 2026.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "mid-south-multisensory-tutoring-memphis",
+      "name": "Mid South Multisensory Tutoring",
+      "category": "tutors",
+      "categoryLabel": "Tutors",
+      "description": "Private, structured, multisensory (Orton-Gillingham) tutoring from an Associate of the Orton-Gillingham Academy, for students with dyslexia or dysgraphia or anyone who needs a different way to learn.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://midsouthmultisensorytutoring.com/",
+      "email": "midsouthmultisensorytutoring@gmail.com",
+      "phone": "901.569.0345",
+      "agesGrades": "All levels",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Paid.",
+      "sourceUrl": "https://midsouthmultisensorytutoring.com/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site shows 2026. 'Mid South' only; exact city not stated.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "tiyak-field-school-at-pinecrest-camp-moscow",
+      "name": "Tiyak Field School at Pinecrest Camp",
       "category": "classes",
-      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
-      "website": "https://literature-writing-classes-onl.example.com",
-      "email": "hello@literature-writing-classes-onl.example.com",
-      "phone": "555-0130",
-      "image": "img/placeholder-1.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Grades 6–12",
-        "min": 6,
-        "max": 12
+      "categoryLabel": "Classes and enrichment",
+      "description": "Monthly outdoor field-school classes for homeschoolers at Pinecrest Camp and Retreat Center. Seasonal nature and environmental education reinforces core subjects, rain or shine.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Fayette",
+        "city": "Moscow",
+        "zip": "",
+        "address": ""
       },
-      "subjects": [
-        "Language Arts",
-        "Writing"
-      ],
-      "worldview": "Faith-based",
-      "cost": {
-        "type": "Paid",
-        "note": "Example per-class fee."
+      "serviceArea": {
+        "counties": [
+          "Fayette",
+          "Shelby"
+        ]
       },
-      "schedule": "Live weekly classes (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-08-19",
+      "latitude": 35.062,
+      "longitude": -89.40396,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "",
+      "email": "",
+      "phone": "",
+      "agesGrades": "Geared to grades 2-7; others welcome",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Tuition.",
+      "sourceUrl": "https://www.homeschoolroster.com/pinecrest-camp-field-school/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Mar 2025 article on the rename to Tiyak Field School. Official Pinecrest URL not captured.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-031",
-      "name": "Example Online Science Labs",
-      "exampleListing": true,
-      "category": "curriculum",
-      "description": "This is an example listing used to show how the site will look. A real curriculum and online program description would go here.",
-      "website": "https://online-science-labs.example.com",
-      "email": "hello@online-science-labs.example.com",
-      "phone": "555-0131",
-      "image": "img/placeholder-2.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Grades K–8",
-        "min": 0,
-        "max": 8
-      },
-      "subjects": [
-        "Science"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: some free lessons."
-      },
-      "schedule": "Self-paced (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-04-14",
-      "featured": false,
-      "source": "Made-up sample data for the prototype"
-    },
-    {
-      "id": "ex-032",
-      "name": "Example Foreign Language Live Classes",
-      "exampleListing": true,
+      "id": "the-shepherd-s-horn-bartlett",
+      "name": "The Shepherd's Horn",
       "category": "classes",
-      "description": "This is an example listing used to show how the site will look. A real classes and enrichment description would go here.",
-      "website": "https://foreign-language-live-classes.example.com",
-      "email": "hello@foreign-language-live-classes.example.com",
-      "phone": "555-0132",
-      "image": "img/placeholder-3.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Ages 6–14 (about Grades 1–8)",
-        "min": 1,
-        "max": 8
+      "categoryLabel": "Classes and enrichment",
+      "description": "Christian music education for Memphis-area homeschoolers since 2009, with choir, strings, and band classes on Fridays and concerts through the year.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Bartlett",
+        "zip": "38133",
+        "address": "Faith Baptist Church, 3755 N Germantown Pkwy, Bartlett, TN 38133"
       },
-      "subjects": [
-        "Spanish",
-        "French"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Paid",
-        "note": "Example per-term fee."
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
       },
-      "schedule": "Live classes, several times a week (example)",
-      "status": "Verified",
-      "lastVerified": "2026-09-17",
+      "latitude": 35.22855,
+      "longitude": -89.79242,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.theshepherdshorn.org/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "",
+      "sourceUrl": "https://www.theshepherdshorn.org/",
+      "verificationStatus": "Flagged: older source",
+      "verificationNote": "Most recent date on the site is ©2024. The only email listed is a named individual's, so it was omitted.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-033",
-      "name": "Example Homeschool Parent Support Network",
-      "exampleListing": true,
+      "id": "memphis-jewish-community-center-homeschool-theatre-memphis",
+      "name": "Memphis Jewish Community Center: Homeschool Theatre",
+      "category": "classes",
+      "categoryLabel": "Classes and enrichment",
+      "description": "Friday creative drama and acting classes for homeschoolers, offered by academic year or by semester.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.jccmemphis.org/theatre/homeschool/",
+      "email": "theatre@jccmemphis.org",
+      "phone": "(901) 761-0810",
+      "agesGrades": "Ages 5-11 (K-5) and 11-18",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Full year $200 ($174 members); fall semester $110 ($95 members) for ages 5-11.",
+      "sourceUrl": "https://www.jccmemphis.org/theatre/homeschool/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Dates run 10/9/26-4/30/27.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "memphis-botanic-garden-homeschool-days-memphis",
+      "name": "Memphis Botanic Garden: Homeschool Days",
+      "category": "classes",
+      "categoryLabel": "Classes and enrichment",
+      "description": "Hands-on garden and nature sessions for homeschoolers, held as spring and fall series.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.11026,
+      "longitude": -89.91352,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://membg.org/events/homeschool-days-fall-2026/",
+      "email": "info@membg.org",
+      "phone": "(901) 636-4100",
+      "agesGrades": "Ages 6+",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Per search summary: $60 members / $80 non-members per child per series.",
+      "sourceUrl": "https://membg.org/events/homeschool-days-fall-2026/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Fall 2026 series: Sept 14, Oct 12, Nov 9, Dec 14.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "jackson-madison-county-library-homeschool-programs-jackson",
+      "name": "Jackson-Madison County Library: Homeschool programs",
+      "category": "classes",
+      "categoryLabel": "Classes and enrichment",
+      "description": "Free library programs for homeschoolers, including a Homeschool Family Book Club and a Tween & Teen Brown Bag Homeschool Hangout.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "38301",
+        "address": "433 E. Lafayette St., Jackson, TN 38301"
+      },
+      "serviceArea": {
+        "counties": [
+          "Madison"
+        ]
+      },
+      "latitude": 35.61509,
+      "longitude": -88.81524,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://jmclibrary.org/calendar",
+      "email": "",
+      "phone": "731-425-8600",
+      "agesGrades": "Families; tweens and teens",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free; registration required for the book club.",
+      "sourceUrl": "https://events.yodel.today/jacksonhumboldtmilan-tn/event/Jackson-Madison-County-Library/Tween---Teen-Brown-Bag-Homeschool-Hangout/6aaabcc8176fb158c9209b51_20261021",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Hangout listed for Oct 21, 2026.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "collierville-burch-library-homeschool-hangout-collierville",
+      "name": "Collierville Burch Library: Homeschool Hangout",
+      "category": "classes",
+      "categoryLabel": "Classes and enrichment",
+      "description": "A free monthly open session for homeschoolers of all ages in the library's Storytelling Room, often with a guest. For example, the Nov 2026 session features Collierville Fire and Rescue.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Collierville",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.05336,
+      "longitude": -89.70115,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://collierville.libnet.info/event/16970264",
+      "email": "",
+      "phone": "901-457-2600",
+      "agesGrades": "All ages",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free; registration required.",
+      "sourceUrl": "https://collierville.libnet.info/event/16970264",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Nov 6, 2026 session posted.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "germantown-community-library-homeschool-hangout-germantown",
+      "name": "Germantown Community Library: Homeschool Hangout",
+      "category": "classes",
+      "categoryLabel": "Classes and enrichment",
+      "description": "A free, hands-on crafting and social program for homeschool students. No registration is needed, but large groups should call ahead.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Germantown",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.09651,
+      "longitude": -89.80269,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://germantown-tn.libcal.com/event/17596172",
+      "email": "",
+      "phone": "",
+      "agesGrades": "Homeschool students",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free.",
+      "sourceUrl": "https://germantown-tn.libcal.com/event/17596172",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Sessions scheduled Jan-May 2027.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "jackson-state-community-college-dual-enrollment-and-middle-college-jackson",
+      "name": "Jackson State Community College: Dual Enrollment & Middle College",
+      "category": "classes",
+      "categoryLabel": "Classes and enrichment",
+      "description": "Homeschooled high school students can take college courses through dual enrollment and Middle College if they meet the college's entry requirements.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Madison",
+          "Crockett",
+          "Gibson",
+          "Haywood",
+          "Chester",
+          "Henderson",
+          "Carroll"
+        ]
+      },
+      "latitude": 35.64499,
+      "longitude": -88.78296,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://www.jscc.edu/academics/academic-offerings/high-school-opportunities/",
+      "email": "dual@jscc.edu",
+      "phone": "",
+      "agesGrades": "High school juniors and seniors (dual enrollment)",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Per search summary: first five courses covered by the state dual enrollment grant.",
+      "sourceUrl": "https://www.jscc.edu/academics/academic-offerings/high-school-opportunities/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Page shows 2025 content.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "west-tennessee-home-education-association-wthea-jackson",
+      "name": "West Tennessee Home Education Association (WTHEA)",
       "category": "support-groups",
-      "description": "This is an example listing used to show how the site will look. A real support groups and parent meetup description would go here.",
-      "website": "https://homeschool-parent-support-netw.example.com",
-      "email": "hello@homeschool-parent-support-netw.example.com",
-      "phone": "555-0133",
-      "image": "img/placeholder-1.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "For parents (all ages)",
-        "min": null,
-        "max": null
+      "categoryLabel": "Support groups and parent meetups",
+      "description": "The THEA chapter for 18 West Tennessee counties (including Crockett and Madison), offering support, workshops, local-group referrals, and an athletics program.",
+      "reach": "Regional",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "38308",
+        "address": "P.O. Box 10013, Jackson, TN 38308"
       },
-      "subjects": [],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Free",
-        "note": ""
+      "serviceArea": {
+        "counties": [
+          "Benton",
+          "Carroll",
+          "Chester",
+          "Crockett",
+          "Decatur",
+          "Dyer",
+          "Gibson",
+          "Hardeman",
+          "Hardin",
+          "Haywood",
+          "Henderson",
+          "Henry",
+          "Lake",
+          "Lauderdale",
+          "Madison",
+          "McNairy",
+          "Obion",
+          "Weakley"
+        ]
       },
-      "schedule": "Monthly video calls (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-07-23",
+      "latitude": 35.61444,
+      "longitude": -88.81774,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "http://www.wthea.org/",
+      "email": "info@wthea.org",
+      "phone": "731-784-8117",
+      "agesGrades": "All",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Membership.",
+      "sourceUrl": "https://www.tnhea.org/resources",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Website did not load for us. Activity confirmed through 2025 athletics coverage. Mailing address only.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-034",
-      "name": "Example Learning Differences Coaching",
-      "exampleListing": true,
-      "category": "special-needs",
-      "description": "This is an example listing used to show how the site will look. A real special needs and learning-difference support description would go here.",
-      "website": "https://learning-differences-coaching.example.com",
-      "email": "hello@learning-differences-coaching.example.com",
-      "phone": "555-0134",
-      "image": "img/placeholder-2.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Grades K–12",
-        "min": 0,
-        "max": 12
+      "id": "memphis-area-home-education-association-mhea-cordova",
+      "name": "Memphis-area Home Education Association (MHEA)",
+      "category": "support-groups",
+      "categoryLabel": "Support groups and parent meetups",
+      "description": "A Christian, membership-based THEA chapter serving Memphis-area families since 1984, with advocacy, field trips, student groups, testing, graduations, and parent mentoring.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Cordova",
+        "zip": "38088",
+        "address": "P.O. Box 521, Cordova, TN 38088-0521"
       },
-      "subjects": [
-        "Learning Differences",
-        "Reading"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Varies",
-        "note": "Example: depends on the plan."
+      "serviceArea": {
+        "counties": [
+          "Shelby",
+          "Fayette",
+          "Tipton"
+        ]
       },
-      "schedule": "By appointment (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-03-03",
+      "latitude": 35.15565,
+      "longitude": -89.7762,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.mymhea.org/",
+      "email": "info@mymhea.org",
+      "phone": "(901) 753-4705",
+      "agesGrades": "All ages",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "$36.50 per family per year (includes THEA membership).",
+      "sourceUrl": "https://www.mymhea.org/why-mhea.html",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site ©2026; 25/26 memberships referenced.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-035",
-      "name": "Example Homeschool Legal Info Hub",
-      "exampleListing": true,
-      "category": "associations",
-      "description": "This is an example listing used to show how the site will look. A real state associations and legal help description would go here.",
-      "website": "https://homeschool-legal-info-hub.example.com",
-      "email": "hello@homeschool-legal-info-hub.example.com",
-      "phone": "555-0135",
-      "image": "img/placeholder-3.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "All ages",
-        "min": -1,
-        "max": 12
+      "id": "l-i-g-h-t-homeschool-group-dyersburg",
+      "name": "L.I.G.H.T. Homeschool Group",
+      "category": "support-groups",
+      "categoryLabel": "Support groups and parent meetups",
+      "description": "A Christian support group for Dyersburg and Dyer County ('Learning In Godly Homes Together') that runs a co-op, field trips, moms' nights out, and family potlucks.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Dyer",
+        "city": "Dyersburg",
+        "zip": "",
+        "address": ""
       },
-      "subjects": [
-        "Legal Help"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Free",
-        "note": ""
+      "serviceArea": {
+        "counties": [
+          "Dyer"
+        ]
       },
-      "schedule": "Articles available anytime (example)",
-      "status": "Verified",
-      "lastVerified": "2026-09-25",
+      "latitude": 36.03252,
+      "longitude": -89.38664,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://lighthomeschooltn.weebly.com/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K through high school (co-op)",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "",
+      "sourceUrl": "https://lighthomeschooltn.weebly.com/about.html",
+      "verificationStatus": "Needs verification",
+      "verificationNote": "Free Weebly site with no dates found. Confirm the group is active.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-036",
-      "name": "Example Online Standardized Testing",
-      "exampleListing": true,
-      "category": "testing",
-      "description": "This is an example listing used to show how the site will look. A real testing and evaluation service description would go here.",
-      "website": "https://online-standardized-testing.example.com",
-      "email": "hello@online-standardized-testing.example.com",
-      "phone": "555-0136",
-      "image": "img/placeholder-1.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Grades 3–12",
-        "min": 3,
-        "max": 12
+      "id": "eagle-ii-homeschool-support-group-savannah",
+      "name": "Eagle II Homeschool Support Group",
+      "category": "support-groups",
+      "categoryLabel": "Support groups and parent meetups",
+      "description": "A faith-based support group serving Hardin, McNairy, Wayne, and nearby counties from the Savannah area, with co-op classes, field trips, group activities, and play dates.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Hardin",
+        "city": "Savannah",
+        "zip": "",
+        "address": ""
       },
-      "subjects": [
-        "Assessment"
-      ],
-      "worldview": "Secular",
-      "cost": {
-        "type": "Paid",
-        "note": "Example per-test fee."
+      "serviceArea": {
+        "counties": [
+          "Hardin",
+          "McNairy"
+        ]
       },
-      "schedule": "Test windows each season (example)",
-      "status": "Claimed",
-      "lastVerified": "2026-05-28",
+      "latitude": 35.2248,
+      "longitude": -88.2492,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "http://www.eagle2homeschool.com/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "Preschool through 12th grade",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Membership; contact via site.",
+      "sourceUrl": "http://www.eagle2homeschool.com/",
+      "verificationStatus": "Needs verification",
+      "verificationNote": "Site live but undated. The only contact listed is a leader's personal email, so it was omitted.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     },
     {
-      "id": "ex-037",
-      "name": "Example Virtual Field Trip Library",
-      "exampleListing": true,
+      "id": "homeschool-roster-tn",
+      "name": "Homeschool Roster",
+      "category": "support-groups",
+      "categoryLabel": "Support groups and parent meetups",
+      "description": "A long-running West Tennessee homeschool news and events site with field trips, workshops, proms, graduations, a used-curriculum shop, and local directories.",
+      "reach": "Regional",
+      "location": {
+        "state": "TN",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Madison",
+          "Crockett",
+          "Gibson",
+          "Haywood",
+          "Henderson",
+          "Chester",
+          "Carroll",
+          "Shelby"
+        ]
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Both",
+      "website": "https://www.homeschoolroster.com/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "All",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Free to read; some events paid.",
+      "sourceUrl": "https://www.homeschoolroster.com/about-homeschool-roster/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Regional, online-first. Fall 2026 field trips posted. Base city not stated, so no pin; show it on county/city pages as 'Also available to you.'",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "discovery-park-of-america-homeschool-days-union-city",
+      "name": "Discovery Park of America: Homeschool Days",
       "category": "field-trips",
-      "description": "This is an example listing used to show how the site will look. A real field trips and learning destination description would go here.",
-      "website": "https://virtual-field-trip-library.example.com",
-      "email": "hello@virtual-field-trip-library.example.com",
-      "phone": "555-0137",
-      "image": "img/placeholder-2.svg",
-      "reach": "Nationwide",
-      "location": null,
-      "serviceArea": null,
-      "delivery": "Online",
-      "agesGrades": {
-        "label": "Grades K–8",
-        "min": 0,
-        "max": 8
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "Monthly Homeschool Days at a large museum and heritage park, with morning and afternoon sessions grouped by age on themes like early settlers and bridges.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Obion",
+        "city": "Union City",
+        "zip": "",
+        "address": ""
       },
-      "subjects": [
-        "History",
-        "Science"
-      ],
-      "worldview": "Inclusive",
-      "cost": {
-        "type": "Free",
-        "note": ""
+      "serviceArea": {
+        "counties": [
+          "Obion",
+          "Weakley",
+          "Lake",
+          "Dyer",
+          "Gibson"
+        ]
       },
-      "schedule": "On demand (example)",
-      "status": "Unclaimed",
-      "lastVerified": "2026-01-19",
+      "latitude": 36.43882,
+      "longitude": -89.06983,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://discoveryparkofamerica.com/homeschooldays/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "Ages 6-8, 9-11, 12-17",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Paid registration (see site).",
+      "sourceUrl": "https://discoveryparkofamerica.com/homeschooldays/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "2026 dates (Oct 13, Nov 10, Dec 8) per search. Site blocks automated fetches; check it in a browser.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
       "featured": false,
-      "source": "Made-up sample data for the prototype"
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "memphis-zoo-homeschool-programs-memphis",
+      "name": "Memphis Zoo: Homeschool Programs",
+      "category": "field-trips",
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "Themed homeschool classes at the zoo on select Wednesday mornings, grouped by grade band, with limited space and pre-registration.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.15037,
+      "longitude": -89.99294,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://www.memphiszoo.org/",
+      "email": "",
+      "phone": "901-333-6500",
+      "agesGrades": "Varies by session (e.g., grades 3-5, 9-12)",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Paid; pre-registration required.",
+      "sourceUrl": "https://memphis.kidsoutandabout.com/content/homeschool-programs-memphis-zoo",
+      "verificationStatus": "Likely active",
+      "verificationNote": "2026 sessions per third-party listings. Official zoo homeschool page URL not confirmed.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "museum-of-science-and-history-mosh-pink-palace-memphis",
+      "name": "Museum of Science & History (MoSH): Pink Palace",
+      "category": "field-trips",
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "The Pink Palace museum offers self-guided and facilitated K-12 field trips, labs, planetarium, and giant-screen programs, plus occasional homeschool tour-and-activity days.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "38111",
+        "address": "3050 Central Ave., Memphis, TN 38111"
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.12361,
+      "longitude": -89.95988,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://moshmemphis.com/teacher-resources/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Varies; some homeschool days free.",
+      "sourceUrl": "https://moshmemphis.com/teacher-resources/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "2026 labs PDF and a Sept 26 homeschool day found.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "shiloh-national-military-park-shiloh",
+      "name": "Shiloh National Military Park",
+      "category": "field-trips",
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "A Civil War battlefield with free Junior Ranger activities and curriculum-based ranger programs. Request programs from the Education Coordinator about six weeks ahead.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Hardin",
+        "city": "Shiloh",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Hardin",
+          "McNairy",
+          "Chester",
+          "Decatur"
+        ]
+      },
+      "latitude": 35.11536,
+      "longitude": -88.36171,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.nps.gov/shil/learn/education/classrooms/planafieldtrip.htm",
+      "email": "",
+      "phone": "731-689-5696",
+      "agesGrades": "Junior Ranger ages 7-15 recommended; all ages welcome",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free.",
+      "sourceUrl": "https://www.nps.gov/shil/learn/education/classrooms/planafieldtrip.htm",
+      "verificationStatus": "Likely active",
+      "verificationNote": "NPS page current (2026).",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "pinson-mounds-state-archaeological-park-pinson",
+      "name": "Pinson Mounds State Archaeological Park",
+      "category": "field-trips",
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "A state archaeological park with free ranger-led museum tours, archaeology activities, and hikes for school and homeschool groups, plus an annual Archeofest.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Pinson",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Madison",
+          "Chester",
+          "Crockett"
+        ]
+      },
+      "latitude": 35.49895,
+      "longitude": -88.69219,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://tnstateparks.com/parks/pinson-mounds",
+      "email": "",
+      "phone": "731-988-5614",
+      "agesGrades": "All",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free ranger programs.",
+      "sourceUrl": "https://tnstateparks.com/parks/pinson-mounds",
+      "verificationStatus": "Likely active",
+      "verificationNote": "State park page current.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "cypress-grove-nature-park-jackson",
+      "name": "Cypress Grove Nature Park",
+      "category": "field-trips",
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "A free 165-acre city park with a cypress-swamp boardwalk, observation tower, and raptor center, offering group tours and astronomy, geology, wildlife, and forestry workshops.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "38301",
+        "address": "866 Airways Blvd, Jackson, TN 38301"
+      },
+      "serviceArea": {
+        "counties": [
+          "Madison"
+        ]
+      },
+      "latitude": 35.61851,
+      "longitude": -88.87271,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.tennesseeparent.org/jackson-tn-children-nature-programs/",
+      "email": "",
+      "phone": "(731) 425-8364",
+      "agesGrades": "All",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free admission.",
+      "sourceUrl": "https://www.tennesseeparent.org/jackson-tn-children-nature-programs/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Official City of Jackson park page URL changed (404). Local co-ops use the park in 2026.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "c-h-nash-museum-at-chucalissa-memphis",
+      "name": "C.H. Nash Museum at Chucalissa",
+      "category": "field-trips",
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "A University of Memphis museum at a Native American mound site with Saturday Family Days and bookable group programs such as archaeology mystery boxes.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.06237,
+      "longitude": -90.12666,
+      "geocodePrecision": "place",
+      "delivery": "In person",
+      "website": "https://www.memphis.edu/chucalissa/",
+      "email": "",
+      "phone": "901-678-5381",
+      "agesGrades": "All",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Admission fees (see Plan Your Visit).",
+      "sourceUrl": "https://www.memphis.edu/chucalissa/events/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Events page current; no homeschool-specific day listed.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "reelfoot-lake-state-park-tiptonville",
+      "name": "Reelfoot Lake State Park",
+      "category": "field-trips",
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "A state park on Reelfoot Lake offering educator field trips on lake ecosystems, wildlife adaptations, and park history. Request them about six weeks ahead.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Lake",
+        "city": "Tiptonville",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Lake",
+          "Obion",
+          "Dyer"
+        ]
+      },
+      "latitude": 36.3777,
+      "longitude": -89.48533,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://tnstateparks.com/parks/reelfoot-lake/for-educators",
+      "email": "",
+      "phone": "",
+      "agesGrades": "All",
+      "religiousAffiliation": "Secular",
+      "costNotes": "",
+      "sourceUrl": "https://tnstateparks.com/parks/reelfoot-lake/for-educators",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Page live with 2026-27 content. Park spans Lake and Obion counties; pin placed at Tiptonville.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "wthea-athletics-warriors-jackson",
+      "name": "WTHEA Athletics (Warriors)",
+      "category": "sports",
+      "categoryLabel": "Sports and extracurriculars",
+      "description": "A Christ-centered homeschool athletics program with competitive basketball and volleyball teams (the Warriors) for WTHEA member families.",
+      "reach": "Regional",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Madison",
+          "Crockett",
+          "Gibson",
+          "Haywood",
+          "Henderson",
+          "Chester"
+        ]
+      },
+      "latitude": 35.61444,
+      "longitude": -88.81774,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "",
+      "email": "sportsinfo@wthea.org",
+      "phone": "",
+      "agesGrades": "Teams for grades 7-12 (tryouts)",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Participant-funded; WTHEA membership.",
+      "sourceUrl": "https://stayhappening.com/e/7th-12th-grade-basketball-tryouts-E2ISXJ8MUDK",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Sept 2025 tryouts; Feb 2025 WBBJ coverage. Facebook: facebook.com/WTHEASports.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "mhea-athletics-eagles-cordova",
+      "name": "MHEA Athletics (Eagles)",
+      "category": "sports",
+      "categoryLabel": "Sports and extracurriculars",
+      "description": "A Christ-honoring school-level sports program for MHEA members: basketball (multiple national titles), baseball, soccer, softball, volleyball, swim and dive, water polo, track, cross country, golf, tennis, and bowling.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Cordova",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby",
+          "Fayette",
+          "Tipton"
+        ]
+      },
+      "latitude": 35.15565,
+      "longitude": -89.7762,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.mymhea.org/sports.html",
+      "email": "athletics@mymhea.org",
+      "phone": "(901) 753-4705",
+      "agesGrades": "Elementary through high school, varies by sport",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Participant-funded; requires MHEA membership ($36.50/family).",
+      "sourceUrl": "https://www.mymhea.org/sports.html",
+      "verificationStatus": "Likely active",
+      "verificationNote": "25/26 season referenced; basketball 2026-27 registration closed.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "mhea-speech-and-debate-and-honor-society-cordova",
+      "name": "MHEA Speech & Debate and Honor Society",
+      "category": "sports",
+      "categoryLabel": "Sports and extracurriculars",
+      "description": "MHEA student groups, including SWAT Speech & Debate and the ETA Honor Society, plus yearbook and HOSA, for member families.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Cordova",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.15565,
+      "longitude": -89.7762,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.mymhea.org/",
+      "email": "info@mymhea.org",
+      "phone": "",
+      "agesGrades": "Speech & Debate ages 7-18; Honor Society grades 7-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "MHEA membership plus group fees.",
+      "sourceUrl": "https://www.mymhea.org/why-mhea.html",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Listed on current MHEA site.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "mhea-achievement-testing-cordova",
+      "name": "MHEA Achievement Testing",
+      "category": "testing",
+      "categoryLabel": "Testing and evaluation services",
+      "description": "Achievement testing that MHEA arranges as a member service for Memphis-area homeschoolers.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Cordova",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.15565,
+      "longitude": -89.7762,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.mymhea.org/",
+      "email": "info@mymhea.org",
+      "phone": "(901) 753-4705",
+      "agesGrades": "",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Contact MHEA.",
+      "sourceUrl": "https://www.mymhea.org/why-mhea.html",
+      "verificationStatus": "Needs verification",
+      "verificationNote": "Service named on the site, but no 2026 dates or test names found.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "wylde-psychological-jackson",
+      "name": "Wylde Psychological",
+      "category": "testing",
+      "categoryLabel": "Testing and evaluation services",
+      "description": "A licensed clinical psychologist providing child and teen evaluations for autism, ADHD, mood, and learning disorders, aiming to schedule within two weeks.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Madison",
+          "Shelby"
+        ]
+      },
+      "latitude": 35.61444,
+      "longitude": -88.81774,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.wyldepsychological.com/",
+      "email": "info@wyldepsychological.com",
+      "phone": "731-991-4523",
+      "agesGrades": "Children and teens",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Paid.",
+      "sourceUrl": "https://www.wyldepsychological.com/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site shows 2026. Serves Jackson and Memphis; pinned at Jackson.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "dyslexia-foundation-of-memphis-saturday-school-memphis",
+      "name": "Dyslexia Foundation of Memphis: Saturday School",
+      "category": "special-needs",
+      "categoryLabel": "Special needs and learning-difference support",
+      "description": "Since 1970, Saturday School sessions of one-on-one phonics tutoring for dyslexic children, plus training for parents to tutor.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.memphisdyslexia.org/",
+      "email": "",
+      "phone": "901-671-7399",
+      "agesGrades": "Children",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "See applications page.",
+      "sourceUrl": "https://www.memphisdyslexia.org/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Fall 2026 and spring/summer 2027 sessions posted.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "washington-learning-solutions-memphis",
+      "name": "Washington Learning Solutions",
+      "category": "special-needs",
+      "categoryLabel": "Special needs and learning-difference support",
+      "description": "Individualized academic support and dyslexia therapy using research-based, Orton-Gillingham-based programs such as Take Flight.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.wlsmemphis.com/services",
+      "email": "askus@wlsmemphis.com",
+      "phone": "(901) 206-5034",
+      "agesGrades": "",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Paid.",
+      "sourceUrl": "https://www.wlsmemphis.com/services",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site shows 2026.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "tennessee-disability-pathfinder-tn",
+      "name": "Tennessee Disability Pathfinder",
+      "category": "special-needs",
+      "categoryLabel": "Special needs and learning-difference support",
+      "description": "A statewide directory and helpline connecting Tennessee families to disability services, support groups, advocacy, and respite.",
+      "reach": "Statewide",
+      "location": {
+        "state": "TN",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Online",
+      "website": "https://www.tnpathfinder.org/",
+      "email": "",
+      "phone": "1-800-640-4636",
+      "agesGrades": "All",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free.",
+      "sourceUrl": "https://www.tnpathfinder.org/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Statewide; no pin.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "tennessee-individualized-education-account-iea-program-tn",
+      "name": "Tennessee Individualized Education Account (IEA) Program",
+      "category": "special-needs",
+      "categoryLabel": "Special needs and learning-difference support",
+      "description": "A state program that can fund approved curriculum, tutoring, therapies, and technology for eligible K-12 students with qualifying disabilities who leave public school, including homeschoolers.",
+      "reach": "Statewide",
+      "location": {
+        "state": "TN",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Online",
+      "website": "https://www.tn.gov/education/iea/iea-parents-students.html",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Secular",
+      "costNotes": "State-funded account for eligible students.",
+      "sourceUrl": "https://www.tn.gov/education/iea/iea-parents-students.html",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Official TDOE page. Eligibility rules change; link out and don't summarize the law.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "tennessee-electronic-library-tel-tn",
+      "name": "Tennessee Electronic Library (TEL)",
+      "category": "curriculum",
+      "categoryLabel": "Curriculum and online programs",
+      "description": "Free statewide online databases, e-books, and K-12 learning resources from the Tennessee State Library, available to homeschool students.",
+      "reach": "Statewide",
+      "location": {
+        "state": "TN",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Online",
+      "website": "https://www.tel4u.org/",
+      "email": "tel.tsla@tnsos.gov",
+      "phone": "",
+      "agesGrades": "K-12 and adults",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free.",
+      "sourceUrl": "https://www.tel4u.org/faq.php",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Statewide; no pin.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "memphis-public-libraries-school-connection-memphis",
+      "name": "Memphis Public Libraries: School Connection",
+      "category": "curriculum",
+      "categoryLabel": "Curriculum and online programs",
+      "description": "Library services for educators, including homeschool teachers: an Educator Library Card plus parent/teacher collections with homeschool manuals and curriculum guides.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
+      "delivery": "Both",
+      "website": "https://www.memphislibrary.org/learn/schools/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free.",
+      "sourceUrl": "https://www.memphislibrary.org/learn/schools/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Page current.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "tennessee-home-education-association-thea-tn",
+      "name": "Tennessee Home Education Association (THEA)",
+      "category": "associations",
+      "categoryLabel": "State associations and legal help",
+      "description": "A statewide, Christian-led homeschool association since 1984 that monitors legislation, hosts Rally Day at the Capitol, and coordinates regional chapters (MHEA and WTHEA in West TN).",
+      "reach": "Statewide",
+      "location": {
+        "state": "TN",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Online",
+      "website": "https://www.tnhea.org/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "All",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Membership (included with chapter membership).",
+      "sourceUrl": "https://www.tnhea.org/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Rally Day March 31, 2027 posted.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "tennessee-department-of-education-home-school-tn",
+      "name": "Tennessee Department of Education: Home School",
+      "category": "associations",
+      "categoryLabel": "State associations and legal help",
+      "description": "The official state page on Tennessee's homeschool options (independent, church-related, and distance-learning schools), with forms and testing requirements.",
+      "reach": "Statewide",
+      "location": {
+        "state": "TN",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Online",
+      "website": "https://www.tn.gov/education/families/school-options/home-schooling-in-tn.html",
+      "email": "Home.School@tn.gov",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free.",
+      "sourceUrl": "https://www.tn.gov/education/families/school-options/home-schooling-in-tn.html",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Official source; link to it instead of restating the law.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "gateway-homeschool-gateway-christian-schools-memphis",
+      "name": "Gateway Homeschool (Gateway Christian Schools)",
+      "category": "umbrella-schools",
+      "categoryLabel": "Umbrella schools",
+      "description": "A Christian church-related umbrella school. Parents choose curriculum and teach, counselors review plans, and Gateway keeps records, handles transfers, and issues diplomas.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Memphis",
+        "zip": "38168",
+        "address": "P.O. Box 280117, Memphis, TN 38168-0117"
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby"
+        ]
+      },
+      "latitude": 35.14603,
+      "longitude": -90.05178,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.gatewayhomeschool.org/",
+      "email": "info@gatewaychristianschools.com",
+      "phone": "901-454-1606",
+      "agesGrades": "Pre-K through 12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "$120 for one student, $20 for each additional student.",
+      "sourceUrl": "https://www.gatewayhomeschool.org/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Umbrella (church-related school). Listed on MHEA's 2026 cover-schools page. Mailing address only; campus at 4070 Macon Rd per search.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "faith-heritage-christian-academy-off-campus-program-millington",
+      "name": "Faith Heritage Christian Academy: Off-Campus Program",
+      "category": "umbrella-schools",
+      "categoryLabel": "Umbrella schools",
+      "description": "A church-related umbrella school in Millington whose off-campus program covers homeschool families, with annual parent orientation and achievement testing.",
+      "reach": "Local",
+      "location": {
+        "state": "TN",
+        "county": "Shelby",
+        "city": "Millington",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "Shelby",
+          "Tipton"
+        ]
+      },
+      "latitude": 35.34147,
+      "longitude": -89.89731,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "http://www.faithheritage.com/offcampus.html",
+      "email": "offcampus@faithheritage.com",
+      "phone": "901-381-5218",
+      "agesGrades": "",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "",
+      "sourceUrl": "https://www.mymhea.org/cover-schools.html",
+      "verificationStatus": "Needs verification",
+      "verificationNote": "Listed on MHEA's 2026 cover-schools page, but the school's own site did not load for us. Contact details come from a search summary.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "homelife-academy-jackson",
+      "name": "HomeLife Academy",
+      "category": "umbrella-schools",
+      "categoryLabel": "Umbrella schools",
+      "description": "A Christian, Category IV church-related umbrella school with administrative offices in Jackson. It keeps records, issues transcripts and diplomas, and offers counseling. It reports enrollment to each county and does not require testing.",
+      "reach": "Statewide",
+      "location": {
+        "state": "TN",
+        "county": "Madison",
+        "city": "Jackson",
+        "zip": "38308",
+        "address": "P.O. Box 11688, Jackson, TN 38308"
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": 35.61444,
+      "longitude": -88.81774,
+      "geocodePrecision": "city",
+      "delivery": "Online",
+      "website": "https://homelifeacademy.com/hla-states-pages/homeschooling-in-tennessee/",
+      "email": "",
+      "phone": "(888) 560-0774",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "$75 family fee ($60 for Tennessee families who register by Aug 1), plus $25 per K-7 student or $55 per grade 8-12 student (student fees capped at $110). One-time application fee for new families.",
+      "sourceUrl": "https://homelifeacademy.com/hla-states-pages/homeschooling-in-tennessee/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Page shows a 2026/2027 Tennessee update. Mailing address only. Serves families statewide (and in other states); pinned at Jackson. Fees from the registration-fees page. The site blocks automated fetches, so it was read through a fetch tool.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "titus-2-academy-tn",
+      "name": "Titus 2 Academy",
+      "category": "umbrella-schools",
+      "categoryLabel": "Umbrella schools",
+      "description": "A Tennessee Category IV church-related umbrella school that provides legal covering, attendance reporting to the board of education, online record keeping, and academic counseling for homeschool families statewide.",
+      "reach": "Statewide",
+      "location": {
+        "state": "TN",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Online",
+      "website": "https://titus2academy.com/",
+      "email": "info@titus2academy.com",
+      "phone": "(931) 442-5026",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "$125 per family per year (renew by Aug 1).",
+      "sourceUrl": "https://titus2academy.com/register/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site shows 2026. Main office is in Columbia (Middle TN), so it has no West TN pin. Listed on MHEA's 2026 cover-schools page as a local option.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "mississippi-homeschool-life-ms",
+      "name": "Mississippi Homeschool Life",
+      "category": "support-groups",
+      "categoryLabel": "Support groups and parent meetups",
+      "description": "A Christian homeschool support group (formerly Olive Branch Christian Home Educators) with 150+ families across DeSoto and nearby counties, offering clubs, field trips, family events, a teen banquet, and K and high school graduations. It is not a co-op and does not offer classes.",
+      "reach": "Regional",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto",
+          "Shelby"
+        ]
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "In person",
+      "website": "https://homeschoollife.org/",
+      "email": "info@homeschoollife.org",
+      "phone": "",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "$35 per family per year, plus one act of service or a $50 fee. New members only mid-July to September and January to March.",
+      "sourceUrl": "https://obche47.wildapricot.org/page-18095",
+      "verificationStatus": "Likely active",
+      "verificationNote": "FAQ cites March 2026 membership numbers. Email from MHEA's support-group list. Members also come from Marshall and Tate counties (MS) and Shelby County (TN).",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "beacon-hill-homeschool-community-olive-branch",
+      "name": "Beacon Hill Homeschool Community",
+      "category": "co-ops",
+      "categoryLabel": "Co-ops",
+      "description": "A homeschool co-op meeting Mondays with hands-on classes (messy art, experiments, presentations), full-curriculum K-8 science, rotating electives, monthly field trips, and regular community service.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Olive Branch",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.96176,
+      "longitude": -89.82953,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.beaconhillhomeschool.com/",
+      "email": "beaconhillhomeschool@gmail.com",
+      "phone": "",
+      "agesGrades": "Ages 0-18 electives; K-8 science",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "$50 per student per semester (up to 4 students; $25 for more), plus about $35/month per family for building rental.",
+      "sourceUrl": "https://www.beaconhillhomeschool.com/p/class-schedule.html",
+      "verificationStatus": "Likely active",
+      "verificationNote": "2026-2027 course offerings posted. Faith stance not stated on the pages checked.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "heights-tutorial-olive-branch",
+      "name": "Heights Tutorial",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A ministry of Longview Heights Baptist Church offering a la carte middle and high school classes with a biblical worldview. Classes meet once a week (Tuesdays or Thursdays) for 32 weeks, with the rest of the work done at home through Google Classroom.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Olive Branch",
+        "zip": "38654",
+        "address": "4501 Goodman Rd, Olive Branch, MS 38654"
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto",
+          "Shelby"
+        ]
+      },
+      "latitude": 34.96232,
+      "longitude": -89.91813,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.theheightstutorial.com/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "Grades 6-12",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Per-class tuition; see site.",
+      "sourceUrl": "https://www.theheightstutorial.com/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "2026-27 course lists posted; registration currently closed. Address is the church's (from search), assumed to be where classes meet.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "cross-creek-christian-academy-homeschool-extension-program-olive-branch",
+      "name": "Cross Creek Christian Academy: Homeschool Extension Program",
+      "category": "hybrid",
+      "categoryLabel": "Hybrid and university-model schools",
+      "description": "A homeschool extension program run by Cross Creek Christian Academy, a K3-12 Christian school (Abeka curriculum) and ministry of Cross Creek Church.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Olive Branch",
+        "zip": "38654",
+        "address": "4105 Goodman Road, Olive Branch, MS 38654"
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.96232,
+      "longitude": -89.91586,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://myccca.com/homeschool/",
+      "email": "",
+      "phone": "(662) 895-0525",
+      "agesGrades": "",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "",
+      "sourceUrl": "https://homeschoollife.org/local-classes-and-schools",
+      "verificationStatus": "Needs verification",
+      "verificationNote": "Listed by Mississippi Homeschool Life. The school's homeschool page would not load for us, so program details are unconfirmed.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "classical-conversations-olive-branch-olive-branch",
+      "name": "Classical Conversations: Olive Branch",
+      "category": "co-ops",
+      "categoryLabel": "Co-ops",
+      "description": "A local Classical Conversations community offering Christ-centered classical homeschool programs that meet weekly.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Olive Branch",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.96176,
+      "longitude": -89.82953,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://classicalconversations.com/locations/homeschool-mississippi/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K-12 (Foundations, Essentials, Challenge)",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition by program; see CC.",
+      "sourceUrl": "https://www.homeschoolroster.com/learn-about-classical-conversations/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "April 2, 2026 open house listed. Only contacts are individual directors, so none listed.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "classical-conversations-hernando-nesbit-nesbit",
+      "name": "Classical Conversations: Hernando/Nesbit",
+      "category": "co-ops",
+      "categoryLabel": "Co-ops",
+      "description": "A local Classical Conversations community for the Hernando and Nesbit area, offering Christ-centered classical homeschool programs that meet weekly.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Nesbit",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.88176,
+      "longitude": -90.0087,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://classicalconversations.com/locations/homeschool-mississippi/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "K-12 (Foundations, Essentials, Challenge)",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "Tuition by program; see CC.",
+      "sourceUrl": "https://www.homeschoolroster.com/learn-about-classical-conversations/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "April 7, 2026 open house in Nesbit listed; CC's Mississippi page lists Hernando/Nesbit. Only contacts are individual directors, so none listed.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "tuesday-school-southaven-southaven",
+      "name": "Tuesday School Southaven",
+      "category": "co-ops",
+      "categoryLabel": "Co-ops",
+      "description": "A Southaven homeschool group offering core curriculum classes on Tuesdays.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Southaven",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.98738,
+      "longitude": -90.00349,
+      "geocodePrecision": "city",
+      "delivery": "In person",
+      "website": "https://www.facebook.com/TuesdaySchoolSouthaven/",
+      "email": "tuesdayschoolsouthaven@gmail.com",
+      "phone": "",
+      "agesGrades": "",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "",
+      "sourceUrl": "https://homeschoollife.org/local-classes-and-schools",
+      "verificationStatus": "Needs verification",
+      "verificationNote": "Listed by Mississippi Homeschool Life; Facebook page only. Email from an HSLDA group-listing search summary. No dated info confirmed.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "desoto-diamondbacks-ms",
+      "name": "DeSoto Diamondbacks",
+      "category": "sports",
+      "categoryLabel": "Sports and extracurriculars",
+      "description": "DeSoto County's homeschool cross country and track team.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "In person",
+      "website": "https://www.desotodiamondbacks.com/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "",
+      "sourceUrl": "https://www.desotodiamondbacks.com/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live; no dated content. Listed by Mississippi Homeschool Life. Only contact listed is the coach's personal phone, so it was omitted.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "first-regional-library-desoto-county-branches-hernando",
+      "name": "First Regional Library: DeSoto County branches",
+      "category": "curriculum",
+      "categoryLabel": "Curriculum and online programs",
+      "description": "The regional public library system, with branches in Hernando, Horn Lake, Olive Branch, Southaven, and Walls. It runs free children's and teen programs (storytimes, LEGO club, art, live animals) and a summer reading program.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Hernando",
+        "zip": "38632",
+        "address": "370 West Commerce Street, Hernando, MS 38632"
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.82359,
+      "longitude": -89.9959,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://firstregional.org/",
+      "email": "",
+      "phone": "(662) 429-4439",
+      "agesGrades": "All",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free.",
+      "sourceUrl": "https://firstregional.org/srp/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "2026 summer reading program posted. No homeschool-specific program found. Pinned at the Hernando headquarters.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "desoto-county-museum-hernando",
+      "name": "DeSoto County Museum",
+      "category": "field-trips",
+      "categoryLabel": "Field trips and learning destinations",
+      "description": "A county history museum with free daily self-guided tours (Tuesday-Saturday) and private group tours by arrangement, including the Crumpler-Ferguson log cabin.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Hernando",
+        "zip": "38632",
+        "address": "111 East Commerce Street, Hernando, MS 38632"
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.82355,
+      "longitude": -89.98772,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.desotomuseum.org/",
+      "email": "desotocountymuseum@gmail.com",
+      "phone": "662-429-8852",
+      "agesGrades": "All",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free admission.",
+      "sourceUrl": "https://www.desotomuseum.org/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site shows 2026. Street address from search results.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "northwest-mississippi-community-college-desoto-center-dual-enrollment-southaven",
+      "name": "Northwest Mississippi Community College: DeSoto Center (Dual Enrollment)",
+      "category": "classes",
+      "categoryLabel": "Classes and enrichment",
+      "description": "Dual enrollment college courses for eligible high school students, including homeschoolers, at NWCC's DeSoto Center campus in Southaven.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Southaven",
+        "zip": "38671",
+        "address": "1210 Church Road, Southaven, MS 38671"
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.93361,
+      "longitude": -90.01029,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://www.northwestms.edu/admissions/dual-enrollment-admissions",
+      "email": "dual@northwestms.edu",
+      "phone": "(662) 342-1570",
+      "agesGrades": "High school",
+      "religiousAffiliation": "Secular",
+      "costNotes": "College tuition per credit hour; see NWCC.",
+      "sourceUrl": "https://www.northwestms.edu/admissions/dual-enrollment-admissions",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Pages current (2026). Homeschool rules (parent transcript and notarized affidavit) come from a search summary of the NWCC catalog; confirm before showing them.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "mathnasium-of-olive-branch-olive-branch",
+      "name": "Mathnasium of Olive Branch",
+      "category": "tutors",
+      "categoryLabel": "Tutors",
+      "description": "A K-12 math learning center with assessment-based learning plans, homework help, and test prep. It advertises support for homeschooling families.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Olive Branch",
+        "zip": "38654",
+        "address": "5155 Goodman Road, Suite 100, Olive Branch, MS 38654"
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.96237,
+      "longitude": -89.89823,
+      "geocodePrecision": "address",
+      "delivery": "Both",
+      "website": "https://www.mathnasium.com/math-centers/olivebranch",
+      "email": "",
+      "phone": "(662) 782-5196",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Paid; free assessment offered.",
+      "sourceUrl": "https://www.mathnasium.com/math-centers/olivebranch",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Center page current (2026).",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "club-z-tutoring-of-desoto-county-ms",
+      "name": "Club Z! Tutoring of DeSoto County",
+      "category": "tutors",
+      "categoryLabel": "Tutors",
+      "description": "In-home and online tutoring franchise for DeSoto County covering math, reading, science, study skills, ACT/SAT test prep, and ADHD and learning-disability support.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Both",
+      "website": "https://clubztutoring.com/desoto/",
+      "email": "",
+      "phone": "662-342-1161",
+      "agesGrades": "K-12",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Paid.",
+      "sourceUrl": "https://clubztutoring.com/desoto/",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live; no dated content. No office address listed.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "master-minds-dyslexia-center-southaven",
+      "name": "Master Minds Dyslexia Center",
+      "category": "special-needs",
+      "categoryLabel": "Special needs and learning-difference support",
+      "description": "A team that evaluates and treats dyslexia and other language disorders, with dyslexia therapy, speech and occupational therapy, and reading, spelling, writing, and math interventions using multisensory methods.",
+      "reach": "Local",
+      "location": {
+        "state": "MS",
+        "county": "DeSoto",
+        "city": "Southaven",
+        "zip": "38671",
+        "address": "1630 Goodman Rd E, Suite 1, Southaven, MS 38671"
+      },
+      "serviceArea": {
+        "counties": [
+          "DeSoto"
+        ]
+      },
+      "latitude": 34.96256,
+      "longitude": -89.96063,
+      "geocodePrecision": "address",
+      "delivery": "In person",
+      "website": "https://mastermindsdyslexiacenter.com/",
+      "email": "info@mastermindsdyslexiacenter.com",
+      "phone": "",
+      "agesGrades": "Children and adults",
+      "religiousAffiliation": "Unknown",
+      "costNotes": "Paid.",
+      "sourceUrl": "https://mastermindsdyslexiacenter.com/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Site shows 2026. Street address from search results (state business registry and directories).",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "mississippi-department-of-education-home-school-ms",
+      "name": "Mississippi Department of Education: Home School",
+      "category": "associations",
+      "categoryLabel": "State associations and legal help",
+      "description": "The official state page for homeschooling in Mississippi. Families file a Certificate of Enrollment with their local School Attendance Officer by August 15 each year.",
+      "reach": "Statewide",
+      "location": {
+        "state": "MS",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Online",
+      "website": "https://mdek12.org/ocsa/home-school/",
+      "email": "homeschool@mdek12.org",
+      "phone": "",
+      "agesGrades": "Compulsory school age",
+      "religiousAffiliation": "Secular",
+      "costNotes": "Free.",
+      "sourceUrl": "https://mdek12.org/ocsa/home-school/",
+      "verificationStatus": "Likely active",
+      "verificationNote": "Official source; link to it instead of restating the law. Mississippi does not require an umbrella school.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
+    },
+    {
+      "id": "mississippi-home-educators-association-mhea-ms",
+      "name": "Mississippi Home Educators Association (MHEA)",
+      "category": "associations",
+      "categoryLabel": "State associations and legal help",
+      "description": "A statewide Christian homeschool association that monitors legislation, hosts Capitol Day and Camp Dixon, and keeps a county-by-county list of affiliated support groups. Not the same group as the Memphis Home Education Association.",
+      "reach": "Statewide",
+      "location": {
+        "state": "MS",
+        "county": "",
+        "city": "",
+        "zip": "",
+        "address": ""
+      },
+      "serviceArea": {
+        "counties": []
+      },
+      "latitude": null,
+      "longitude": null,
+      "geocodePrecision": null,
+      "delivery": "Online",
+      "website": "https://www.mhea.net/",
+      "email": "",
+      "phone": "",
+      "agesGrades": "All",
+      "religiousAffiliation": "Faith-based",
+      "costNotes": "",
+      "sourceUrl": "https://www.mhea.net/support-groups",
+      "verificationStatus": "Site live (undated)",
+      "verificationNote": "Site live (footer says 2024); support-group list includes DeSoto County.",
+      "lastChecked": "2026-10-27",
+      "listingTier": "Free",
+      "featured": false,
+      "photo": null,
+      "longDescription": null,
+      "status": "Draft",
+      "claimStatus": "Unclaimed"
     }
   ]
 }

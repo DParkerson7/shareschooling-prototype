@@ -1,120 +1,88 @@
-# ShareSchooling — clickable prototype
+# ShareSchooling: map pilot
 
-A static website prototype for ShareSchooling: a map-first guide to homeschool help.
-Plain HTML, CSS and JavaScript. No build step, no backend, no accounts, no paid services.
+A map-first guide to homeschool help. Parents go from the US map to their state, county and city (or type a zip code) to find co-ops, tutors, classes, field trips and support.
 
-**Everything on the site is sample data.** Every listing is made up and labeled "Example listing".
+The pilot covers **West Tennessee (21 counties) plus DeSoto County, MS**, with 77 listings researched from public pages. Every listing is still a **Draft** that the organization hasn't confirmed, and the site says so in a banner on every page. The build brief is [docs/map-pilot/claude-brief.md](docs/map-pilot/claude-brief.md).
 
-## What's in the folder
+Plain HTML, CSS and JavaScript, hosted on GitHub Pages. No backend, accounts, payments or paid services.
 
-| Path | What it is |
-| --- | --- |
-| `index.html` | Homepage: US map, zip search, and the State › County › Town drill-down |
-| `online.html` | Online & Nationwide listings, filtered by subject, grade or category |
-| `about.html`, `book.html`, `list-your-resource.html`, `contact.html` | Other pages |
-| `data/listings.json` | **All listings, categories, states, counties and towns.** Edit this to change the content. |
-| `data/map.json` | Map shapes (states, plus counties for Tennessee and Colorado). You don't need to edit this. |
-| `css/theme.css` | **All colors and fonts.** Change the look here. |
-| `css/styles.css` | Layout and components |
-| `js/` | The scripts that draw the map, cards and filters |
-| `img/` | Placeholder images and the browser-tab icon |
-| `tools/topo2svg.py` | Optional: rebuilds `data/map.json` if you add map counties for a new state |
+## How it fits together
 
-## Run it on your computer
+All pages are generated from the data by a small script, then committed. GitHub Pages serves them as they are.
 
-The site loads its data with JavaScript, so open it through a tiny local web server rather than double-clicking `index.html`.
+| Path | What it is | Edit it? |
+| --- | --- | --- |
+| `data/listings.json` | **All listings**, the 13 categories, and the pilot states and counties | Yes |
+| `data/site.json` | Site address, whether Drafts show, and whether search engines may index the site | Yes |
+| `templates/pages/` | About, The Book, Contact and List your co-op or tutor pages | Yes |
+| `css/theme.css` | **All colors and fonts** | Yes |
+| `css/styles.css`, `js/site.js` | Layout and interactive parts (filters, zip search, forms) | Rarely |
+| `tools/build_site.py` | Builds every page from the files above | Run it |
+| `data/map.json`, `data/zips.json` | Map shapes and zip codes, from free US Census data | No (see "Adding a state") |
+| `index.html`, `online.html`, the other top-level pages, `tn/`, `ms/`, the other state folders, `listing/`, `sitemap.xml`, `data/county-routes.json` | **Generated.** Rebuilt every time you run the build | No, they get overwritten |
+| `docs/map-pilot/` | The pilot brief and the original research files | Reference |
 
-1. Open Terminal in this folder.
-2. Run:
+## Make a change
+
+1. Edit `data/listings.json`, a template, or `css/theme.css`.
+2. Open Terminal in this folder and run:
 
    ```bash
-   python3 -m http.server 8000
+   python3 tools/build_site.py
    ```
 
-3. Visit <http://localhost:8000> in your browser. Press `Ctrl+C` in Terminal to stop.
+   It prints how many pages it built. It needs only the Python that comes with macOS.
+3. Preview it (next section), then commit and push to `main`. GitHub Pages updates within a minute or two.
 
-## Put it on GitHub Pages
+## Preview on your computer
 
-1. Create a GitHub repository and push this folder to its `main` branch.
-2. In the repository, open **Settings › Pages**.
-3. Under **Build and deployment**, set **Source** to **Deploy from a branch**, then choose **`main`** and **`/ (root)`**.
-4. Click **Save** and wait a minute or two. The site address (like `https://username.github.io/repo-name/`) appears at the top of that page.
-
-No build step or GitHub Actions workflow is needed. All links use relative paths, so the site works from a project address like `username.github.io/repo-name/`. The empty `.nojekyll` file tells GitHub to serve the files as they are.
-
-## Edit the sample data (`data/listings.json`)
-
-The file has three main parts. After editing, reload the page. If the page says the data didn't load, there is usually a missing comma or quote — paste the file into <https://jsonlint.com> to find it.
-
-### `categories`
-
-The 12 categories. Each has an `id` (used by listings) and a `name` (shown on the site). Keep the `id`s as they are unless you also update every listing that uses them.
-
-### `states`
-
-Only states listed here can be drilled into; every other state shows "coming soon".
-
-```jsonc
-{
-  "id": "tennessee",           // used in the web address: #/state/tennessee
-  "name": "Tennessee",
-  "fips": "47",                // US Census state code; connects to the map shape
-  "lawBasics": "[Placeholder] ...",
-  "counties": [
-    {
-      "id": "williamson",      // used in the web address
-      "fips": "47187",         // US Census county code; connects to the map shape
-      "name": "Williamson County",
-      "towns": [
-        { "id": "franklin", "name": "Franklin",
-          "zips": ["37064", "37067"],   // zip search matches these
-          "lon": -86.869, "lat": 35.925 } // where the dot goes on the county map
-      ]
-    }
-  ]
-}
+```bash
+python3 -m http.server 8000
 ```
 
-To add a new state, you also need its county shapes in `data/map.json`: add its FIPS code to `keep_states` in `tools/topo2svg.py` and re-run it (instructions at the top of that file).
+Then visit <http://localhost:8000>. Press `Ctrl+C` in Terminal to stop.
 
-### `listings`
+## GitHub Pages
 
-One entry per resource. Every field:
+Already on. Settings › Pages is set to **Deploy from a branch**, `main`, `/ (root)`. The test address is <https://dparkerson7.github.io/shareschooling-prototype/>.
 
-| Field | What it means | Allowed values / example |
+If the site moves to a real domain later, change `baseUrl` in `data/site.json` and rebuild. That one value sets every page's canonical address and the sitemap.
+
+## Listing fields (`data/listings.json` › `listings`)
+
+The full definitions are in section 3 of the [brief](docs/map-pilot/claude-brief.md). The ones that change how the site behaves:
+
+| Field | Effect on the site |
+| --- | --- |
+| `id` | The listing's address: `listing/{id}/`. Never change it for an existing listing. |
+| `category` | One of the 13 category ids in `categories`. Drives the category sections and filter. |
+| `reach` | `Local`, `Regional` or `Statewide`. Statewide listings show in "Also available to you" on every county page in their state. |
+| `location.state` / `county` / `city` | Where it's based. The city decides which city page it appears on first. |
+| `serviceArea.counties` | Bare county names. The listing appears on each of those county pages. `DeSoto` means DeSoto County, MS; every other name is in Tennessee. |
+| `latitude`, `longitude`, `geocodePrecision` | The map pin. `city` precision shows a lighter "approximate" pin. Leave both `null` for no pin. |
+| `religiousAffiliation` | `Faith-based`, `Secular` or `Unknown`. Unknown listings appear only under the "All" faith filter. |
+| `verificationStatus` | `Needs verification` and `Flagged: older source` show "We're still confirming this listing's details." and sort after confirmed listings. |
+| `verificationNote` | Internal only. Never shown on the site. |
+| `lastChecked` | Shown as "Last verified". |
+| `listingTier`, `featured` | `Featured` + `true` shows the Featured badge, sorts first, and shows `photo` and `longDescription` on the detail page. |
+| `status` | `Draft`, `Published` or `Archived`. With `showDrafts: true` in `data/site.json`, Drafts show with a "Draft" tag; set it to `false` to show only Published listings. |
+
+Empty fields (`null` or `""`) are simply left out on the page.
+
+## Settings (`data/site.json`)
+
+| Setting | Now | What it does |
 | --- | --- | --- |
-| `id` | Unique ID | `"ex-001"` |
-| `name` | Name shown on the card | `"Example Co-op of Franklin"` |
-| `exampleListing` | Shows the "Example listing" label | `true` |
-| `category` | One category `id` | `"co-ops"`, `"tutors"`, … |
-| `description` | Short description | text |
-| `website`, `email`, `phone` | Contact details | use `example.com` addresses and `555-01xx` numbers for samples |
-| `image` | Logo or photo | `"img/placeholder-1.svg"` |
-| `reach` | Who it serves | `"Local"`, `"Statewide"` or `"Nationwide"` |
-| `location` | Where it's based | Local: `{ "state": "tennessee", "county": "williamson", "town": "franklin" }`. Statewide: `{ "state": "tennessee" }`. Nationwide: `null` |
-| `serviceArea` | **Local only.** Where it shows up | `{ "towns": ["tennessee/franklin"], "counties": ["tennessee/davidson"] }` — a county entry means every town in that county. Use `null` for Statewide/Nationwide. |
-| `delivery` | How it's offered | `"In person"`, `"Online"` or `"Both"` |
-| `agesGrades` | Ages or grades | `{ "label": "Grades K–8", "min": 0, "max": 8 }` — `label` is shown; `min`/`max` drive the grade filter (PreK = `-1`, K = `0`, 1–12 as numbers; `null` for parent-only groups) |
-| `subjects` | Subjects (used by the subject filter) | `["Math", "Science"]` |
-| `worldview` | Faith-based, secular or inclusive | `"Faith-based"`, `"Secular"` or `"Inclusive"` |
-| `cost` | Cost and a note | `{ "type": "Free" \| "Paid" \| "Varies", "note": "text" }` |
-| `schedule` | When it meets | text |
-| `status` | Trust badge | `"Unclaimed"`, `"Claimed"` or `"Verified"` |
-| `lastVerified` | Date shown publicly | `"2026-09-14"` (year-month-day) |
-| `featured` | Shows the "Featured" label and lists it first | `true` or `false` |
-| `source` | Where the info came from | text |
+| `baseUrl` | the GitHub Pages test address | Canonical links and sitemap |
+| `showDrafts` | `true` | Show Draft listings (with a "Draft" tag) |
+| `allowSearchEngines` | `false` | While `false`, every page asks search engines not to index it. Set to `true` when the listings are ready to be found on Google. |
 
-Where listings appear:
+## Adding a state or county to the pilot
 
-- **Town page:** Local listings whose `serviceArea` includes that town or its county. The "Also available to you" column shows that state's Statewide listings and the Nationwide listings.
-- **County page:** Local listings serving that county or any of its towns.
-- **State page:** Statewide listings. Those in the "State associations and legal help" category appear under associations; the rest appear as state programs.
-- **Online & Nationwide page:** Nationwide listings plus any listing delivered `"Online"`.
-
-## Change the look
-
-Open `css/theme.css`. Every color and font is a named setting at the top (for example `--color-primary`). Change a value and it updates everywhere.
+1. Add the county names to that state's `pilotCounties` in `data/listings.json` (or add a new state there).
+2. For a new state, add its 2-digit FIPS code in `tools/topo2svg.py` and `tools/make_zips.py`, then follow the steps at the top of each file to rebuild `data/map.json` and `data/zips.json`.
+3. Run `python3 tools/build_site.py`.
 
 ## Credits
 
-Map shapes come from [us-atlas](https://github.com/topojson/us-atlas) (ISC license, see `data/MAP-LICENSE.txt`), based on US Census Bureau cartographic boundary files.
+Map shapes come from [us-atlas](https://github.com/topojson/us-atlas) (ISC license, see `data/MAP-LICENSE.txt`), based on US Census Bureau cartographic boundary files. Zip codes come from the US Census Bureau 2020 ZCTA files (public domain). Headings use Playfair Display from Google Fonts (free).

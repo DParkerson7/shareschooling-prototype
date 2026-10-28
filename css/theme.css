@@ -1,44 +1,45 @@
 /*
-  ShareSchooling theme — PLACEHOLDER brand.
-  Every color and font for the whole site lives here. Change a value once
-  and it updates on every page.
+  ShareSchooling theme. Every color and font for the whole site lives here.
+  Change a value once and it updates on every page.
+  The first five values come from the map pilot brief.
 */
 :root {
-  /* Colors */
-  --color-bg: #fbf7f0;          /* page background (warm cream) */
-  --color-surface: #ffffff;     /* cards, panels */
-  --color-surface-alt: #f3ece0; /* soft panels, hero */
-  --color-text: #2b2621;        /* main text */
-  --color-text-muted: #5f564c;  /* secondary text */
-  --color-border: #ddd2c1;
+  --color-primary: #1F6F78;   /* teal: links, buttons, active map areas */
+  --color-accent:  #C9A227;   /* gold: Featured badge, highlights. Use with dark text, never as text on cream. */
+  --color-bg:      #FBF4E4;   /* cream page background */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  --color-primary: #1f5f5b;       /* deep teal: links, buttons */
-  --color-primary-hover: #174a47;
+  /* Supporting colors */
+  --color-primary-hover: #17575e;
   --color-primary-contrast: #ffffff;
-  --color-accent: #b9532a;        /* terracotta: highlights */
-  --color-accent-soft: #f7e3d6;
-  --color-sun: #f4b860;           /* warm yellow: featured */
+  --color-primary-soft: #e3efef;
+  --color-accent-text: #2b2200;   /* text on gold */
+  --color-surface: #ffffff;       /* cards, panels */
+  --color-surface-alt: #f4ead3;   /* soft panels */
+  --color-text: #2b2621;
+  --color-text-muted: #5c544a;
+  --color-border: #e0d4bb;
+  --color-note-bg: #efe9dc;       /* neutral "still confirming" note */
 
-  --color-map-state: #d9cdb8;     /* states with no data yet */
-  --color-map-active: #2f7a74;    /* example states / counties */
-  --color-map-hover: #b9532a;
-  --color-map-stroke: #fbf7f0;
+  /* Map */
+  --color-map-muted: #ddd3c0;     /* coming soon */
+  --color-map-stroke: #fbf4e4;
+  --color-map-pilot-1: #a9cfd1;   /* pilot area, fewest listings */
+  --color-map-pilot-2: #6fa9ae;
+  --color-map-pilot-3: #3f8a91;
+  --color-map-pilot-4: #1F6F78;   /* most listings */
+  --color-map-hover: #C9A227;
+  --color-pin: #b4532a;
+  --color-pin-stroke: #ffffff;
 
-  --color-status-verified: #1d6b3a;
-  --color-status-claimed: #2b5c8a;
-  --color-status-unclaimed: #6b5f52;
-
-  --color-banner-bg: #3a2f26;
-  --color-banner-text: #fff4e2;
-  --color-focus: #e08a00;
-
-  /* Fonts (system fonts only, so nothing extra to download) */
-  --font-heading: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --color-banner-bg: #2f3a3b;
+  --color-banner-text: #fdf6e6;
+  --color-focus: #b86e00;
 
   /* Shape */
   --radius: 12px;
   --radius-small: 6px;
   --shadow: 0 1px 2px rgba(43, 38, 33, 0.08), 0 4px 14px rgba(43, 38, 33, 0.06);
-  --content-width: 1120px;
+  --content-width: 1160px;
 }
