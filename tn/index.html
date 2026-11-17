@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/styles.css">
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "Statewide homeschool resources in Tennessee", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://dparkerson7.github.io/shareschooling-prototype/listing/homelife-academy-jackson/", "name": "HomeLife Academy"}, {"@type": "ListItem", "position": 2, "url": "https://dparkerson7.github.io/shareschooling-prototype/listing/tennessee-department-of-education-home-school-tn/", "name": "Tennessee Department of Education: Home School"}, {"@type": "ListItem", "position": 3, "url": "https://dparkerson7.github.io/shareschooling-prototype/listing/tennessee-disability-pathfinder-tn/", "name": "Tennessee Disability Pathfinder"}, {"@type": "ListItem", "position": 4, "url": "https://dparkerson7.github.io/shareschooling-prototype/listing/tennessee-electronic-library-tel-tn/", "name": "Tennessee Electronic Library (TEL)"}, {"@type": "ListItem", "position": 5, "url": "https://dparkerson7.github.io/shareschooling-prototype/listing/tennessee-home-education-association-thea-tn/", "name": "Tennessee Home Education Association (THEA)"}, {"@type": "ListItem", "position": 6, "url": "https://dparkerson7.github.io/shareschooling-prototype/listing/tennessee-individualized-education-account-iea-program-tn/", "name": "Tennessee Individualized Education Account (IEA) Program"}, {"@type": "ListItem", "position": 7, "url": "https://dparkerson7.github.io/shareschooling-prototype/listing/titus-2-academy-tn/", "name": "Titus 2 Academy"}]}</script>
 </head>
-<body data-root="../">
+<body data-root="../" data-state="TN">
   <a class="skip-link" href="#main">Skip to main content</a>
   <div class="test-banner" role="note">Test site: listings are drafts gathered from public pages and not yet confirmed by the organizations.</div>
   <header class="site-header">
@@ -50,9 +50,9 @@
       <p class="hint" style="margin:0.75rem 0 0">Across the state line: <a href="../ms/desoto-county/">DeSoto County, MS</a></p>
     </section>
     <section class="panel" aria-labelledby="zip-heading">
-      <h2 id="zip-heading">Search by zip code</h2>
-      <form data-zip-form role="search"><label class="visually-hidden" for="state-zip">Zip code</label>
-        <div class="btn-row"><input id="state-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="Zip code" style="flex:1 1 8rem"><button class="btn" type="submit">Go</button></div></form>
+      <h2 id="zip-heading">Search by ZIP code or city</h2>
+      <form data-zip-form role="search"><label class="visually-hidden" for="state-zip">ZIP code or city</label>
+        <div class="btn-row"><input id="state-zip" name="place" maxlength="48" autocomplete="off" placeholder="ZIP code or city" style="flex:1 1 8rem"><button class="btn" type="submit">Go</button></div></form>
       <p class="zip-status" data-zip-status aria-live="polite"></p>
     </section>
   </div>
