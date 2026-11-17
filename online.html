@@ -31,16 +31,18 @@
 <p class="intro">Programs in the pilot that families can use online, in full or in part. Narrow them down by category, reach, delivery or faith.</p>
 
 <div class="filterbar" data-filterbar>
+  
   <div class="bar-row">
     <button type="button" class="btn btn-secondary filters-toggle" data-filters-toggle aria-expanded="false" aria-controls="filter-panel">Filters<span class="count-badge" data-filter-count hidden></span></button>
     
     <form class="zip-mini" data-zip-form role="search">
-      <label class="visually-hidden" for="bar-zip">Zip code</label>
-      <input id="bar-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="Zip code">
+      <label class="visually-hidden" for="bar-zip">ZIP code or city</label>
+      <input id="bar-zip" name="place" maxlength="48" autocomplete="off" placeholder="ZIP code or city">
       <button class="btn" type="submit">Go</button>
     </form>
   </div>
-  <p class="zip-status" data-zip-status aria-live="polite"></p>
+  <p class="zip-status" id="place-status" data-zip-status aria-live="polite"></p>
+  
   <div id="filter-panel" class="filter-panel" hidden>
     <div class="label" id="cat-label">Category</div>
     <ul class="chips" aria-labelledby="cat-label"><li><button type="button" class="chip" data-chip="co-ops" aria-pressed="false">Co-ops</button></li><li><button type="button" class="chip" data-chip="microschools" aria-pressed="false">Microschools</button></li><li><button type="button" class="chip" data-chip="hybrid" aria-pressed="false">Hybrid and university-model schools</button></li><li><button type="button" class="chip" data-chip="tutors" aria-pressed="false">Tutors</button></li><li><button type="button" class="chip" data-chip="classes" aria-pressed="false">Classes and enrichment</button></li><li><button type="button" class="chip" data-chip="support-groups" aria-pressed="false">Support groups and parent meetups</button></li><li><button type="button" class="chip" data-chip="field-trips" aria-pressed="false">Field trips and learning destinations</button></li><li><button type="button" class="chip" data-chip="sports" aria-pressed="false">Sports and extracurriculars</button></li><li><button type="button" class="chip" data-chip="testing" aria-pressed="false">Testing and evaluation services</button></li><li><button type="button" class="chip" data-chip="special-needs" aria-pressed="false">Special needs and learning-difference support</button></li><li><button type="button" class="chip" data-chip="curriculum" aria-pressed="false">Curriculum and online programs</button></li><li><button type="button" class="chip" data-chip="associations" aria-pressed="false">State associations and legal help</button></li><li><button type="button" class="chip" data-chip="umbrella-schools" aria-pressed="false">Umbrella schools</button></li></ul>

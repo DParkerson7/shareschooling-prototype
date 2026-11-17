@@ -6,7 +6,8 @@ to data/ or templates/:
 
 Reads:   data/listings.json, data/map.json, data/site.json, templates/pages/*.html
 Writes:  index.html, the other top-level pages, one folder per state
-         (tn/, ms/, al/ ...), listing/, data/county-routes.json, sitemap.xml
+         (tn/, ms/, al/ ...), listing/, data/county-routes.json,
+         data/places.json, sitemap.xml
 
 Uses only the Python standard library. GitHub Pages serves the output as-is,
 so commit the generated files along with your data changes.
@@ -181,6 +182,235 @@ def bbox(*paths):
     return min(xs), min(ys), max(xs), max(ys)
 
 
+def _load_interstates():
+    path = ROOT / "data" / "interstates.json"
+    if not path.exists():
+        return []
+    lines = json.loads(path.read_text()).get("lines", [])
+    for line in lines:
+        xs = [p[0] for p in line["pts"]]
+        ys = [p[1] for p in line["pts"]]
+        line["_box"] = (min(xs), min(ys), max(xs), max(ys))
+    return lines
+
+
+ROADS = _load_interstates()
+_RING_CACHE = {}
+
+
+def parse_rings(d):
+    rings, cur = [], []
+    for tok in re.findall(r"[MLZ]|-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?", d):
+        if tok == "M":
+            if len(cur) >= 3:
+                rings.append(cur)
+            cur = []
+        elif tok == "Z":
+            if len(cur) >= 3:
+                rings.append(cur)
+            cur = []
+        elif tok != "L":
+            x, y = tok.split(",")
+            cur.append((float(x), float(y)))
+    if len(cur) >= 3:
+        rings.append(cur)
+    return rings
+
+
+def _ring_area(ring):
+    area = 0
+    for (x1, y1), (x2, y2) in zip(ring, ring[1:] + ring[:1]):
+        area += x1 * y2 - x2 * y1
+    return area / 2
+
+
+def _pip(x, y, ring):
+    inside = False
+    j = len(ring) - 1
+    for i, (xi, yi) in enumerate(ring):
+        xj, yj = ring[j]
+        if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / ((yj - yi) or 1e-12) + xi:
+            inside = not inside
+        j = i
+    return inside
+
+
+def polygon_of(d):
+    cached = _RING_CACHE.get(d)
+    if cached is not None:
+        return cached
+    classified = [(ring, _ring_area(ring) < 0) for ring in parse_rings(d)]
+    _RING_CACHE[d] = classified
+    return classified
+
+
+def _inside(x, y, classified):
+    in_ext = in_hole = False
+    for ring, is_hole in classified:
+        if _pip(x, y, ring):
+            if is_hole:
+                in_hole = True
+            else:
+                in_ext = True
+    return in_ext and not in_hole
+
+
+def _seg_hits(a, b, ring):
+    ax, ay = a
+    bx, by = b
+    rx, ry = bx - ax, by - ay
+    hits = []
+    prev = ring[-1]
+    for cur in ring:
+        sx, sy = cur[0] - prev[0], cur[1] - prev[1]
+        den = rx * sy - ry * sx
+        if abs(den) > 1e-9:
+            qpx, qpy = prev[0] - ax, prev[1] - ay
+            t = (qpx * sy - qpy * sx) / den
+            u = (qpx * ry - qpy * rx) / den
+            if 0 < t < 1 and 0 <= u <= 1:
+                hits.append(t)
+        prev = cur
+    return hits
+
+
+def clip_line(pts, classified):
+    pieces, cur = [], []
+
+    def flush():
+        nonlocal cur
+        if len(cur) >= 2:
+            pieces.append(cur)
+        cur = []
+
+    for a, b in zip(pts, pts[1:]):
+        ts = [0.0, 1.0]
+        for ring, _hole in classified:
+            ts.extend(_seg_hits(a, b, ring))
+        ts = sorted(set(round(t, 5) for t in ts))
+        ax, ay = a
+        bx, by = b
+        for t0, t1 in zip(ts, ts[1:]):
+            if t1 - t0 < 1e-5:
+                continue
+            mid = ((t0 + t1) / 2)
+            mx, my = ax + (bx - ax) * mid, ay + (by - ay) * mid
+            if _inside(mx, my, classified):
+                p0 = (ax + (bx - ax) * t0, ay + (by - ay) * t0)
+                p1 = (ax + (bx - ax) * t1, ay + (by - ay) * t1)
+                if cur and math.hypot(cur[-1][0] - p0[0], cur[-1][1] - p0[1]) < 0.05:
+                    cur.append(p1)
+                else:
+                    flush()
+                    cur = [p0, p1]
+            else:
+                flush()
+    flush()
+    return pieces
+
+
+def _boxes_overlap(a, b, pad=0.4):
+    return not (a[2] < b[0] - pad or b[2] < a[0] - pad or a[3] < b[1] - pad or b[3] < a[1] - pad)
+
+
+def _path_d(pts):
+    if len(pts) < 2:
+        return ""
+    head = f"M{pts[0][0]:.2f},{pts[0][1]:.2f}"
+    return head + "".join(f"L{x:.2f},{y:.2f}" for x, y in pts[1:])
+
+
+def _line_length(pts):
+    return sum(math.hypot(bx - ax, by - ay) for (ax, ay), (bx, by) in zip(pts, pts[1:]))
+
+
+def _point_at(pts, frac):
+    target = _line_length(pts) * frac
+    walked = 0
+    for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+        step = math.hypot(bx - ax, by - ay)
+        if walked + step >= target and step:
+            t = (target - walked) / step
+            return ax + (bx - ax) * t, ay + (by - ay) * t
+        walked += step
+    return pts[len(pts) // 2]
+
+
+def _midpoint(pts):
+    return _point_at(pts, 0.5)
+
+
+def _clip_rect(pts, box):
+    x0, y0, x1, y1 = box
+    ring = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+    return clip_line(pts, [(ring, False)])
+
+
+def roads_for(d, label_view=None):
+    """Interstate pieces clipped to a projected polygon, plus a few label anchors."""
+    if not ROADS:
+        return [], []
+    classified = polygon_of(d)
+    if not classified:
+        return [], []
+    box = bbox(d)
+    pieces = []
+    for line in ROADS:
+        if not _boxes_overlap(line["_box"], box):
+            continue
+        for part in clip_line(line["pts"], classified):
+            if _line_length(part) < 0.4:
+                continue
+            pieces.append((line["ref"], part))
+    label_src = pieces
+    span_box = box
+    if label_view:
+        span_box = label_view
+        label_src = []
+        for ref, part in pieces:
+            for bit in _clip_rect(part, label_view):
+                if _line_length(bit) >= 0.8:
+                    label_src.append((ref, bit))
+    best = {}
+    for ref, part in label_src:
+        length = _line_length(part)
+        if ref not in best or length > best[ref][0]:
+            best[ref] = (length, part)
+    labels = []
+    placed = []
+    span = max(span_box[2] - span_box[0], span_box[3] - span_box[1])
+    sep = max(span * 0.045, 2.2)
+    for ref, (length, part) in sorted(best.items(), key=lambda kv: (len(kv[0]) > 2, -kv[1][0])):
+        if length < max(1.1, span * 0.03):
+            continue
+        spot = None
+        for frac in (0.5, 0.32, 0.68, 0.18, 0.82):
+            x, y = _point_at(part, frac)
+            if any(math.hypot(x - px, y - py) < sep for _oref, px, py in placed):
+                continue
+            spot = (x, y)
+            break
+        if not spot:
+            continue
+        placed.append((ref, spot[0], spot[1]))
+        labels.append({"ref": ref, "x": round(spot[0], 2), "y": round(spot[1], 2)})
+    return pieces, labels
+
+
+def interstate_paths(pieces):
+    body = "".join(f'<path class="interstate" d="{_path_d(part)}"/>' for _ref, part in pieces)
+    if not body:
+        return ""
+    return f'<g class="interstates" aria-hidden="true">{body}</g>'
+
+
+def interstate_static_labels(labels, font):
+    return "".join(
+        f'<text class="road-label" x="{lab["x"]:.2f}" y="{lab["y"]:.2f}" text-anchor="middle" '
+        f'font-size="{font:.2f}" stroke-width="{font / 3:.2f}">I-{esc(lab["ref"])}</text>'
+        for lab in labels)
+
+
 def view_box(box, pad=0.06, extra_bottom=0.0):
     x0, y0, x1, y1 = box
     p = max(x1 - x0, y1 - y0) * pad
@@ -195,49 +425,251 @@ def shade(count):
     return "pilot-1" if count <= 2 else "pilot-2" if count <= 5 else "pilot-3" if count <= 10 else "pilot-4"
 
 
-def pins_svg(listings, size, emphasize=None):
-    """Map pins. City-precision pins sharing a spot are fanned out so they don't overlap."""
-    groups = {}
+# Marker colors live in css/theme.css. Co-ops use the original pin rust.
+PIN_KNOWN = {
+    "co-ops", "microschools", "hybrid", "tutors", "classes", "support-groups",
+    "field-trips", "sports", "testing", "special-needs", "curriculum",
+    "associations", "umbrella-schools",
+}
+CAT_SHORT = {
+    "co-ops": "Co-ops",
+    "microschools": "Microschools",
+    "hybrid": "Hybrid / university-model",
+    "tutors": "Tutors",
+    "classes": "Classes and enrichment",
+    "support-groups": "Support groups",
+    "field-trips": "Field trips",
+    "sports": "Sports",
+    "testing": "Testing",
+    "special-needs": "Special needs support",
+    "curriculum": "Curriculum and online",
+    "associations": "State associations",
+    "umbrella-schools": "Umbrella schools",
+}
+MAGNIFIER = ('<svg class="icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">'
+             '<circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="2"/>'
+             '<path d="M11 11 L15 15" fill="none" stroke="currentColor" stroke-width="2"/></svg>')
+FIT_ICON = ('<svg class="icon" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true">'
+            '<path d="M2.2 6.2V2.2h4M9.8 2.2h4v4M13.8 9.8v4h-4M6.2 13.8h-4v-4" fill="none" '
+            'stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+
+def pin_token(cat_id):
+    if cat_id in PIN_KNOWN:
+        return cat_id
+    return f"extra-{sum(ord(ch) for ch in str(cat_id)) % 6 + 1}"
+
+
+def cat_short(cat_id):
+    return CAT_SHORT.get(cat_id, CAT_NAME.get(cat_id, cat_id))
+
+
+def json_embed(obj):
+    return json.dumps(obj, ensure_ascii=False).replace("<", "\\u003c")
+
+
+def unique_listings(listings):
+    seen, out = set(), []
     for l in listings:
-        if l.get("latitude") is not None and l.get("longitude") is not None:
-            groups.setdefault((round(l["latitude"], 4), round(l["longitude"], 4)), []).append(l)
-    r = size / 55
-    out = []
-    DIM_ATTR = ' opacity="0.6"'
-    for (lat, lon), group in groups.items():
-        x, y = project(lon, lat)
-        for i, l in enumerate(group):
-            px, py = x, y
-            if len(group) > 1:
-                angle = 2 * math.pi * i / len(group)
-                spread = r * (1.4 + 0.12 * len(group))
-                px, py = x + spread * math.cos(angle), y + spread * math.sin(angle)
-            approx = l.get("geocodePrecision") == "city"
-            dim = emphasize is not None and l["_city"] != emphasize
-            label = l["name"] + (" (approximate location)" if approx else "")
-            out.append(
-                f'<a href="{{root}}{l["_url"]}" data-pin="{esc(l["id"])}" aria-label="{esc(label)}">'
-                f'<circle class="pin{" approx" if approx else ""}" cx="{px:.3f}" cy="{py:.3f}" r="{r * (0.75 if dim else 1):.3f}"'
-                f'{DIM_ATTR if dim else ""}><title>{esc(label)}</title></circle></a>')
-    return "".join(out)
+        if l["id"] not in seen:
+            seen.add(l["id"])
+            out.append(l)
+    return out
 
 
-def county_map_svg(county, listings, title, emphasize=None, small=False):
+def listing_pin(l, emphasize=None):
+    if l.get("latitude") is None or l.get("longitude") is None:
+        return None
+    x, y = project(l["longitude"], l["latitude"])
+    faith = l.get("religiousAffiliation") if l.get("religiousAffiliation") in ("Faith-based", "Secular") else ""
+    return {
+        "id": l["id"],
+        "name": l["name"],
+        "cat": l["category"],
+        "catLabel": cat_short(l["category"]),
+        "token": pin_token(l["category"]),
+        "exact": l.get("geocodePrecision") != "city",
+        "x": round(x, 3),
+        "y": round(y, 3),
+        "city": l["_city"],
+        "state": l["_state"],
+        "url": l["_url"],
+        "ages": l.get("agesGrades") or "",
+        "faith": faith,
+        "delivery": l.get("delivery") or "",
+        "dim": bool(emphasize and l["_city"] != emphasize),
+    }
+
+
+def tight_bounds(county, listings):
+    """County shape, plus pins that sit just across the line. Far outliers stay reachable by Fit."""
     box = bbox(county["d"])
-    # Widen the view so pins just across a county or state line still show.
+    reach = max(box[2] - box[0], box[3] - box[1]) * 0.22
+    grown = box
     for l in listings:
-        if l.get("latitude") is not None:
-            x, y = project(l["longitude"], l["latitude"])
-            box = (min(box[0], x), min(box[1], y), max(box[2], x), max(box[3], y))
-    size = max(box[2] - box[0], box[3] - box[1])
-    extra = "" if small else ' style="max-height:440px"'
-    return (
-        f'<svg class="map-svg" viewBox="{view_box(box, 0.1)}" role="group" aria-label="{esc(title)}"{extra}>'
-        f'<path class="area focus" d="{county["d"]}"/>{pins_svg(listings, size, emphasize)}</svg>')
+        if l.get("latitude") is None:
+            continue
+        x, y = project(l["longitude"], l["latitude"])
+        if box[0] - reach <= x <= box[2] + reach and box[1] - reach <= y <= box[3] + reach:
+            grown = (min(grown[0], x), min(grown[1], y), max(grown[2], x), max(grown[3], y))
+    x0, y0, x1, y1 = grown
+    w, h = max(x1 - x0, 1), max(y1 - y0, 1)
+    px, py = max(w * 0.1, max(w, h) * 0.05), max(h * 0.1, max(w, h) * 0.05)
+    return (x0 - px, y0 - py, x1 + px, y1 + py)
+
+
+def place_search_form(suffix, overlay=False):
+    kind = "overlay" if overlay else "bar-search"
+    return f'''<form class="place-search {kind}" data-place-form role="search" data-status="place-status">
+      <label class="visually-hidden" for="place-{suffix}">ZIP code or city</label>
+      <span class="place-field">{MAGNIFIER}<input id="place-{suffix}" name="place" maxlength="48" autocomplete="off" placeholder="ZIP code or city" enterkeyhint="search"></span>
+      <button class="btn" type="submit">Go</button>
+    </form>'''
+
+
+def legend_html():
+    items = []
+    for c in CATS:
+        token = pin_token(c["id"])
+        items.append(
+            f'<li data-legend-cat="{esc(c["id"])}"><span class="mk solid pin-{token}" aria-hidden="true"></span>{esc(cat_short(c["id"]))}</li>')
+    return f'''<div class="map-key" id="map-key">
+      <h2>Resource type (marker color)</h2>
+      <ul>{"".join(items)}</ul>
+      <div class="key-sub">
+        <span><span class="mk solid" style="--c:#5c544a" aria-hidden="true"></span>Solid = exact location</span>
+        <span><span class="mk hollow" style="--c:#5c544a" aria-hidden="true"></span>Hollow = approximate (city only)</span>
+        <span><span class="mk cluster-sample" aria-hidden="true">99+</span>Number = group. Click to zoom in. Over 99 shows as 99+.</span>
+        <span><span class="road-sample" aria-hidden="true"></span>Interstate</span>
+      </div>
+      <p class="hint map-scroll-hint">Scrolling moves the page. Pinch, or hold Ctrl and scroll, to zoom the map.</p>
+      <p class="hint unpinned-note" data-unpinned-note></p>
+    </div>'''
+
+
+def map_controls_html():
+    dots = "".join(
+        f'<span class="mk solid pin-{pin_token(c["id"])}" aria-hidden="true"></span>'
+        for c in CATS[:3])
+    return f'''<div class="map-controls">
+      <div class="zoom-stack">
+        <button type="button" data-zoom-in aria-label="Zoom in">+</button>
+        <button type="button" data-zoom-out aria-label="Zoom out">−</button>
+      </div>
+      <button type="button" class="fit-btn" data-fit aria-label="Fit to results">{FIT_ICON}<span class="fit-label">Fit to results</span></button>
+    </div>
+    <button type="button" class="key-btn" data-key aria-controls="map-key">{dots} Key</button>'''
+
+
+def interactive_map(county, listings, title, emphasize=None, small=False, preview=True):
+    """County shape plus a JSON pin list. js/site.js clusters, zooms, and opens the preview."""
+    bounds = tight_bounds(county, listings)
+    x0, y0, x1, y1 = bounds
+    home = f"{x0:.2f} {y0:.2f} {x1 - x0:.2f} {y1 - y0:.2f}"
+    neighbors = []
+    labels = []
+    font = max(x1 - x0, y1 - y0) / 42
+    for key in county["neighbors"]:
+        n = COUNTIES[key]
+        neighbors.append(f'<path class="area neighbor" d="{n["d"]}"/>')
+        nx0, ny0, nx1, ny1 = bbox(n["d"])
+        cx, cy = (nx0 + nx1) / 2, (ny0 + ny1) / 2
+        if x0 <= cx <= x1 and y0 <= cy <= y1:
+            label = n["name"].upper() + (" CO." if n["state"] == county["state"] else f" CO., {n['state']}")
+            labels.append(
+                f'<text class="neighbor-label" x="{cx:.2f}" y="{cy:.2f}" text-anchor="middle" font-size="{font:.2f}">{esc(label)}</text>')
+    pins = [p for p in (listing_pin(l, emphasize) for l in listings) if p]
+    road_pieces, road_labels = roads_for(county["d"])
+    roads = interstate_paths(road_pieces)
+    road_json = json_embed(road_labels)
+    size = " small" if small else ""
+    preview_html = ""
+    if preview:
+        preview_html = '''<div class="map-preview" data-preview hidden role="dialog" aria-modal="false" aria-labelledby="map-preview-title" tabindex="-1">
+      <div class="preview-handle" aria-hidden="true"></div>
+      <button type="button" class="map-preview-close" data-preview-close aria-label="Close">×</button>
+      <p class="pc-cat" data-preview-cat></p>
+      <h3 id="map-preview-title" data-preview-name></h3>
+      <p class="pc-meta" data-preview-meta></p>
+      <p class="pc-loc" data-preview-loc></p>
+      <div class="pc-foot">
+        <a class="preview-details" data-preview-link href="#">View details</a>
+        <div class="pager" data-preview-pager hidden>
+          <button type="button" data-preview-prev aria-label="Previous listing in this group">‹</button>
+          <span data-preview-count></span>
+          <button type="button" data-preview-next aria-label="Next listing in this group">›</button>
+        </div>
+      </div>
+    </div>'''
+    overlay = place_search_form("map", overlay=True) if not small else ""
+    legend = "" if small else legend_html()
+    return f'''<div class="map-column">
+  <div class="map-stage{size}" id="map-area" data-map tabindex="0" role="region" data-home="{home}" data-emphasize="{esc(emphasize or "")}" data-allow-preview="{1 if preview else 0}" aria-label="{esc(title)}. Plus zooms in, minus zooms out. Drag sideways or pinch to move the map. Scrolling still moves the page.">
+    {overlay}
+    <svg class="map-svg interactive" viewBox="{home}" preserveAspectRatio="xMidYMid meet" role="group" aria-label="{esc(title)}">
+      {"".join(neighbors)}
+      <path class="area focus" d="{county["d"]}"/>
+      {roads}
+      {"".join(labels)}
+      <g data-road-labels></g>
+      <g data-marker-layer></g>
+    </svg>
+    {map_controls_html()}
+    {preview_html}
+    <script type="application/json" data-map-pins>{json_embed(pins)}</script>
+    <script type="application/json" data-road-label-data>{road_json}</script>
+  </div>
+  {legend}
+</div>'''
+
+
+def results_rail(listings):
+    rows = []
+    ordered = sorted(unique_listings(listings), key=lambda l: l["name"].lower())
+    for l in ordered:
+        token = pin_token(l["category"])
+        exact = l.get("latitude") is not None and l.get("geocodePrecision") != "city"
+        hollow = "hollow" if l.get("latitude") is not None and not exact else "solid"
+        if l.get("latitude") is None:
+            loc = "No map pin"
+            mark = f'<span class="mk hollow" style="--c:#5c544a" aria-hidden="true"></span>'
+        else:
+            loc = "Exact location" if exact else "Approximate (city only)"
+            mark = f'<span class="mk {hollow} pin-{token}" aria-hidden="true"></span>'
+        place = ", ".join(x for x in [l["_city"], l["_state"]] if x)
+        meta = f'<span class="ct">{esc(cat_short(l["category"]))}</span>' + (f" · {esc(place)}" if place else "")
+        body = f'{mark}<span><span class="nm">{esc(l["name"])}</span><span class="mt">{meta}</span><span class="loc">{loc}</span></span>'
+        if l.get("latitude") is None:
+            rows.append(
+                f'<li data-result data-id="{esc(l["id"])}" data-name="{esc(l["name"].lower())}">'
+                f'<a class="result-link" href="{{root}}{l["_url"]}">{body}</a></li>')
+        else:
+            rows.append(
+                f'<li data-result data-id="{esc(l["id"])}" data-name="{esc(l["name"].lower())}">'
+                f'<button type="button" class="result-btn">{body}</button></li>')
+    return f'''<aside class="results-rail" data-results-rail aria-labelledby="results-heading">
+  <h2 id="results-heading">Results <small data-rail-scope>A–Z · tap a result to find it on the map</small></h2>
+  <p class="rail-scope-actions"><button type="button" class="link-button" data-rail-all hidden>Show every result</button></p>
+  <ul>{"".join(rows)}</ul>
+  <p class="hint rail-note" data-unpinned-note></p>
+  <p class="empty-note" data-rail-empty hidden>No listings match these filters.</p>
+</aside>'''
+
+
+def explorer_block(county, listings, title, emphasize=None):
+    return f'''<div class="explorer view-map" data-explorer>
+  <div class="explorer-grid">
+    {results_rail(listings)}
+    {interactive_map(county, listings, title, emphasize=emphasize)}
+  </div>
+</div>'''
 
 
 def outline_svg(d, title):
-    return f'<svg class="map-svg" viewBox="{view_box(bbox(d), 0.08)}" role="img" aria-label="{esc(title)}" style="max-height:260px"><path class="area focus" d="{d}"/></svg>'
+    pieces, labels = roads_for(d)
+    font = max(bbox(d)[2] - bbox(d)[0], bbox(d)[3] - bbox(d)[1]) / 28
+    return (f'<svg class="map-svg" viewBox="{view_box(bbox(d), 0.08)}" role="img" aria-label="{esc(title)}" style="max-height:260px">'
+            f'<path class="area focus" d="{d}"/>{interstate_paths(pieces)}{interstate_static_labels(labels, font)}</svg>')
 
 
 def state_map_svg(code):
@@ -268,7 +700,10 @@ def state_map_svg(code):
         else:
             cls, label = "", f"{c['label']}: coming soon"
         parts.append(f'<a href="{{root}}{county_url(c)}" aria-label="{esc(label)}"><path class="area {cls}" d="{c["d"]}"><title>{esc(label)}</title></path></a>')
+    road_pieces, road_labels = roads_for(st["d"], label_view=box)
+    parts.append(interstate_paths(road_pieces))
     parts.append(f'<path class="state-line" d="{st["d"]}"/>')
+    parts.append(interstate_static_labels(road_labels, font * 0.72))
     for c in cross:
         n = len(county_listings(c["key"]))
         name = f"{c['label']}, {c['state']}"
@@ -386,7 +821,7 @@ def missing_categories_note(listings, state_code, suggest_href):
             f'Know one? <a href="{{root}}{suggest_href}">Suggest a resource</a>.</p>')
 
 
-def filter_bar(state_code=None, with_map=False):
+def filter_bar(state_code=None, with_map=False, list_total=0):
     notes = PILOT.get(state_code, {}).get("categoryNotes", {}) if state_code else {}
     chips, chip_notes = [], []
     for c in CATS:
@@ -396,20 +831,33 @@ def filter_bar(state_code=None, with_map=False):
         else:
             chips.append(f'<li><button type="button" class="chip" data-chip="{c["id"]}" aria-pressed="false">{esc(c["name"])}</button></li>')
     opts = lambda values: "".join(f'<option value="{esc(v)}">{esc(v)}</option>' for v in values)
-    map_btn = ('<button type="button" class="btn btn-secondary map-toggle" data-map-toggle aria-expanded="true" aria-controls="map-area">Hide map</button>'
-               if with_map else "")
+    if with_map:
+        search = place_search_form("bar")
+        view_toggle = f'''<div class="view-toggle map-toggle" role="group" aria-label="Map or list">
+      <button type="button" data-view="map" aria-pressed="true">Map</button>
+      <button type="button" data-view="list" aria-pressed="false">List (<span data-list-count>{list_total}</span>)</button>
+    </div>'''
+        tools = ""
+        count = f'<p class="results-count" data-results-count aria-live="polite">Showing {list_total} of {list_total} listings</p>'
+    else:
+        search = ""
+        view_toggle = ""
+        tools = '''<form class="zip-mini" data-zip-form role="search">
+      <label class="visually-hidden" for="bar-zip">ZIP code or city</label>
+      <input id="bar-zip" name="place" maxlength="48" autocomplete="off" placeholder="ZIP code or city">
+      <button class="btn" type="submit">Go</button>
+    </form>'''
+        count = '<p class="results-count" data-results-count aria-live="polite"></p>'
     return f'''
 <div class="filterbar" data-filterbar>
+  {search}
   <div class="bar-row">
     <button type="button" class="btn btn-secondary filters-toggle" data-filters-toggle aria-expanded="false" aria-controls="filter-panel">Filters<span class="count-badge" data-filter-count hidden></span></button>
-    {map_btn}
-    <form class="zip-mini" data-zip-form role="search">
-      <label class="visually-hidden" for="bar-zip">Zip code</label>
-      <input id="bar-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="Zip code">
-      <button class="btn" type="submit">Go</button>
-    </form>
+    {count if with_map else ""}
+    {tools}
   </div>
-  <p class="zip-status" data-zip-status aria-live="polite"></p>
+  <p class="zip-status" id="place-status" data-zip-status aria-live="polite"></p>
+  {view_toggle}
   <div id="filter-panel" class="filter-panel" hidden>
     <div class="label" id="cat-label">Category</div>
     <ul class="chips" aria-labelledby="cat-label">{"".join(chips)}</ul>
@@ -429,7 +877,7 @@ def filter_bar(state_code=None, with_map=False):
     </div>
     <button type="button" class="link-button" data-clear-filters>Clear filters</button>
   </div>
-  <p class="results-count" data-results-count aria-live="polite"></p>
+  {"" if with_map else count}
 </div>'''
 
 
@@ -514,7 +962,7 @@ def page(path, title, desc, body, state_code=None, county_name="", extra_head=""
   <link rel="stylesheet" href="{root}css/theme.css">
   <link rel="stylesheet" href="{root}css/styles.css">{extra_head}
 </head>
-<body data-root="{root}">
+<body data-root="{root}"{f' data-state="{esc(state_code)}"' if state_code else ""}{f' data-county="{esc(county_name)}"' if county_name else ""}>
   <a class="skip-link" href="#main">Skip to main content</a>
   <div class="test-banner" role="note">Test site: listings are drafts gathered from public pages and not yet confirmed by the organizations.</div>
   <header class="site-header">
@@ -574,8 +1022,8 @@ def build_home():
     <section class="panel" aria-labelledby="zip-heading">
       <h2 id="zip-heading">Find help near you</h2>
       <form data-zip-form role="search">
-        <label for="home-zip">Zip code</label>
-        <div class="btn-row"><input id="home-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" style="flex:1 1 8rem"><button class="btn" type="submit">Go</button></div>
+        <label for="home-zip">ZIP code or city</label>
+        <div class="btn-row"><input id="home-zip" name="place" maxlength="48" autocomplete="off" placeholder="ZIP code or city" style="flex:1 1 8rem"><button class="btn" type="submit">Go</button></div>
       </form>
       <p class="zip-status" data-zip-status aria-live="polite"></p>
       <p class="hint" style="margin:0.5rem 0 0">The pilot covers West Tennessee and DeSoto County, MS.</p>
@@ -622,6 +1070,7 @@ def build_pilot_state(code):
       <span><span class="swatch" style="background:var(--color-map-pilot-3)"></span>6–10</span>
       <span><span class="swatch" style="background:var(--color-map-pilot-4)"></span>11 or more</span>
       <span><span class="swatch" style="background:var(--color-map-muted)"></span>Coming soon</span>
+      <span><span class="road-sample" aria-hidden="true"></span>Interstate</span>
     </div>
   </section>
   <div>
@@ -631,9 +1080,9 @@ def build_pilot_state(code):
       <p class="hint" style="margin:0.75rem 0 0">Across the state line: <a href="{{root}}{county_url(cross)}">{esc(cross["label"])}, {cross["state"]}</a></p>
     </section>
     <section class="panel" aria-labelledby="zip-heading">
-      <h2 id="zip-heading">Search by zip code</h2>
-      <form data-zip-form role="search"><label class="visually-hidden" for="state-zip">Zip code</label>
-        <div class="btn-row"><input id="state-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="Zip code" style="flex:1 1 8rem"><button class="btn" type="submit">Go</button></div></form>
+      <h2 id="zip-heading">Search by ZIP code or city</h2>
+      <form data-zip-form role="search"><label class="visually-hidden" for="state-zip">ZIP code or city</label>
+        <div class="btn-row"><input id="state-zip" name="place" maxlength="48" autocomplete="off" placeholder="ZIP code or city" style="flex:1 1 8rem"><button class="btn" type="submit">Go</button></div></form>
       <p class="zip-status" data-zip-status aria-live="polite"></p>
     </section>
   </div>
@@ -702,31 +1151,25 @@ def build_pilot_county(c):
     nlocal = len(listings)
     ncats = len({l["category"] for l in listings})
     city_links = "".join(f'<li><a href="{{root}}{city_url(ci)}"><span>{esc(ci["name"])}</span><span class="count">{len(ci["listings"])} based here</span></a></li>' for ci in cities)
-    unpinned = [l for l in listings if l.get("latitude") is None]
+    shown = unique_listings(pinned)
     body = f'''
 {crumbs_for(state=code, county=c)}
 <h1>Homeschool resources in {esc(c["label"])}, {esc(st["name"])}</h1>
-<p class="intro">{plural(nlocal, "local and regional listing")} serve {esc(c["label"])} across {ncats} categories, plus statewide resources for {esc(st["name"])} families.</p>
-{filter_bar(code, with_map=True)}
-<div class="map-layout" id="map-area">
-  <section class="panel" aria-labelledby="map-h">
-    <h2 id="map-h" class="visually-hidden">Map of {esc(c["label"])}</h2>
-    {county_map_svg(c, pinned, "Map of " + place + " with listing pins")}
-    <div class="map-legend">
-      <span><span class="swatch round" style="background:var(--color-pin)"></span>Exact location</span>
-      <span><span class="swatch round" style="background:var(--color-pin);opacity:0.45"></span>Approximate (city only)</span>
+<p class="intro map-intro">{plural(nlocal, "local and regional listing")} serve {esc(c["label"])} across {ncats} categories, plus statewide resources for {esc(st["name"])} families.</p>
+{filter_bar(code, with_map=True, list_total=nlocal)}
+{explorer_block(c, shown, "Map of " + place)}
+<div class="list-extra">
+  <div class="map-layout">
+    <div>
+      {f'<section class="panel" aria-labelledby="cities-h"><h2 id="cities-h">Cities</h2><ul class="link-list">{city_links}</ul></section>' if cities else ""}
     </div>
-    {f'<p class="hint" style="margin:0.5rem 0 0">{len(unpinned)} listings have no fixed spot on the map. They are in the list below.</p>' if unpinned else ""}
-  </section>
-  <div>
-    {f'<section class="panel" aria-labelledby="cities-h"><h2 id="cities-h">Cities</h2><ul class="link-list">{city_links}</ul></section>' if cities else ""}
     {neighbors_html(c)}
   </div>
-</div>
-<div class="results-layout" style="margin-top:1.5rem">
-  <div>{category_sections(listings, code, suggest_href(code, c["name"]))}
-  {missing_categories_note(listings, code, suggest_href(code, c["name"]))}</div>
-  {also_column(code)}
+  <div class="results-layout" style="margin-top:1.5rem">
+    <div>{category_sections(listings, code, suggest_href(code, c["name"]))}
+    {missing_categories_note(listings, code, suggest_href(code, c["name"]))}</div>
+    {also_column(code)}
+  </div>
 </div>'''
     jsonld = json_ld(item_list(f"Homeschool resources in {place}", listings))
     page(county_url(c) + "index.html", f"Homeschool co-ops, tutors & resources in {place} | ShareSchooling",
@@ -766,26 +1209,23 @@ def build_city(ci):
     rest = [l for l in county_listings(c["key"]) if l["id"] not in ids]
     sw = statewide(code)
     place = f"{ci['name']}, {code}"
+    mapped = unique_listings(here + rest + [l for l in sw if l["_home"] == c["key"]])
     body = f'''
 {crumbs_for(state=code, county=c, city=ci)}
 <h1>Homeschool resources in {esc(ci["name"])}, {esc(st["name"])}</h1>
-<p class="intro">{len(here)} listings are based in {esc(ci["name"])}, and {len(rest)} more serve the rest of {esc(c["label"])}.</p>
-{filter_bar(code, with_map=True)}
-<div class="map-layout" id="map-area">
-  <section class="panel" aria-labelledby="map-h">
-    <h2 id="map-h" class="visually-hidden">Map of {esc(c["label"])}</h2>
-    {county_map_svg(c, here + rest + [l for l in sw if l["_home"] == c["key"]], "Map of " + c["label"] + " with listing pins. Listings in " + ci["name"] + " are larger.", emphasize=ci["name"])}
-    <p class="hint" style="margin:0.5rem 0 0">Pins for {esc(ci["name"])} are larger. Faded pins are elsewhere in {esc(c["label"])}.</p>
-  </section>
-  {neighbors_html(c)}
-</div>
-<div class="results-layout" style="margin-top:1.5rem">
-  <div>
-    <section class="cat-section" data-section aria-labelledby="here-h"><h2 id="here-h">In {esc(ci["name"])}</h2>{card_list(here, code, "None match these filters.")}</section>
-    <section class="cat-section" data-section aria-labelledby="rest-h"><h2 id="rest-h">Elsewhere in {esc(c["label"])}</h2>{card_list(rest, code, "None match these filters.")}</section>
-    <p class="empty-note" data-all-empty hidden>No listings match these filters yet. <a href="{{root}}{suggest_href(code, c["name"])}">Suggest a resource</a></p>
+<p class="intro map-intro">{len(here)} listings are based in {esc(ci["name"])}, and {len(rest)} more serve the rest of {esc(c["label"])}. Pins for {esc(ci["name"])} are solid color. Faded pins are elsewhere in {esc(c["label"])}.</p>
+{filter_bar(code, with_map=True, list_total=len(here) + len(rest))}
+{explorer_block(c, mapped, "Map of " + c["label"] + ", with " + ci["name"] + " highlighted", emphasize=ci["name"])}
+<div class="list-extra">
+  <div class="map-layout">{neighbors_html(c)}</div>
+  <div class="results-layout" style="margin-top:1.5rem">
+    <div>
+      <section class="cat-section" data-section aria-labelledby="here-h"><h2 id="here-h">In {esc(ci["name"])}</h2>{card_list(here, code, "None match these filters.")}</section>
+      <section class="cat-section" data-section aria-labelledby="rest-h"><h2 id="rest-h">Elsewhere in {esc(c["label"])}</h2>{card_list(rest, code, "None match these filters.")}</section>
+      <p class="empty-note" data-all-empty hidden>No listings match these filters yet. <a href="{{root}}{suggest_href(code, c["name"])}">Suggest a resource</a></p>
+    </div>
+    {also_column(code)}
   </div>
-  {also_column(code)}
 </div>'''
     jsonld = json_ld(item_list(f"Homeschool resources in {place}", here + rest))
     page(city_url(ci) + "index.html", f"Homeschool co-ops, tutors & resources in {place} | ShareSchooling",
@@ -848,8 +1288,8 @@ def build_listing(l):
     long_desc = f'<p>{esc(l["longDescription"])}</p>' if featured and present(l.get("longDescription")) else ""
 
     if county and l.get("latitude") is not None:
-        side_map = county_map_svg(county, [l], f"Map of {county['label']} showing {l['name']}", small=True)
-        map_note = "Approximate location (city only)." if l.get("geocodePrecision") == "city" else ""
+        side_map = interactive_map(county, [l], f"Map of {county['label']} showing {l['name']}", small=True, preview=False)
+        map_note = "Approximate location (city only)." if l.get("geocodePrecision") == "city" else "Exact location."
     elif county:
         side_map = outline_svg(county["d"], "Outline of " + county["label"])
         map_note = "No fixed spot on the map. Serves the area shown."
@@ -949,6 +1389,40 @@ def clean_old_output():
     shutil.rmtree(ROOT / "listing", ignore_errors=True)
 
 
+def norm_place(text):
+    text = re.sub(r"\bcounty\b", " ", str(text).lower().replace(".", " "))
+    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+
+
+def build_places():
+    """City and pilot-county names the ZIP/city box can jump to. Not listing content."""
+    cities = {}
+    for ci in CITIES.values():
+        pts = [(l["latitude"], l["longitude"]) for l in ci["listings"] if l.get("latitude") is not None]
+        rec = {
+            "name": ci["name"], "state": ci["county"]["state"], "county": ci["county"]["name"],
+            "url": city_url(ci), "countyUrl": county_url(ci["county"]),
+            "lat": round(sum(p[0] for p in pts) / len(pts), 5) if pts else None,
+            "lon": round(sum(p[1] for p in pts) / len(pts), 5) if pts else None,
+        }
+        bucket = cities.setdefault(norm_place(ci["name"]), [])
+        if not any(r["url"] == rec["url"] for r in bucket):
+            bucket.append(rec)
+    counties = {}
+    for c in COUNTIES.values():
+        if not c["pilot"]:
+            continue
+        rec = {"name": c["label"], "state": c["state"], "url": county_url(c), "countyUrl": county_url(c)}
+        for key in (norm_place(c["name"]), norm_place(c["label"])):
+            if not key:
+                continue
+            bucket = counties.setdefault(key, [])
+            if not any(r["url"] == rec["url"] for r in bucket):
+                bucket.append(rec)
+    states = {code: st["name"] for code, st in STATES.items()}
+    return {"cities": cities, "counties": counties, "states": states}
+
+
 def main():
     clean_old_output()
     build_home()
@@ -970,6 +1444,7 @@ def main():
 
     routes = {c["fips"]: [county_url(c), c["pilot"], f"{c['label']}, {c['state']}"] for c in COUNTIES.values()}
     (ROOT / "data/county-routes.json").write_text(json.dumps(routes, separators=(",", ":")))
+    (ROOT / "data/places.json").write_text(json.dumps(build_places(), ensure_ascii=False, separators=(",", ":")))
 
     today = date.today().isoformat()
     urls = "".join(f"  <url><loc>{esc(BASE + (p[:-len('index.html')] if p.endswith('index.html') else p))}</loc><lastmod>{today}</lastmod></url>\n"

@@ -5,6 +5,8 @@ Documentation and draft data for the map-first clearinghouse pilot. These files 
 | File | What it is |
 | --- | --- |
 | `claude-brief.md` | Build brief: drill-down map, filters, cards, forms, theme, and SEO pages for West Tennessee plus DeSoto County, MS. |
+| `map-navigation-brief.md` | Navigation and mobile-layout brief for Claude (Nov 17, 2026). David reviews this first; Claude implements after that, in a follow-up PR. |
+| `map-ux/` | Screenshots from the Nov 17, 2026 review of the live test site, referenced by `map-navigation-brief.md`. |
 | `listings.json` | Source of truth for the pilot data. An array of 77 listings (61 in Tennessee, 16 in Mississippi). |
 | `listings.csv` | The same 77 listings, flattened for spreadsheets. Row order and ids match `listings.json`. |
 

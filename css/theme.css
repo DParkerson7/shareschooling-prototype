@@ -33,6 +33,30 @@
   --color-pin: #b4532a;
   --color-pin-stroke: #ffffff;
 
+  /* Marker colors by resource type. Co-ops stay the original pin rust.
+     Extra slots cover a category a later state adds. */
+  --pin-co-ops: #b4532a;
+  --pin-microschools: #7b4fa6;
+  --pin-hybrid: #2e63b8;
+  --pin-tutors: #a87700;
+  --pin-classes: #2f8a4e;
+  --pin-support-groups: #c2417a;
+  --pin-field-trips: #5b7d1e;
+  --pin-sports: #d9661f;
+  --pin-testing: #5a5f6b;
+  --pin-special-needs: #8e2c48;
+  --pin-curriculum: #2b8fb8;
+  --pin-associations: #3d5a80;
+  --pin-umbrella-schools: #6b4a2e;
+  --pin-extra-1: #0f766e;
+  --pin-extra-2: #9a3412;
+  --pin-extra-3: #4338ca;
+  --pin-extra-4: #be123c;
+  --pin-extra-5: #3f6212;
+  --pin-extra-6: #155e75;
+  --color-map-land: #f6f1e4;
+  --color-cluster: #1F6F78;
+
   --color-banner-bg: #2f3a3b;
   --color-banner-text: #fdf6e6;
   --color-focus: #b86e00;
