@@ -398,8 +398,13 @@
     let maxW = 100;
     let limits = homeBox;
     const phone = () => window.matchMedia("(max-width: 899px)").matches;
-    const sameCityPx = () => (phone() ? 280 : 320);
-    const otherCityPx = () => (phone() ? 18 : 26);
+    const FAN_MAX = 8;
+    const clusterRadius = () => (phone() ? 60 : 52);
+    let drawn = [];
+    let railMode = "viewport";
+    let railIds = null;
+    let placingCard = false;
+    let nudgedCard = false;
 
     function parseBox(str) {
       const [x, y, w, h] = String(str).trim().split(/[\s,]+/).map(Number);
@@ -471,29 +476,21 @@
       return { sx: m.offX + (p.x - view.x) * m.s, sy: m.offY + (p.y - view.y) * m.s };
     }
     function clusterPins(list) {
+      // One cluster per screen-space grid cell. Cells are not chained together,
+      // so a dense city stays many bubbles instead of collapsing into one.
       const m = metrics();
-      const items = list.map((p) => ({ pin: p, ...screenOf(p, m) }));
-      const parent = items.map((_, i) => i);
-      const find = (i) => { while (parent[i] !== i) i = parent[i] = parent[parent[i]]; return i; };
-      const unite = (a, b) => { a = find(a); b = find(b); if (a !== b) parent[b] = a; };
-      const near = (a, b) => {
-        const d = Math.hypot(a.sx - b.sx, a.sy - b.sy);
-        const same = a.pin.city && a.pin.city === b.pin.city && a.pin.state === b.pin.state;
-        return d <= (same ? sameCityPx() : otherCityPx());
-      };
-      for (let i = 0; i < items.length; i++) {
-        for (let j = i + 1; j < items.length; j++) if (near(items[i], items[j])) unite(i, j);
-      }
-      const groups = new Map();
-      items.forEach((item, i) => {
-        const id = find(i);
-        if (!groups.has(id)) groups.set(id, []);
-        groups.get(id).push(item.pin);
+      const cell = clusterRadius();
+      const buckets = new Map();
+      list.forEach((p) => {
+        const s = screenOf(p, m);
+        const key = `${Math.floor(s.sx / cell)}:${Math.floor(s.sy / cell)}`;
+        const bucket = buckets.get(key);
+        if (bucket) bucket.push(p);
+        else buckets.set(key, [p]);
       });
-      return [...groups.values()].map((members) => {
-        const sx = members.reduce((s, p) => s + screenOf(p, m).sx, 0) / members.length;
-        const sy = members.reduce((s, p) => s + screenOf(p, m).sy, 0) / members.length;
-        return { members, sx, sy, x: view.x + (sx - m.offX) / m.s, y: view.y + (sy - m.offY) / m.s };
+      return [...buckets.values()].map((members) => {
+        const c = centroid(members);
+        return { members, x: c.x, y: c.y };
       });
     }
     function mstMaxEdge(members) {
@@ -552,16 +549,23 @@
       if (p.id === hoveredId) g.classList.add("is-hot");
       if (selected) g.classList.add("is-selected");
     }
+    function countLabel(n) { return n > 99 ? "99+" : String(n); }
     function drawCluster(g, group) {
-      const r = px(phone() ? 22 : 20);
+      const n = group.members.length;
+      const label = countLabel(n);
+      const wide = label.length >= 3;
+      const r = px(wide ? (phone() ? 26 : 24) : (phone() ? 22 : 20));
       const c = centroid(group.members);
       g.append(svgEl("circle", { cx: c.x, cy: c.y, r: r + px(6), fill: "#1F6F78", "fill-opacity": "0.18" }));
       g.append(svgEl("circle", { class: "focus-ring", cx: c.x, cy: c.y, r: r + px(4), fill: "none" }));
       g.append(svgEl("circle", { class: "cluster-bubble", cx: c.x, cy: c.y, r, "stroke-width": 3 }));
-      const text = svgEl("text", { class: "cluster-count", x: c.x, y: c.y + px(phone() ? 6 : 5), "font-size": px(phone() ? 16 : 15) });
-      text.textContent = String(group.members.length);
+      const text = svgEl("text", {
+        class: "cluster-count", x: c.x, y: c.y + px(wide ? 4 : (phone() ? 6 : 5)),
+        "font-size": px(wide ? 12 : (phone() ? 16 : 15)),
+      });
+      text.textContent = label;
       g.append(text);
-      g.append(svgEl("circle", { class: "hit", cx: c.x, cy: c.y, r: px(phone() ? 22 : 20) }));
+      g.append(svgEl("circle", { class: "hit", cx: c.x, cy: c.y, r: Math.max(r, px(phone() ? 22 : 20)) }));
       if (group.members.every((p) => p.dim)) g.classList.add("is-dim");
       if (group.members.some((p) => p.id === hoveredId)) g.classList.add("is-hot");
     }
@@ -580,30 +584,80 @@
       node.textContent = text;
       layer.append(node);
     }
+    function coincident(members) {
+      const bb = bboxOf(members);
+      if (!bb) return true;
+      const diag = Math.hypot(Math.max(bb.w - 0.02, 0), Math.max(bb.h - 0.02, 0));
+      const width = svg.getBoundingClientRect().width || 700;
+      return diag / minW * width < clusterRadius() * 1.2;
+    }
+    function syncRail() {
+      const rail = document.querySelector("[data-results-rail]");
+      if (!rail) return;
+      const blocked = new Set();
+      document.querySelectorAll("main [data-listing][hidden]").forEach((el) => blocked.add(el.dataset.id));
+      const home = frame(homeBox);
+      const full = view.w >= home.w * 0.9;
+      let shown = 0;
+      rail.querySelectorAll("[data-result]").forEach((row) => {
+        const id = row.dataset.id;
+        if (blocked.has(id)) { row.hidden = true; return; }
+        let show = true;
+        if (railMode === "cluster" && railIds) show = railIds.has(id);
+        else if (!full && byId.has(id)) {
+          const p = byId.get(id);
+          show = p.x >= view.x && p.x <= view.x + view.w && p.y >= view.y && p.y <= view.y + view.h;
+        }
+        row.hidden = !show;
+        if (show) shown++;
+      });
+      const scope = rail.querySelector("[data-rail-scope]");
+      const allBtn = rail.querySelector("[data-rail-all]");
+      if (railMode === "cluster" && railIds) {
+        if (scope) scope.textContent = `This group · ${railIds.size}`;
+        if (allBtn) allBtn.hidden = false;
+      } else if (!full) {
+        if (scope) scope.textContent = `On the map now · ${shown}`;
+        if (allBtn) allBtn.hidden = false;
+      } else {
+        if (scope) scope.textContent = "A–Z · tap a result to find it on the map";
+        if (allBtn) allBtn.hidden = true;
+      }
+      const empty = rail.querySelector("[data-rail-empty]");
+      if (empty) empty.hidden = shown > 0;
+    }
+    function focusClusterList(members) {
+      railMode = "cluster";
+      railIds = new Set(members.map((p) => p.id));
+      const list = document.querySelector("[data-results-rail] ul");
+      if (list) list.scrollTop = 0;
+    }
     function render() {
       if (svg.getBoundingClientRect().width < 20) return;
       if (spider && spider.ready && view.w > spider.scale * 1.35) spider = null;
       const list = visiblePins();
       const spiderIds = spider ? new Set(spider.members.map((p) => p.id)) : new Set();
-      const rest = list.filter((p) => !spiderIds.has(p.id));
+      const rest = spiderIds.size ? list.filter((p) => !spiderIds.has(p.id)) : list;
       labels.length = 0;
+      drawn = [];
       layer.replaceChildren();
       const groups = clusterPins(rest);
+      const labelGroups = groups.filter((g) => g.members.length > 1).length <= 14;
       if (spider) {
         const members = spider.members.filter((p) => list.some((v) => v.id === p.id));
-        if (members.length < 2) spider = null;
+        if (members.length < 2 || members.length > FAN_MAX) spider = null;
         else {
           const c = centroid(members);
-          const radius = px(Math.max(36, 16 + members.length * 4));
-          members.forEach((p) => {
-            const i = members.indexOf(p);
+          const radius = px(Math.max(34, 14 + members.length * 4));
+          members.forEach((p, i) => {
             const a = -Math.PI / 2 + (2 * Math.PI * i) / members.length;
-            const x = c.x + Math.cos(a) * radius;
-            const y = c.y + Math.sin(a) * radius;
-            layer.append(svgEl("line", { class: "spider-line", x1: c.x, y1: c.y, x2: x, y2: y }));
-            p._sx = x; p._sy = y;
+            p._sx = c.x + Math.cos(a) * radius;
+            p._sy = c.y + Math.sin(a) * radius;
+            layer.append(svgEl("line", { class: "spider-line", x1: c.x, y1: c.y, x2: p._sx, y2: p._sy }));
           });
-          const hub = markerGroup(svgEl("g", {}), "spider", "spider", `${members.length} listings. Collapse this group`, members);
+          const hub = markerGroup(svgEl("g", {}), "spider", "spider", "Collapse this group");
+          hub.dataset.ci = String(drawn.length);
+          drawn.push(members);
           drawCluster(hub, { members });
           layer.append(hub);
           members.forEach((p) => {
@@ -621,23 +675,27 @@
           const g = markerGroup(svgEl("g", {}), "pin", p.id, `${p.name}, ${p.catLabel}${p.city ? ", " + p.city : ""}${where}`);
           drawPin(g, p, p.x, p.y, p.id === selectedId);
           layer.append(g);
-          if (p.city && list.filter((o) => o.city === p.city && o.state === p.state).length === 1) addLabel(p.x, p.y + px(22), p.city, "middle");
         } else {
           const city = sharedCity(group.members);
-          const g = markerGroup(
-            svgEl("g", {}), "cluster", group.members.map((p) => p.id).join("|"),
-            `${group.members.length} listings${city ? " in " + city : ""}. Zoom in to choose one`,
-            group.members);
+          const noun = group.members.length === 1 ? "listing" : "listings";
+          const g = markerGroup(svgEl("g", {}), "cluster", "c" + drawn.length,
+            `${group.members.length} ${noun}${city ? " in " + city : ""}. Zoom in, or use the list to choose one`);
+          g.dataset.ci = String(drawn.length);
+          drawn.push(group.members);
           drawCluster(g, group);
           layer.append(g);
-          const place = sharedCity(group.members);
-          if (place) addLabel(centroid(group.members).x, centroid(group.members).y + px(phone() ? 40 : 36), place, "middle");
+          if (labelGroups && city) addLabel(group.x, group.y + px(phone() ? 40 : 36), city, "middle");
         }
       });
       $$("[data-legend-cat]").forEach((li) => {
         li.classList.toggle("is-off", !list.some((p) => p.cat === li.dataset.legendCat));
       });
-      if (previewOpen) positionPreview();
+      syncRail();
+      if (previewOpen && !placingCard) positionPreview();
+    }
+    function membersOf(marker) {
+      const idx = marker && marker.dataset.ci;
+      return idx != null && drawn[idx] ? drawn[idx] : [];
     }
     function jump(box, done) {
       const next = clampView(frame(box));
@@ -679,18 +737,24 @@
       jump(boxAround(list, minFrac == null ? (list.length === 1 ? 0.34 : 0.2) : minFrac));
     }
     function expandCluster(members, done) {
-      const edge = mstMaxEdge(members);
-      const width = svg.getBoundingClientRect().width || 700;
-      const threshold = members.every((p) => p.city && p.city === members[0].city) ? sameCityPx() : otherCityPx();
-      const splitW = edge > 0.02 ? (edge * width) / (threshold * 1.15) : 0;
-      if (edge < 0.02 || splitW < minW) {
-        spider = { members: members.slice(), scale: 0, ready: false };
-        jump(boxAround(members, 0.28), done);
+      focusClusterList(members);
+      if (coincident(members)) {
+        if (members.length <= FAN_MAX) {
+          spider = { members: members.slice(), scale: 0, ready: false };
+          jump(boxAround(members, 0.22), done);
+        } else {
+          render();
+          if (done) done();
+        }
         return;
       }
+      const edge = mstMaxEdge(members);
+      const width = svg.getBoundingClientRect().width || 700;
+      const splitW = edge > 0 ? (edge * width) / (clusterRadius() * 1.08) : minW;
+      const w = Math.max(minW, Math.min(view.w / 1.7, Math.max(splitW, minW)));
       const c = centroid(members);
-      const w = Math.min(view.w / 1.15, Math.max(minW, splitW));
-      jump({ x: c.x - w / 2, y: c.y - w / aspect() / 2, w, h: w / aspect() }, done);
+      const h = w / aspect();
+      jump({ x: c.x - w / 2, y: c.y - h / 2, w, h }, done);
     }
     function groupFor(id) {
       const list = visiblePins();
@@ -752,31 +816,89 @@
       selectedId = item.id;
       highlight(item.id);
     }
+    function stagePoint(x, y) {
+      const m = metrics();
+      const svgRect = svg.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
+      return {
+        x: svgRect.left + m.offX + (x - view.x) * m.s - stageRect.left,
+        y: svgRect.top + m.offY + (y - view.y) * m.s - stageRect.top,
+      };
+    }
+    function obstacleBox() {
+      const pts = [];
+      const add = (x, y) => pts.push(stagePoint(x, y));
+      const sel = selectedId && byId.get(selectedId);
+      if (!sel) return null;
+      const fanned = spider && spider.members.some((m) => m.id === sel.id);
+      const sx = fanned && sel._sx != null ? sel._sx : sel.x;
+      const sy = fanned && sel._sy != null ? sel._sy : sel.y;
+      add(sx, sy);
+      if (fanned) {
+        spider.members.forEach((p) => add(p._sx != null ? p._sx : p.x, p._sy != null ? p._sy : p.y));
+        const c = centroid(spider.members);
+        add(c.x, c.y);
+      }
+      previewGroup.forEach((p) => {
+        if (p.id !== sel.id) add(p._sx != null && fanned ? p._sx : p.x, p._sy != null && fanned ? p._sy : p.y);
+      });
+      if (!pts.length) return null;
+      const padPx = 20;
+      return {
+        l: Math.min(...pts.map((p) => p.x)) - padPx,
+        t: Math.min(...pts.map((p) => p.y)) - padPx,
+        r: Math.max(...pts.map((p) => p.x)) + padPx,
+        b: Math.max(...pts.map((p) => p.y)) + padPx,
+      };
+    }
+    function rectsOverlap(a, b, gap) {
+      return !(a.r + gap <= b.l || b.r + gap <= a.l || a.b + gap <= b.t || b.b + gap <= a.t);
+    }
     function positionPreview() {
-      if (!previewOpen || !preview) return;
+      if (!previewOpen || !preview || placingCard) return;
       const item = previewGroup[previewIndex];
       if (!item) return;
       if (phone()) {
         preview.classList.add("is-sheet");
         preview.style.left = "";
         preview.style.top = "";
+        preview.style.width = "";
         return;
       }
       preview.classList.remove("is-sheet");
-      const point = item._sx != null && spider && spider.members.some((p) => p.id === item.id)
-        ? { x: item._sx, y: item._sy } : item;
-      const m = metrics();
-      const pxX = m.offX + (point.x - view.x) * m.s;
-      const pxY = m.offY + (point.y - view.y) * m.s;
-      const cardW = Math.min(290, stage.clientWidth - 16);
-      let left = pxX + 16;
-      let top = pxY - 70;
-      if (left + cardW > stage.clientWidth - 8) left = pxX - cardW - 16;
-      left = Math.max(8, Math.min(left, stage.clientWidth - cardW - 8));
-      const cardH = preview.offsetHeight || 180;
-      top = Math.max(8, Math.min(top, stage.clientHeight - cardH - 8));
-      preview.style.left = left + "px";
-      preview.style.top = top + "px";
+      const cardW = Math.min(300, Math.max(220, stage.clientWidth * 0.36));
+      preview.style.width = cardW + "px";
+      const cardH = preview.offsetHeight || 170;
+      const left = 10;
+      const top = Math.min(76, Math.max(8, stage.clientHeight - cardH - 8));
+      const card = { l: left, t: top, r: left + cardW, b: top + cardH };
+      const stageRect = stage.getBoundingClientRect();
+      const covered = [];
+      layer.querySelectorAll(".mark, .cluster-bubble").forEach((dot) => {
+        const m = dot.getBoundingClientRect();
+        const box = {
+          l: m.left - stageRect.left, t: m.top - stageRect.top,
+          r: m.right - stageRect.left, b: m.bottom - stageRect.top,
+        };
+        if (rectsOverlap(card, box, 8)) covered.push(box);
+      });
+      if (covered.length && !nudgedCard) {
+        nudgedCard = true;
+        placingCard = true;
+        const m = metrics();
+        const leftEdge = Math.min(...covered.map((b) => b.l));
+        const midY = covered.reduce((s, b) => s + (b.t + b.b) / 2, 0) / covered.length;
+        const deltaX = (card.r + 18 - leftEdge) / m.s;
+        const deltaY = (top + cardH + 28 - midY) / m.s;
+        view = clampView({ ...view, x: view.x - deltaX, y: view.y - deltaY });
+        applyView();
+        render();
+        placingCard = false;
+        positionPreview();
+        return;
+      }
+      preview.style.left = Math.round(left) + "px";
+      preview.style.top = Math.round(top) + "px";
     }
     function openPreview(id, group) {
       if (!allowPreview || !preview) { highlight(id); selectedId = id; render(); return; }
@@ -793,6 +915,7 @@
       if (!previewOpen) return;
       previewOpen = false;
       selectedId = null;
+      nudgedCard = false;
       if (preview) preview.hidden = true;
       $$("[data-result], [data-listing]").forEach((el) => el.classList.remove("is-selected"));
       render();
@@ -810,18 +933,22 @@
       const pin = byId.get(id);
       if (!pin || !visiblePins().some((p) => p.id === id)) return;
       const group = groupFor(id);
-      const show = () => openPreview(id, groupFor(id));
-      if (group.length > 1 && !(spider && spider.members.some((p) => p.id === id))) {
-        const edge = mstMaxEdge(group);
-        const span = bboxOf(group);
-        const wide = span && Math.hypot(span.w, span.h) > 1.35 && edge > 0.08;
-        if (!wide) {
+      const inSpider = spider && spider.members.some((p) => p.id === id);
+      if (group.length > 1 && !inSpider) {
+        focusClusterList(group);
+        if (coincident(group) && group.length <= FAN_MAX) {
           spider = { members: group.slice(), scale: 0, ready: false };
-          jump(boxAround(group, 0.28), show);
-        } else expandCluster(group, show);
+          jump(boxAround(group, 0.22), () => openPreview(id, group));
+        } else if (coincident(group)) {
+          jump(boxAround(group, 0.16), () => openPreview(id, group));
+        } else expandCluster(group, () => {
+          const now = groupFor(id);
+          focusClusterList(now.length ? now : group);
+          openPreview(id, now.length ? now : group);
+        });
         return;
       }
-      show();
+      openPreview(id, inSpider ? spider.members : group);
     }
     function clientToView(cx, cy) {
       const m = metrics();
@@ -841,7 +968,15 @@
       render();
     }
     function zoomCenter(factor) {
+      railMode = "viewport";
+      railIds = null;
       zoomAt(view.x + view.w / 2, view.y + view.h / 2, factor);
+    }
+    let renderQueued = false;
+    function scheduleRender() {
+      if (renderQueued) return;
+      renderQueued = true;
+      requestAnimationFrame(() => { renderQueued = false; render(); });
     }
 
     configureLimits();
@@ -853,8 +988,9 @@
       const marker = e.target.closest("[data-marker]");
       if (!marker) { closePreview(); return; }
       if (marker.dataset.kind === "cluster" || marker.dataset.kind === "spider") {
-        if (marker.dataset.kind === "spider") { spider = null; render(); return; }
-        expandCluster(marker.dataset.members.split("|").map((id) => byId.get(id)).filter(Boolean));
+        if (marker.dataset.kind === "spider") { spider = null; railMode = "viewport"; railIds = null; render(); return; }
+        const members = membersOf(marker);
+        if (members.length) expandCluster(members);
         return;
       }
       if (marker.dataset.kind === "pin") {
@@ -917,7 +1053,7 @@
         const scale = m.rect.width / gesture.view.w;
         view = clampView({ ...gesture.view, x: gesture.view.x - (e.clientX - gesture.x) / scale, y: gesture.view.y - (e.clientY - gesture.y) / scale, w: gesture.view.w, h: gesture.view.h });
         applyView();
-        render();
+        scheduleRender();
       }
       if (gesture.type === "pinch" && pointers.size >= 2) {
         e.preventDefault();
@@ -941,11 +1077,16 @@
           y: vy - (cy - m0.top - offY1) / s1,
         });
         applyView();
-        render();
+        scheduleRender();
       }
     });
     svg.addEventListener("pointerup", (e) => {
-      if (gesture && gesture.moved) suppressClick = true;
+      if (gesture && gesture.moved) {
+        suppressClick = true;
+        railMode = "viewport";
+        railIds = null;
+        syncRail();
+      }
       pointers.delete(e.pointerId);
       if (pointers.size < 2 && gesture && gesture.type === "pinch") gesture = null;
       if (pointers.size === 0) gesture = null;
@@ -960,7 +1101,19 @@
 
     $("[data-zoom-in]", stage).addEventListener("click", () => zoomCenter(1.4));
     $("[data-zoom-out]", stage).addEventListener("click", () => zoomCenter(1 / 1.4));
-    $("[data-fit]", stage).addEventListener("click", () => fitTo(visiblePins()));
+    $("[data-fit]", stage).addEventListener("click", () => {
+      railMode = "viewport";
+      railIds = null;
+      spider = null;
+      fitTo(visiblePins());
+    });
+    const showAll = document.querySelector("[data-rail-all]");
+    if (showAll) showAll.addEventListener("click", () => {
+      railMode = "viewport";
+      railIds = null;
+      spider = null;
+      jump(homeBox);
+    });
     const keyBtn = $("[data-key]", stage);
     if (keyBtn) keyBtn.addEventListener("click", () => {
       const key = document.getElementById("map-key");

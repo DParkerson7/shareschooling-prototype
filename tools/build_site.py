@@ -309,7 +309,7 @@ def legend_html():
       <div class="key-sub">
         <span><span class="mk solid" style="--c:#5c544a" aria-hidden="true"></span>Solid = exact location</span>
         <span><span class="mk hollow" style="--c:#5c544a" aria-hidden="true"></span>Hollow = approximate (city only)</span>
-        <span><span class="mk cluster-sample" aria-hidden="true">16</span>Number = group of listings, zoom in</span>
+        <span><span class="mk cluster-sample" aria-hidden="true">99+</span>Number = group. Click to zoom in. Over 99 shows as 99+.</span>
       </div>
       <p class="hint map-scroll-hint">Scrolling moves the page. Pinch, or hold Ctrl and scroll, to zoom the map.</p>
       <p class="hint unpinned-note" data-unpinned-note></p>
@@ -411,7 +411,8 @@ def results_rail(listings):
                 f'<li data-result data-id="{esc(l["id"])}" data-name="{esc(l["name"].lower())}">'
                 f'<button type="button" class="result-btn">{body}</button></li>')
     return f'''<aside class="results-rail" data-results-rail aria-labelledby="results-heading">
-  <h2 id="results-heading">Results <small>A–Z · tap a result to find it on the map</small></h2>
+  <h2 id="results-heading">Results <small data-rail-scope>A–Z · tap a result to find it on the map</small></h2>
+  <p class="rail-scope-actions"><button type="button" class="link-button" data-rail-all hidden>Show every result</button></p>
   <ul>{"".join(rows)}</ul>
   <p class="hint rail-note" data-unpinned-note></p>
   <p class="empty-note" data-rail-empty hidden>No listings match these filters.</p>
