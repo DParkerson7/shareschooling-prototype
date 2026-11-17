@@ -271,6 +271,20 @@ legend { font-weight: 600; padding: 0; margin-bottom: 0.25rem; }
 .map-svg [data-marker]:focus { outline: none; }
 .map-svg [data-marker]:focus-visible .focus-ring { stroke: var(--color-focus); stroke-width: 3; fill: none; vector-effect: non-scaling-stroke; }
 .map-svg .is-dim { opacity: 0.42; }
+.map-svg .interstates { pointer-events: none; --road-width: 1.5; }
+.map-svg .interstate {
+  fill: none; stroke: #7d94a3; stroke-width: var(--road-width);
+  stroke-linecap: round; stroke-linejoin: round;
+  vector-effect: non-scaling-stroke; pointer-events: none;
+}
+.map-svg .road-label {
+  font-family: var(--font-body); font-weight: 700; fill: #3e5160;
+  paint-order: stroke; stroke: #fff; stroke-linejoin: round; pointer-events: none;
+}
+.road-sample {
+  display: inline-block; width: 1.35rem; height: 0; border-top: 2px solid #7d94a3;
+  vertical-align: middle; margin-right: 0.15rem;
+}
 .map-svg .is-hot .select-ring, .map-svg .is-selected .select-ring { display: inline; }
 
 .map-controls {
@@ -294,6 +308,8 @@ legend { font-weight: 600; padding: 0; margin-bottom: 0.25rem; }
   box-shadow: 0 2px 8px rgba(0,0,0,.15); color: var(--color-primary);
   display: flex; align-items: center; justify-content: center; padding: 0;
 }
+.fit-btn .icon { width: 20px; height: 20px; display: block; flex: none; overflow: visible; }
+.fit-btn .icon path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .fit-btn .fit-label {
   position: absolute; left: 50%; top: calc(100% + 3px); transform: translateX(-50%);
   width: 4.6rem; font-size: 0.72rem; font-weight: 700; line-height: 1.15; text-align: center;
@@ -477,8 +493,8 @@ legend { font-weight: 600; padding: 0; margin-bottom: 0.25rem; }
     align-items: start;
   }
   .explorer-grid > .map-column { display: contents; }
-  .results-rail { grid-area: rail; height: 300px; }
-  .map-stage { grid-area: map; height: 300px; }
+  .results-rail { grid-area: rail; height: 460px; }
+  .map-stage { grid-area: map; height: 460px; }
   .map-key { grid-area: key; margin-top: 0.35rem; padding: 0.35rem 0.7rem 0.3rem; }
   .map-key h2 { margin-bottom: 0.1rem; font-size: 0.72rem; }
   .map-key ul { font-size: 0.78rem; gap: 0.12rem 0.7rem; }

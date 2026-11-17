@@ -488,10 +488,33 @@
         if (bucket) bucket.push(p);
         else buckets.set(key, [p]);
       });
-      return [...buckets.values()].map((members) => {
+      let clusters = [...buckets.values()].map((members) => {
         const c = centroid(members);
         return { members, x: c.x, y: c.y };
       });
+      // Pull together bubbles whose drawn circles would overlap.
+      const bubbleR = (n) => {
+        const wide = countLabel(n).length >= 3;
+        return (wide ? (phone() ? 26 : 24) : (phone() ? 22 : 20)) + 8;
+      };
+      for (let guard = 0; guard < 24 && clusters.length > 1; guard++) {
+        const screen = clusters.map((c) => screenOf({ x: c.x, y: c.y }, m));
+        let bestI = -1, bestJ = -1, bestRatio = 1;
+        for (let i = 0; i < clusters.length; i++) {
+          for (let j = i + 1; j < clusters.length; j++) {
+            const need = bubbleR(clusters[i].members.length) + bubbleR(clusters[j].members.length);
+            const d = Math.hypot(screen[i].sx - screen[j].sx, screen[i].sy - screen[j].sy);
+            const ratio = d / need;
+            if (ratio < bestRatio) { bestRatio = ratio; bestI = i; bestJ = j; }
+          }
+        }
+        if (bestI < 0) break;
+        const members = clusters[bestI].members.concat(clusters[bestJ].members);
+        const c = centroid(members);
+        clusters[bestI] = { members, x: c.x, y: c.y };
+        clusters.splice(bestJ, 1);
+      }
+      return clusters;
     }
     function mstMaxEdge(members) {
       if (members.length < 2) return 0;
@@ -578,11 +601,12 @@
       const m = metrics();
       const sx = m.offX + (x - view.x) * m.s;
       const sy = m.offY + (y - view.y) * m.s;
-      if (labels.some((l) => Math.hypot(l.sx - sx, l.sy - sy) < 28)) return;
-      labels.push({ sx, sy });
+      if (labels.some((l) => Math.hypot(l.sx - sx, l.sy - sy) < 44 || l.text === text)) return false;
+      labels.push({ sx, sy, text });
       const node = svgEl("text", { class: "city-label", x, y, "text-anchor": anchor || "middle", "font-size": px(12), "stroke-width": px(3) });
       node.textContent = text;
       layer.append(node);
+      return true;
     }
     function coincident(members) {
       const bb = bboxOf(members);
@@ -642,7 +666,6 @@
       drawn = [];
       layer.replaceChildren();
       const groups = clusterPins(rest);
-      const labelGroups = groups.filter((g) => g.members.length > 1).length <= 14;
       if (spider) {
         const members = spider.members.filter((p) => list.some((v) => v.id === p.id));
         if (members.length < 2 || members.length > FAN_MAX) spider = null;
@@ -684,14 +707,51 @@
           drawn.push(group.members);
           drawCluster(g, group);
           layer.append(g);
-          if (labelGroups && city) addLabel(group.x, group.y + px(phone() ? 40 : 36), city, "middle");
         }
       });
+      const named = new Set();
+      groups.filter((g) => g.members.length > 1)
+        .sort((a, b) => b.members.length - a.members.length)
+        .forEach((g) => {
+          const city = sharedCity(g.members);
+          if (!city || named.has(city)) return;
+          if (addLabel(g.x, g.y + px(phone() ? 40 : 34), city, "middle")) named.add(city);
+        });
+      drawRoadLabels(groups);
       $$("[data-legend-cat]").forEach((li) => {
         li.classList.toggle("is-off", !list.some((p) => p.cat === li.dataset.legendCat));
       });
       syncRail();
       if (previewOpen && !placingCard) positionPreview();
+    }
+    function drawRoadLabels(groups) {
+      const holder = svg.querySelector("[data-road-labels]");
+      const raw = stage.querySelector("[data-road-label-data]");
+      const roads = svg.querySelector(".interstates");
+      if (roads) {
+        const zoom = frame(homeBox).w / Math.max(view.w, 0.01);
+        const thick = Math.min(2.6, 1.5 + Math.max(0, zoom - 1) * 0.45);
+        roads.style.setProperty("--road-width", thick.toFixed(2));
+      }
+      if (!holder || !raw) return;
+      let specs = [];
+      try { specs = JSON.parse(raw.textContent || "[]"); } catch (err) { specs = []; }
+      holder.replaceChildren();
+      const m = metrics();
+      const bubbles = groups.filter((g) => g.members.length > 1).map((g) => screenOf({ x: g.x, y: g.y }, m));
+      const placed = [];
+      specs.forEach((spec) => {
+        const s = screenOf({ x: spec.x, y: spec.y }, m);
+        if (bubbles.some((b) => Math.hypot(b.sx - s.sx, b.sy - s.sy) < 34)) return;
+        if (placed.some((p) => Math.hypot(p.sx - s.sx, p.sy - s.sy) < 46)) return;
+        placed.push(s);
+        const text = svgEl("text", {
+          class: "road-label", x: spec.x, y: spec.y, "text-anchor": "middle",
+          "font-size": px(11), "stroke-width": px(3),
+        });
+        text.textContent = "I-" + spec.ref;
+        holder.append(text);
+      });
     }
     function membersOf(marker) {
       const idx = marker && marker.dataset.ci;

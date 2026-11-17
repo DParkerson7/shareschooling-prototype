@@ -88,7 +88,9 @@
     <svg class="map-svg interactive" viewBox="628.20 369.10 10.61 10.88" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Map of Chester County, TN">
       <path class="area neighbor" d="M622.87,376.21L622.84,375.39L624.73,375.29L629.08,375.05L629.15,376.04L630.14,377.23L630.49,379.08L630.83,384.85L630.16,384.9L626.6,385.17L623.27,385.42L622.87,376.21Z"/><path class="area neighbor" d="M637.92,375.43L637.88,374.57L640.05,374.29L640.95,375.22L642.25,375.01L643.29,374.15L644.07,374.67L644.51,375.58L644.38,376.78L645.05,376.81L645.54,383.42L641.53,383.71L641.6,383.98L638.61,384.23L638.29,384.25L637.92,375.43Z"/><path class="area neighbor" d="M632.72,366.47L633.34,365.62L640.45,365.22L640.63,369.98L639.83,371.88L640.05,374.29L637.88,374.57L637.69,372.89L636.78,373.2L635.07,372.66L633.84,371.03L632.95,371.07L632.72,366.47Z"/><path class="area neighbor" d="M630.49,379.08L631.62,379L632.07,377.52L632.86,376.29L634.18,375.7L637.92,375.43L638.29,384.25L630.83,384.85L630.49,379.08Z"/><path class="area neighbor" d="M624.47,369.31L625.38,369.74L627.53,366.99L627.09,366.72L630.9,366.57L632.72,366.47L632.95,371.07L632,373.42L629.55,375.02L629.08,375.05L624.73,375.29L624.47,369.31Z"/>
       <path class="area focus" d="M629.08,375.05L629.55,375.02L632,373.42L632.95,371.07L633.84,371.03L635.07,372.66L636.78,373.2L637.69,372.89L637.88,374.57L637.92,375.43L634.18,375.7L632.86,376.29L632.07,377.52L631.62,379L630.49,379.08L630.14,377.23L629.15,376.04L629.08,375.05Z"/>
+      
       <text class="neighbor-label" x="636.67" y="369.89" text-anchor="middle" font-size="0.26">HENDERSON CO.</text><text class="neighbor-label" x="628.71" y="370.88" text-anchor="middle" font-size="0.26">MADISON CO.</text>
+      <g data-road-labels></g>
       <g data-marker-layer></g>
     </svg>
     <div class="map-controls">
@@ -96,7 +98,7 @@
         <button type="button" data-zoom-in aria-label="Zoom in">+</button>
         <button type="button" data-zoom-out aria-label="Zoom out">−</button>
       </div>
-      <button type="button" class="fit-btn" data-fit aria-label="Fit to results"><svg class="icon" width="18" height="18" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/></svg><span class="fit-label">Fit to results</span></button>
+      <button type="button" class="fit-btn" data-fit aria-label="Fit to results"><svg class="icon" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.2 6.2V2.2h4M9.8 2.2h4v4M13.8 9.8v4h-4M6.2 13.8h-4v-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fit-label">Fit to results</span></button>
     </div>
     <button type="button" class="key-btn" data-key aria-controls="map-key"><span class="mk solid pin-co-ops" aria-hidden="true"></span><span class="mk solid pin-microschools" aria-hidden="true"></span><span class="mk solid pin-hybrid" aria-hidden="true"></span> Key</button>
     <div class="map-preview" data-preview hidden role="dialog" aria-modal="false" aria-labelledby="map-preview-title" tabindex="-1">
@@ -116,6 +118,7 @@
       </div>
     </div>
     <script type="application/json" data-map-pins>[{"id": "jackson-state-community-college-dual-enrollment-and-middle-college-jackson", "name": "Jackson State Community College: Dual Enrollment & Middle College", "cat": "classes", "catLabel": "Classes and enrichment", "token": "classes", "exact": true, "x": 629.772, "y": 370.012, "city": "Jackson", "state": "TN", "url": "listing/jackson-state-community-college-dual-enrollment-and-middle-college-jackson/", "ages": "High school juniors and seniors (dual enrollment)", "faith": "Secular", "delivery": "In person", "dim": false}, {"id": "pinson-mounds-state-archaeological-park-pinson", "name": "Pinson Mounds State Archaeological Park", "cat": "field-trips", "catLabel": "Field trips", "token": "field-trips", "exact": true, "x": 631.683, "y": 373.219, "city": "Pinson", "state": "TN", "url": "listing/pinson-mounds-state-archaeological-park-pinson/", "ages": "All", "faith": "Secular", "delivery": "In person", "dim": false}, {"id": "shiloh-national-military-park-shiloh", "name": "Shiloh National Military Park", "cat": "field-trips", "catLabel": "Field trips", "token": "field-trips", "exact": false, "x": 638.419, "y": 381.495, "city": "Shiloh", "state": "TN", "url": "listing/shiloh-national-military-park-shiloh/", "ages": "Junior Ranger ages 7-15 recommended; all ages welcome", "faith": "Secular", "delivery": "In person", "dim": false}, {"id": "west-tennessee-home-education-association-wthea-jackson", "name": "West Tennessee Home Education Association (WTHEA)", "cat": "support-groups", "catLabel": "Support groups", "token": "support-groups", "exact": false, "x": 629.191, "y": 370.757, "city": "Jackson", "state": "TN", "url": "listing/west-tennessee-home-education-association-wthea-jackson/", "ages": "All", "faith": "Faith-based", "delivery": "In person", "dim": false}, {"id": "wthea-athletics-warriors-jackson", "name": "WTHEA Athletics (Warriors)", "cat": "sports", "catLabel": "Sports", "token": "sports", "exact": false, "x": 629.191, "y": 370.757, "city": "Jackson", "state": "TN", "url": "listing/wthea-athletics-warriors-jackson/", "ages": "Teams for grades 7-12 (tryouts)", "faith": "Faith-based", "delivery": "In person", "dim": false}]</script>
+    <script type="application/json" data-road-label-data>[]</script>
   </div>
   <div class="map-key" id="map-key">
       <h2>Resource type (marker color)</h2>
@@ -124,6 +127,7 @@
         <span><span class="mk solid" style="--c:#5c544a" aria-hidden="true"></span>Solid = exact location</span>
         <span><span class="mk hollow" style="--c:#5c544a" aria-hidden="true"></span>Hollow = approximate (city only)</span>
         <span><span class="mk cluster-sample" aria-hidden="true">99+</span>Number = group. Click to zoom in. Over 99 shows as 99+.</span>
+        <span><span class="road-sample" aria-hidden="true"></span>Interstate</span>
       </div>
       <p class="hint map-scroll-hint">Scrolling moves the page. Pinch, or hold Ctrl and scroll, to zoom the map.</p>
       <p class="hint unpinned-note" data-unpinned-note></p>

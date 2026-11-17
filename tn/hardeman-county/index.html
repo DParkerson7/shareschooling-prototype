@@ -89,6 +89,8 @@
       <path class="area neighbor" d="M630.16,384.9L630.83,384.85L638.29,384.25L638.61,384.23L639.02,389.7L632.5,390.19L631.87,390.24L631.69,387.91L630.4,388.01L630.16,384.9Z"/><path class="area neighbor" d="M620.43,385.63L623.27,385.42L626.6,385.17L626.82,388.28L626.56,389.29L625.59,389.37L625.95,394.32L623.05,394.54L623.07,394.87L622.09,394.95L621.66,388.98L620.67,389.05L620.43,385.63Z"/><path class="area neighbor" d="M626.6,385.17L630.16,384.9L630.4,388.01L631.69,387.91L631.87,390.24L632.5,390.19L632.79,393.85L632.47,393.87L625.95,394.32L625.59,389.37L626.56,389.29L626.82,388.28L626.6,385.17Z"/><path class="area neighbor" d="M629.08,375.05L629.55,375.02L632,373.42L632.95,371.07L633.84,371.03L635.07,372.66L636.78,373.2L637.69,372.89L637.88,374.57L637.92,375.43L634.18,375.7L632.86,376.29L632.07,377.52L631.62,379L630.49,379.08L630.14,377.23L629.15,376.04L629.08,375.05Z"/><path class="area neighbor" d="M614.69,377.27L616.34,376.49L617.55,376.45L622.87,376.21L623.27,385.42L620.43,385.63L615.07,385.97L614.69,377.27Z"/><path class="area neighbor" d="M619.06,366.83L620.7,368.16L621.93,368.25L623.59,369.22L624.47,369.31L624.73,375.29L622.84,375.39L622.87,376.21L617.55,376.45L617.41,373.17L616.76,372.43L617.33,372.06L617.26,370.05L617.87,368.52L617.61,368.12L618.21,366.77L619.06,366.83Z"/><path class="area neighbor" d="M630.49,379.08L631.62,379L632.07,377.52L632.86,376.29L634.18,375.7L637.92,375.43L638.29,384.25L630.83,384.85L630.49,379.08Z"/><path class="area neighbor" d="M624.47,369.31L625.38,369.74L627.53,366.99L627.09,366.72L630.9,366.57L632.72,366.47L632.95,371.07L632,373.42L629.55,375.02L629.08,375.05L624.73,375.29L624.47,369.31Z"/>
       <path class="area focus" d="M622.87,376.21L622.84,375.39L624.73,375.29L629.08,375.05L629.15,376.04L630.14,377.23L630.49,379.08L630.83,384.85L630.16,384.9L626.6,385.17L623.27,385.42L622.87,376.21Z"/>
       
+      
+      <g data-road-labels></g>
       <g data-marker-layer></g>
     </svg>
     <div class="map-controls">
@@ -96,7 +98,7 @@
         <button type="button" data-zoom-in aria-label="Zoom in">+</button>
         <button type="button" data-zoom-out aria-label="Zoom out">−</button>
       </div>
-      <button type="button" class="fit-btn" data-fit aria-label="Fit to results"><svg class="icon" width="18" height="18" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/></svg><span class="fit-label">Fit to results</span></button>
+      <button type="button" class="fit-btn" data-fit aria-label="Fit to results"><svg class="icon" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.2 6.2V2.2h4M9.8 2.2h4v4M13.8 9.8v4h-4M6.2 13.8h-4v-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fit-label">Fit to results</span></button>
     </div>
     <button type="button" class="key-btn" data-key aria-controls="map-key"><span class="mk solid pin-co-ops" aria-hidden="true"></span><span class="mk solid pin-microschools" aria-hidden="true"></span><span class="mk solid pin-hybrid" aria-hidden="true"></span> Key</button>
     <div class="map-preview" data-preview hidden role="dialog" aria-modal="false" aria-labelledby="map-preview-title" tabindex="-1">
@@ -116,6 +118,7 @@
       </div>
     </div>
     <script type="application/json" data-map-pins>[{"id": "fcs-homeschool-network-somerville", "name": "FCS Homeschool Network", "cat": "hybrid", "catLabel": "Hybrid / university-model", "token": "hybrid", "exact": false, "x": 620.079, "y": 379.931, "city": "Somerville", "state": "TN", "url": "listing/fcs-homeschool-network-somerville/", "ages": "Pre-K through high school", "faith": "Faith-based", "delivery": "In person", "dim": false}, {"id": "west-tennessee-home-education-association-wthea-jackson", "name": "West Tennessee Home Education Association (WTHEA)", "cat": "support-groups", "catLabel": "Support groups", "token": "support-groups", "exact": false, "x": 629.191, "y": 370.757, "city": "Jackson", "state": "TN", "url": "listing/west-tennessee-home-education-association-wthea-jackson/", "ages": "All", "faith": "Faith-based", "delivery": "In person", "dim": false}]</script>
+    <script type="application/json" data-road-label-data>[]</script>
   </div>
   <div class="map-key" id="map-key">
       <h2>Resource type (marker color)</h2>
@@ -124,6 +127,7 @@
         <span><span class="mk solid" style="--c:#5c544a" aria-hidden="true"></span>Solid = exact location</span>
         <span><span class="mk hollow" style="--c:#5c544a" aria-hidden="true"></span>Hollow = approximate (city only)</span>
         <span><span class="mk cluster-sample" aria-hidden="true">99+</span>Number = group. Click to zoom in. Over 99 shows as 99+.</span>
+        <span><span class="road-sample" aria-hidden="true"></span>Interstate</span>
       </div>
       <p class="hint map-scroll-hint">Scrolling moves the page. Pinch, or hold Ctrl and scroll, to zoom the map.</p>
       <p class="hint unpinned-note" data-unpinned-note></p>

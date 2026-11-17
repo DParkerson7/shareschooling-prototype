@@ -182,6 +182,235 @@ def bbox(*paths):
     return min(xs), min(ys), max(xs), max(ys)
 
 
+def _load_interstates():
+    path = ROOT / "data" / "interstates.json"
+    if not path.exists():
+        return []
+    lines = json.loads(path.read_text()).get("lines", [])
+    for line in lines:
+        xs = [p[0] for p in line["pts"]]
+        ys = [p[1] for p in line["pts"]]
+        line["_box"] = (min(xs), min(ys), max(xs), max(ys))
+    return lines
+
+
+ROADS = _load_interstates()
+_RING_CACHE = {}
+
+
+def parse_rings(d):
+    rings, cur = [], []
+    for tok in re.findall(r"[MLZ]|-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?", d):
+        if tok == "M":
+            if len(cur) >= 3:
+                rings.append(cur)
+            cur = []
+        elif tok == "Z":
+            if len(cur) >= 3:
+                rings.append(cur)
+            cur = []
+        elif tok != "L":
+            x, y = tok.split(",")
+            cur.append((float(x), float(y)))
+    if len(cur) >= 3:
+        rings.append(cur)
+    return rings
+
+
+def _ring_area(ring):
+    area = 0
+    for (x1, y1), (x2, y2) in zip(ring, ring[1:] + ring[:1]):
+        area += x1 * y2 - x2 * y1
+    return area / 2
+
+
+def _pip(x, y, ring):
+    inside = False
+    j = len(ring) - 1
+    for i, (xi, yi) in enumerate(ring):
+        xj, yj = ring[j]
+        if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / ((yj - yi) or 1e-12) + xi:
+            inside = not inside
+        j = i
+    return inside
+
+
+def polygon_of(d):
+    cached = _RING_CACHE.get(d)
+    if cached is not None:
+        return cached
+    classified = [(ring, _ring_area(ring) < 0) for ring in parse_rings(d)]
+    _RING_CACHE[d] = classified
+    return classified
+
+
+def _inside(x, y, classified):
+    in_ext = in_hole = False
+    for ring, is_hole in classified:
+        if _pip(x, y, ring):
+            if is_hole:
+                in_hole = True
+            else:
+                in_ext = True
+    return in_ext and not in_hole
+
+
+def _seg_hits(a, b, ring):
+    ax, ay = a
+    bx, by = b
+    rx, ry = bx - ax, by - ay
+    hits = []
+    prev = ring[-1]
+    for cur in ring:
+        sx, sy = cur[0] - prev[0], cur[1] - prev[1]
+        den = rx * sy - ry * sx
+        if abs(den) > 1e-9:
+            qpx, qpy = prev[0] - ax, prev[1] - ay
+            t = (qpx * sy - qpy * sx) / den
+            u = (qpx * ry - qpy * rx) / den
+            if 0 < t < 1 and 0 <= u <= 1:
+                hits.append(t)
+        prev = cur
+    return hits
+
+
+def clip_line(pts, classified):
+    pieces, cur = [], []
+
+    def flush():
+        nonlocal cur
+        if len(cur) >= 2:
+            pieces.append(cur)
+        cur = []
+
+    for a, b in zip(pts, pts[1:]):
+        ts = [0.0, 1.0]
+        for ring, _hole in classified:
+            ts.extend(_seg_hits(a, b, ring))
+        ts = sorted(set(round(t, 5) for t in ts))
+        ax, ay = a
+        bx, by = b
+        for t0, t1 in zip(ts, ts[1:]):
+            if t1 - t0 < 1e-5:
+                continue
+            mid = ((t0 + t1) / 2)
+            mx, my = ax + (bx - ax) * mid, ay + (by - ay) * mid
+            if _inside(mx, my, classified):
+                p0 = (ax + (bx - ax) * t0, ay + (by - ay) * t0)
+                p1 = (ax + (bx - ax) * t1, ay + (by - ay) * t1)
+                if cur and math.hypot(cur[-1][0] - p0[0], cur[-1][1] - p0[1]) < 0.05:
+                    cur.append(p1)
+                else:
+                    flush()
+                    cur = [p0, p1]
+            else:
+                flush()
+    flush()
+    return pieces
+
+
+def _boxes_overlap(a, b, pad=0.4):
+    return not (a[2] < b[0] - pad or b[2] < a[0] - pad or a[3] < b[1] - pad or b[3] < a[1] - pad)
+
+
+def _path_d(pts):
+    if len(pts) < 2:
+        return ""
+    head = f"M{pts[0][0]:.2f},{pts[0][1]:.2f}"
+    return head + "".join(f"L{x:.2f},{y:.2f}" for x, y in pts[1:])
+
+
+def _line_length(pts):
+    return sum(math.hypot(bx - ax, by - ay) for (ax, ay), (bx, by) in zip(pts, pts[1:]))
+
+
+def _point_at(pts, frac):
+    target = _line_length(pts) * frac
+    walked = 0
+    for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+        step = math.hypot(bx - ax, by - ay)
+        if walked + step >= target and step:
+            t = (target - walked) / step
+            return ax + (bx - ax) * t, ay + (by - ay) * t
+        walked += step
+    return pts[len(pts) // 2]
+
+
+def _midpoint(pts):
+    return _point_at(pts, 0.5)
+
+
+def _clip_rect(pts, box):
+    x0, y0, x1, y1 = box
+    ring = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+    return clip_line(pts, [(ring, False)])
+
+
+def roads_for(d, label_view=None):
+    """Interstate pieces clipped to a projected polygon, plus a few label anchors."""
+    if not ROADS:
+        return [], []
+    classified = polygon_of(d)
+    if not classified:
+        return [], []
+    box = bbox(d)
+    pieces = []
+    for line in ROADS:
+        if not _boxes_overlap(line["_box"], box):
+            continue
+        for part in clip_line(line["pts"], classified):
+            if _line_length(part) < 0.4:
+                continue
+            pieces.append((line["ref"], part))
+    label_src = pieces
+    span_box = box
+    if label_view:
+        span_box = label_view
+        label_src = []
+        for ref, part in pieces:
+            for bit in _clip_rect(part, label_view):
+                if _line_length(bit) >= 0.8:
+                    label_src.append((ref, bit))
+    best = {}
+    for ref, part in label_src:
+        length = _line_length(part)
+        if ref not in best or length > best[ref][0]:
+            best[ref] = (length, part)
+    labels = []
+    placed = []
+    span = max(span_box[2] - span_box[0], span_box[3] - span_box[1])
+    sep = max(span * 0.045, 2.2)
+    for ref, (length, part) in sorted(best.items(), key=lambda kv: (len(kv[0]) > 2, -kv[1][0])):
+        if length < max(1.1, span * 0.03):
+            continue
+        spot = None
+        for frac in (0.5, 0.32, 0.68, 0.18, 0.82):
+            x, y = _point_at(part, frac)
+            if any(math.hypot(x - px, y - py) < sep for _oref, px, py in placed):
+                continue
+            spot = (x, y)
+            break
+        if not spot:
+            continue
+        placed.append((ref, spot[0], spot[1]))
+        labels.append({"ref": ref, "x": round(spot[0], 2), "y": round(spot[1], 2)})
+    return pieces, labels
+
+
+def interstate_paths(pieces):
+    body = "".join(f'<path class="interstate" d="{_path_d(part)}"/>' for _ref, part in pieces)
+    if not body:
+        return ""
+    return f'<g class="interstates" aria-hidden="true">{body}</g>'
+
+
+def interstate_static_labels(labels, font):
+    return "".join(
+        f'<text class="road-label" x="{lab["x"]:.2f}" y="{lab["y"]:.2f}" text-anchor="middle" '
+        f'font-size="{font:.2f}" stroke-width="{font / 3:.2f}">I-{esc(lab["ref"])}</text>'
+        for lab in labels)
+
+
 def view_box(box, pad=0.06, extra_bottom=0.0):
     x0, y0, x1, y1 = box
     p = max(x1 - x0, y1 - y0) * pad
@@ -220,8 +449,9 @@ CAT_SHORT = {
 MAGNIFIER = ('<svg class="icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">'
              '<circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="2"/>'
              '<path d="M11 11 L15 15" fill="none" stroke="currentColor" stroke-width="2"/></svg>')
-FIT_ICON = ('<svg class="icon" width="18" height="18" viewBox="0 0 16 16" aria-hidden="true" fill="none" '
-            'stroke="currentColor" stroke-width="2"><path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/></svg>')
+FIT_ICON = ('<svg class="icon" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true">'
+            '<path d="M2.2 6.2V2.2h4M9.8 2.2h4v4M13.8 9.8v4h-4M6.2 13.8h-4v-4" fill="none" '
+            'stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
 
 def pin_token(cat_id):
@@ -310,6 +540,7 @@ def legend_html():
         <span><span class="mk solid" style="--c:#5c544a" aria-hidden="true"></span>Solid = exact location</span>
         <span><span class="mk hollow" style="--c:#5c544a" aria-hidden="true"></span>Hollow = approximate (city only)</span>
         <span><span class="mk cluster-sample" aria-hidden="true">99+</span>Number = group. Click to zoom in. Over 99 shows as 99+.</span>
+        <span><span class="road-sample" aria-hidden="true"></span>Interstate</span>
       </div>
       <p class="hint map-scroll-hint">Scrolling moves the page. Pinch, or hold Ctrl and scroll, to zoom the map.</p>
       <p class="hint unpinned-note" data-unpinned-note></p>
@@ -348,6 +579,9 @@ def interactive_map(county, listings, title, emphasize=None, small=False, previe
             labels.append(
                 f'<text class="neighbor-label" x="{cx:.2f}" y="{cy:.2f}" text-anchor="middle" font-size="{font:.2f}">{esc(label)}</text>')
     pins = [p for p in (listing_pin(l, emphasize) for l in listings) if p]
+    road_pieces, road_labels = roads_for(county["d"])
+    roads = interstate_paths(road_pieces)
+    road_json = json_embed(road_labels)
     size = " small" if small else ""
     preview_html = ""
     if preview:
@@ -375,12 +609,15 @@ def interactive_map(county, listings, title, emphasize=None, small=False, previe
     <svg class="map-svg interactive" viewBox="{home}" preserveAspectRatio="xMidYMid meet" role="group" aria-label="{esc(title)}">
       {"".join(neighbors)}
       <path class="area focus" d="{county["d"]}"/>
+      {roads}
       {"".join(labels)}
+      <g data-road-labels></g>
       <g data-marker-layer></g>
     </svg>
     {map_controls_html()}
     {preview_html}
     <script type="application/json" data-map-pins>{json_embed(pins)}</script>
+    <script type="application/json" data-road-label-data>{road_json}</script>
   </div>
   {legend}
 </div>'''
@@ -429,7 +666,10 @@ def explorer_block(county, listings, title, emphasize=None):
 
 
 def outline_svg(d, title):
-    return f'<svg class="map-svg" viewBox="{view_box(bbox(d), 0.08)}" role="img" aria-label="{esc(title)}" style="max-height:260px"><path class="area focus" d="{d}"/></svg>'
+    pieces, labels = roads_for(d)
+    font = max(bbox(d)[2] - bbox(d)[0], bbox(d)[3] - bbox(d)[1]) / 28
+    return (f'<svg class="map-svg" viewBox="{view_box(bbox(d), 0.08)}" role="img" aria-label="{esc(title)}" style="max-height:260px">'
+            f'<path class="area focus" d="{d}"/>{interstate_paths(pieces)}{interstate_static_labels(labels, font)}</svg>')
 
 
 def state_map_svg(code):
@@ -460,7 +700,10 @@ def state_map_svg(code):
         else:
             cls, label = "", f"{c['label']}: coming soon"
         parts.append(f'<a href="{{root}}{county_url(c)}" aria-label="{esc(label)}"><path class="area {cls}" d="{c["d"]}"><title>{esc(label)}</title></path></a>')
+    road_pieces, road_labels = roads_for(st["d"], label_view=box)
+    parts.append(interstate_paths(road_pieces))
     parts.append(f'<path class="state-line" d="{st["d"]}"/>')
+    parts.append(interstate_static_labels(road_labels, font * 0.72))
     for c in cross:
         n = len(county_listings(c["key"]))
         name = f"{c['label']}, {c['state']}"
@@ -827,6 +1070,7 @@ def build_pilot_state(code):
       <span><span class="swatch" style="background:var(--color-map-pilot-3)"></span>6–10</span>
       <span><span class="swatch" style="background:var(--color-map-pilot-4)"></span>11 or more</span>
       <span><span class="swatch" style="background:var(--color-map-muted)"></span>Coming soon</span>
+      <span><span class="road-sample" aria-hidden="true"></span>Interstate</span>
     </div>
   </section>
   <div>
