@@ -25,7 +25,7 @@ David approved the following. The build follows these rows.
 | 9 | **Two admin pages: settings and a moderation queue.** A moderator role exists so trusted parents or regional volunteers can help later. | David is the only admin at the start. He grants moderator access; there is no public application. |
 | 10 | **Each feature is its own module with an on/off flag.** | Flags live in `data/site.json` and can also be flipped on the admin settings page. Off keeps the data and hides the UI. |
 | 11 | **Build order:** reviews, then claimed listings, then the group portal, then state law guides, then the rest (section 4). | The portal is built for testing only. |
-| 12 | **No paid service, and no live payments, unless David approves that spend.** | Prefer a free tier for the friends test. Claude does not create accounts, add a card, or start a trial. |
+| 12 | **Backend is Render: a free web service plus the smallest paid Postgres (about $6 a month).** David approved that database on November 22, 2026, so reviews are not deleted when a free database expires. | The map stays on GitHub Pages. A larger database, a paid web service, extra storage, an email sender, live payments, or a paid workspace plan still need a separate yes. See section 5. |
 | 13 | **The group portal is a paid tier for testing only.** Basic listings, reviews, and the map stay free. | Payments run in a provider's test mode, or a "mark as paid" toggle. No real charges. An admin switch can grant the portal without a payment. Pricing is a config value, left unset until David decides. |
 | 14 | **Paying does not change how a group is judged or found.** | Portal status does not affect ratings, which reviews are public, moderation, or search and map ranking. The same review rules apply to every listing. |
 | 15 | **State law guides are a template plus a data format.** | Claude does not write the legal content. David researches and approves each state. |
@@ -63,14 +63,15 @@ Every listing is still `status: "Draft"`, `claimStatus: "Unclaimed"`, and `listi
 
 ## 3. What Claude must not do
 
-- Do not sign up for a host, database, auth service, email sender, or payment company on David's behalf.
-- Do not enter a payment card, start a paid plan, start a free trial that requires a card, or flip a test payment setup into live mode.
-- Do not put a database password, service-role key, or payment secret in the git repo or in the GitHub Pages files. The repository is public.
+- Do not open a new Render account. David already has one. Do not add a payment card or change the card on that account.
+- Do not create any paid Render service except the one database he approved: the smallest paid Postgres plan, about $6 a month (section 5). Do not upgrade the web service, add storage, add Redis, or move the workspace to a paid plan.
+- Do not sign up for an email sender or a payment company, and do not turn a test payment setup into live mode.
+- Do not put the database URL, database password, or API signing secret in the git repo or in the GitHub Pages files. The repository is public. Those values live in the Render web service's environment settings.
 - Do not write homeschool legal advice into a state guide. The template can ship empty.
 - Do not let a group hide reviews, slow down a low rating, or move itself up the map or the list because it claimed a listing or turned on the portal.
 - Do not merge implementation code into the pull request that adds this brief.
 
-A free-tier account is still something David chooses and creates. Claude's job, after he says which option and that the project exists, is to wire the code. If the choice is still open, ship the UI against a config value `communityApi` in `data/site.json`. While that value is empty, dynamic blocks stay hidden and the static map works as it does now.
+`communityApi` in `data/site.json` is the public URL of the Render web service. While that value is empty, dynamic blocks stay hidden and the static map works as it does now. Claude wires the API once David confirms the two Render services exist, or once he has said the implementer may create them on his account. Creating them is the free web service plus the one approved database, and nothing else.
 
 ## 4. Modules, flags, and build order
 
@@ -132,8 +133,8 @@ All modules share one account system and one database.
 
 ### Accounts
 
-- A person signs up with an email and a password, or a magic link. Either is fine. Pick one and stick to it.
-- The account cannot post until the email is verified. That is the "verified account" rule.
+- A person signs up with an email and a password. Skip magic-link login for now: the free Render service cannot send that mail, and an email sender is not approved yet.
+- The account cannot post until the email is verified. That is the "verified account" rule. Until David approves a sender, he uses "Mark this email verified" on the admin page after the friend signs up with the invite code.
 - Display name is a family name ("The Chen family") or a first name and last initial ("Alex P."). It is not an email address and it is not a child's name. The form says so.
 - Children do not get accounts.
 - One person can hold more than one role. A parent who also runs a co-op is both `family` and `organization`.
@@ -154,57 +155,63 @@ The friends test is invite-only.
 - `inviteRequired` defaults to true. David copies a single invite code from the admin settings page and sends it himself (email or text). The site does not email the invitation. Friends enter the code on the sign-up form.
 - Verified email, as above.
 - A honeypot field, same pattern as the existing forms (a hidden field that must stay empty).
-- The server limits how often one IP or one email can create accounts and posts. A plain limit is enough (for example a handful of sign-ups per hour). Do not add a paid anti-bot product.
-- Cloudflare Turnstile is free, but it is a separate account. Use it only if David already chose the Cloudflare option below or explicitly asks for Turnstile. The invite code plus a verified email is enough for a handful of friends.
+- The server limits how often one IP or one email can create accounts and posts. A plain limit is enough (for example a handful of sign-ups per hour).
+- That limit, the honeypot, and the invite code are enough spam protection for a handful of friends. Do not add a paid anti-bot product, and do not add Cloudflare Turnstile unless David asks for it.
 
 When David is ready for open sign-up, he turns `inviteRequired` off in settings. The other protections stay.
 
 ### Where the backend must run the sensitive steps
 
-The filter, the new-account hold, flag counts, role checks, claim verification, and "mark as paid" run on the server. A family must not be able to skip them by calling the database directly from the browser. If the chosen host has row-level security, use it so the browser's public key cannot publish a review or edit another group's roster.
+The filter, the new-account hold, flag counts, role checks, claim verification, and "mark as paid" run in the Render web service. The browser never holds the database password, so a family cannot skip those checks by talking to Postgres directly.
 
 The static site and the API are different hosts. Sign-in uses a token the browser stores, not a cookie that assumes the API and the site share a host.
 
-County and city pages ask for **summaries** for the listing ids on that page (count and averages only). The listing page asks for the newest reviews. Do not download every review to draw the map.
+County and city pages ask for **summaries** for the listing ids on that page (count and averages only). The listing page asks for the newest reviews. Do not download every review to draw the map. The map files themselves stay on GitHub Pages, so Render is not serving the HTML, the SVG, or the listing JSON.
 
-### Backend options
+### Backend: Render
 
-Prices below were checked in November 2026. Before David creates anything, open the vendor's pricing page and confirm the free tier still matches. Expected cost for the friends test is **$0** on the recommended path.
+David chose this on November 22, 2026. Prices below were taken from Render's pricing page that month. Before creating the database, confirm the smallest paid Postgres plan is still about $6 a month. If the price has changed, stop and ask him.
 
-Claude does not create the project. Claude does not add a payment method. If a free plan will start billing when a quota is passed, do not attach a card "just in case." Stay on the free plan with no card so a spike cannot charge David.
+Use his existing Render account. Stay on the **Hobby** workspace ($0). Do not move the workspace to Pro (about $25 a month) or any higher workspace plan.
 
-#### Option A — Supabase free tier (recommended)
+Two services, in the same region, and no others:
 
-Postgres, email/password or magic-link auth, and file storage in one project. The static site uses Supabase's client. A database function or Edge Function runs the filter and other rules the browser must not skip. The public anon key may ship in the site; the service-role key stays only in Supabase.
+| Service | Plan for the friends test | What it is |
+|---|---|---|
+| Web service | **Free** ($0). About 512 MB of RAM. | A small HTTP API. Python is a natural fit, because the repo already builds the site with Python. The GitHub Pages pages call this API. |
+| Postgres | **Smallest paid plan**, about **$6 a month** (256 MB of RAM, 100 connections). This is the one spend David approved. | Accounts, reviews, claims, and every later module. It does not expire. |
 
-- Cost: $0 on the Free plan.
-- Room: about 500 MB database, 50,000 monthly active users, two free projects. A friends test and a later nationwide launch of this size fit the free database for a long time.
-- Catch: a free project can pause after about a week of very little database use. A few real requests a day usually prevent that. David can resume a paused project from the dashboard (the restore window is about a year). Paid projects are not paused; the Pro plan starts around $25 a month. Do not upgrade for the friends test.
-- Auth emails are included. They sometimes land in spam. Do not add a separate email company to fix that unless David approves the cost.
-- Fit: best default. One service covers accounts and storage, and the map can stay on GitHub Pages.
+Do not create the free Postgres plan. A free Render database expires 30 days after creation, has no backups, and is then deleted after a short grace period. That is the wrong place for family reviews.
 
-#### Option B — Render, which David already has
+The free web service is enough for a handful of friends, with two limits they will feel:
 
-A small web API on Render, plus Render Postgres. The GitHub Pages site calls the API. David may prefer this because the account already exists.
+- It spins down after 15 minutes with no requests, and the next request takes about a minute to wake. The page should say it is waking the server, not show a hard error.
+- The workspace includes 750 free hours a month, counted only while the service is awake. A quiet friends test stays inside that. A service that is busy all month can be suspended until the next month.
 
-- Free web service: $0, 512 MB, spins down after 15 minutes with no traffic and takes about a minute to wake. 750 free hours per workspace per month. Enough for a friends test if people can wait through a cold start.
-- Free Postgres: $0 and about 1 GB, but it **expires 30 days after creation** and is not backed up. Fine for a short test. Wrong for reviews David wants to keep.
-- Paid: the smallest Postgres is about $6 a month, and the smallest paid web service is about $7 a month. Do not create either unless David approves those amounts.
-- A Hobby workspace can bill for bandwidth past the included amount if a card is already on the account. Do not add a card, do not upgrade the workspace, and do not create a paid instance. Ask David before creating even the free database if the test might run longer than 30 days.
-- Secrets stay in Render's environment settings, not in git.
+Its disk is wiped on spin-down and on every deploy. All stored data goes in Postgres. Do not put a SQLite file or uploads on the web service disk.
 
-#### Option C — Cloudflare Workers, D1, and Turnstile
+The database URL (the private URL, since a free web service can reach a database in the same region) and the API signing secret go in the web service's environment settings. `communityApi` in `data/site.json` is only the public `https://` URL of the web service.
 
-A Worker in front of a D1 database. Turnstile can protect sign-up. The free plan does not pause for inactivity.
+Hobby includes about 5 GB of outbound bandwidth a month, then about $0.15 per extra GB, and a card will be on the account because of the database. API replies are small if the map stays on GitHub Pages. If the dashboard shows bandwidth climbing toward that included amount, tell David before the overage. Do not "fix" it by upgrading the workspace unless he says so.
 
-- Cost: $0 on the Workers Free plan. Workers Paid is $5 a month. Do not upgrade.
-- Room: about 100,000 Worker requests a day, 5 million D1 row reads a day, 100,000 row writes a day, 5 GB total storage, 500 MB per database. Plenty for the friends test.
-- Catch: there is no built-in account system and no built-in email. Magic links need an email sender, which is a separate approval. That makes this the most work for the friends test. The free plan also has a very short CPU budget per request, so the filter stays a word list and simple patterns, which is the plan anyway.
-- Turnstile's free plan is enough for this site and does not require the paid Workers plan.
+The free web service cannot send mail on the usual SMTP ports. Verification for the friends test is the invite code plus a control on the admin page, "Mark this email verified," so a friend is not stuck waiting for mail the server cannot send. Real verification email, announcement email, and alert email wait until David approves a sender (section 13). Do not upgrade the web service just to send mail.
 
-**Recommendation:** Option A for the friends test. Mention Render to David, since he already has an account, and use it if he would rather keep everything there and he accepts the 30-day free database. Use Cloudflare only if he specifically wants it. Do not combine three vendors. The group portal's test payments are a separate choice (section 8) and are not a reason to pick a backend.
+#### How this grows when the map goes nationwide
 
-`communityApi` (or the Supabase URL and anon key) is a setting in `data/site.json` or a small generated config the page can read. Empty means "not connected yet."
+Keep the same two services and move each one up a plan when it is actually tight. Each step below costs more and needs David's yes before anyone clicks upgrade. Check Render's pricing page again at that time; these are the November 2026 steps.
+
+| When | Change | About the cost |
+|---|---|---|
+| Friends test (now) | Free web service + smallest paid Postgres | About $6 a month. Already approved. |
+| Families are using it often enough that the one-minute wake, or the 750 free hours, gets in the way | Move the **web service** to the smallest paid plan (about 512 MB, stays awake) | About $7 a month on top of the database. Not approved yet. |
+| The database is short on memory, or connections are pegged at 100 | Move **Postgres** to the next plan (about 1 GB of RAM, still 100 connections) | About $19 a month, instead of $6. Not approved yet. |
+| Later, if that is still tight | Next web step is about $25 a month for 2 GB. Next database steps are about $40 a month (2 GB) and about $55 a month (4 GB). Extra database storage is about $0.30 per GB a month. | Ask each time. |
+
+Do not add a second database, a Redis / Key Value instance, a persistent disk, or a second web service as a shortcut around asking. The group portal's test payments (section 8) do not change this hosting plan.
+
+#### Considered and not chosen
+
+Supabase and Cloudflare Workers were looked at and set aside. Supabase's free project can pause after a quiet week, and its paid plan starts around $25 a month. Cloudflare's free tier does not pause, but it has no built-in accounts, so sign-in and email would be extra work. David's Render account is the one to build on. Do not set up either alternative.
 
 ## 6. Phase 1 — Family reviews
 
@@ -333,6 +340,7 @@ Settings David can change without a code change:
 | `newAccountHoldCount` | 2 | How many approved reviews an account needs before clean reviews skip the wait. |
 | `flagsToHide` | 3 | How many flags hide a live review. |
 | `inviteRequired` and the invite code | on | Friends-test gate. |
+| Mark email verified | admin action | Used until a mail sender exists. Not a substitute for the invite code. |
 | Rating categories | the four above | Rename, hide, or add. |
 | Module flags | as in `data/site.json` | Hide a module without a rebuild. |
 | `trustedBadgeAfter` | 3 | Used when badges are on. Stored now so the setting has a home. |
@@ -354,7 +362,7 @@ A low score is never listed as a hold reason and is not a reason to remove.
 
 ### Acceptance for phase 1
 
-- A friend can join with the invite code, verify email, and post.
+- A friend can join with the invite code. David marks the email verified, and the friend can post.
 - A clean review from an account past the wait appears on the listing page, the card, and the map preview without a reload of the generator.
 - A brand-new account's first two reviews wait in the queue even when the text is harmless, including a review whose scores are all 1.
 - A review with a phone number or a child's name waits in the queue, and a moderator can delete that part and approve the rest.
@@ -637,13 +645,13 @@ Do not remove or bypass these.
 
 ## 15. Test plan
 
-Test on the GitHub Pages URL after a real backend is connected, and once locally with `python3 -m http.server` only for layout. Two browsers, or one browser and a private window, stand in for two families. Use Shelby County and these listings: Memphis Homeschool Enrichment Cooperative (MHEC), Spark Joy Homeschool Co-operative, and Bellevue Tutorial.
+Test on the GitHub Pages URL after the Render web service and the paid Postgres database are connected, and once locally with `python3 -m http.server` only for layout. Two browsers, or one browser and a private window, stand in for two families. Use Shelby County and these listings: Memphis Homeschool Enrichment Cooperative (MHEC), Spark Joy Homeschool Co-operative, and Bellevue Tutorial.
 
 ### Invite the friends
 
 1. David signs in as the admin (the first admin is created in the backend setup he owns, not by a public "become admin" button).
 2. He opens Admin settings, checks the invite code, and sends it himself to a few friends.
-3. A friend opens https://dparkerson7.github.io/shareschooling-prototype/, creates an account, enters the code, and confirms the email.
+3. A friend opens https://dparkerson7.github.io/shareschooling-prototype/, creates an account, and enters the code. David marks that email verified on the admin page (the free web service cannot send a confirmation mail). The friend can then post.
 4. A second family account and one organizer account are created the same way for the checks below.
 5. A sign-up with the wrong code, or with the honeypot filled in, does not create an account.
 
@@ -699,11 +707,10 @@ At 360px, 390px, and 430px wide, the listing page with reviews, the queue, and t
 
 ## 16. Open questions for David
 
-1. **Backend.** Supabase free is the recommendation. Use Render instead if you would rather stay on the account you have and the 30-day free database is acceptable for the test.
-2. **Invite.** One shared code is the default. Say if you want one link per friend.
-3. **Rating words.** Is the starter list (welcoming, organized, communication, worth the time and cost) the one you want friends to see?
-4. **Portal pricing.** Left unset on purpose. When you want a number: flat monthly fee, a small cut of dues, or both?
-5. **Stripe.** Not required for the test. Mark-as-paid and the admin grant cover it. Say if you want a Stripe test-mode checkout added, and create the account yourself.
-6. **Email sender** for alerts and real announcement mail. Still open from the map brief. The test uses on-site messages until you pick one.
-7. **Law guides.** Who gathers the Tennessee and Mississippi sources, and do you want the empty template built before that writing starts?
-8. **Looking-for replies.** The brief allows both verified groups and other signed-in families to reply. Say if you want groups only.
+1. **Invite.** One shared code is the default. Say if you want one link per friend.
+2. **Rating words.** Is the starter list (welcoming, organized, communication, worth the time and cost) the one you want friends to see?
+3. **Portal pricing.** Left unset on purpose. When you want a number: flat monthly fee, a small cut of dues, or both?
+4. **Stripe.** Not required for the test. Mark-as-paid and the admin grant cover it. Say if you want a Stripe test-mode checkout added, and create the account yourself.
+5. **Email sender** for alerts, confirmation mail, and real announcement mail. Still open from the map brief. The test uses the invite code, "Mark this email verified," and on-site messages until you pick one.
+6. **Law guides.** Who gathers the Tennessee and Mississippi sources, and do you want the empty template built before that writing starts?
+7. **Looking-for replies.** The brief allows both verified groups and other signed-in families to reply. Say if you want groups only.
