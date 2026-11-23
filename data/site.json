@@ -3,7 +3,7 @@
   "baseUrl": "https://dparkerson7.github.io/shareschooling-prototype/",
   "showDrafts": true,
   "allowSearchEngines": false,
-  "communityApi": "",
+  "communityApi": "https://shareschooling-api.onrender.com",
   "modules": {
     "reviews": true,
     "claims": true,
