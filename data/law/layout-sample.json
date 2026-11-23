@@ -1,0 +1,15 @@
+{
+  "state": "SAMPLE",
+  "status": "approved",
+  "title": "Sample layout: Starting homeschool in (State)",
+  "lastChecked": "2026-11-22",
+  "disclaimer": "Plain-language summary, not legal advice. Read the official sources. This page is a layout sample, not a statement of the law.",
+  "who": "Sample layout. This is not a statement of Tennessee law, Mississippi law, or any state's law.",
+  "steps": [
+    {"heading": "Sample step", "body": "Sample layout. Replace this with the approved steps for one state. Nothing in this box is a legal requirement."}
+  ],
+  "notice": "Sample layout. The notice section is empty until an approved guide names the official form.",
+  "testing": "Sample layout. Testing or evaluation belongs here only after the official source is checked.",
+  "umbrella": "Sample layout. For Mississippi, follow the existing note that the state does not require an umbrella school. Do not invent a requirement.",
+  "sources": []
+}

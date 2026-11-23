@@ -1,0 +1,64 @@
+/* Community modules. Colors come from theme.css. Gold is for small marks, not body text. */
+
+.demo-banner {
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+  text-align: center;
+  font-size: 0.88rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.account-slot {
+  display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; align-items: center;
+  font-size: 0.92rem; min-width: 0;
+}
+.account-slot a { font-weight: 700; white-space: nowrap; }
+.community-block, .community-stack { min-width: 0; max-width: 100%; margin-top: 1.25rem; }
+.community-block h2 { margin-top: 0; }
+.review-line, .updated-line, .pc-reviews, .pc-save {
+  margin: 0; font-size: 0.92rem; overflow-wrap: anywhere;
+}
+.review-line { color: var(--color-text); font-weight: 700; }
+.card .review-line, .card .updated-line, .card .save-row { position: relative; z-index: 2; }
+.card .review-line { font-weight: 700; }
+.card .review-averages { font-weight: 500; color: var(--color-text-muted); }
+.updated-line, .pc-reviews { color: var(--color-text-muted); }
+.save-btn { position: relative; z-index: 3; min-height: 44px; }
+.rules {
+  background: var(--color-surface-alt); border-radius: var(--radius);
+  padding: 0.85rem 1rem; margin: 0 0 1rem;
+}
+.rules ul { margin: 0.35rem 0 0; padding-left: 1.1rem; }
+.score-picker { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; margin: 0 0 0.75rem; }
+.score-picker label { display: block; font-weight: 700; font-size: 0.92rem; }
+.score-picker select { max-width: 100%; }
+.review-card, .queue-card, .portal-card, .post-card {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius); padding: 0.9rem 1rem; margin: 0 0 0.75rem;
+  min-width: 0; overflow-wrap: anywhere;
+}
+.review-card header, .queue-card header, .post-card header {
+  display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; align-items: baseline; justify-content: space-between;
+}
+.muted { color: var(--color-text-muted); font-size: 0.9rem; }
+.trust {
+  display: inline-block; background: var(--color-accent); color: var(--color-accent-text);
+  font-size: 0.75rem; font-weight: 700; border-radius: 999px; padding: 0.1rem 0.5rem;
+}
+.reply { margin: 0.75rem 0 0; padding: 0.7rem 0.8rem; background: var(--color-surface-alt); border-radius: var(--radius-small); }
+.waiting { margin: 0.5rem 0 0; }
+.sample-accounts { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0 1rem; }
+.queue-actions, .btn-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.queue-actions .btn, .community-block .btn { min-height: 44px; }
+.admin-grid { display: grid; gap: 1rem; }
+.settings-grid { display: grid; gap: 0.75rem; }
+.check { display: flex; gap: 0.5rem; align-items: flex-start; }
+.event-mark { fill: var(--color-accent); stroke: var(--color-accent-text); stroke-width: 1.5; pointer-events: none; }
+.wake-banner {
+  background: var(--color-note-bg); color: var(--color-text); text-align: center;
+  padding: 0.45rem 1rem; font-size: 0.9rem;
+}
+@media (max-width: 430px) {
+  .community-block, .review-card, .queue-card, .portal-card, .post-card, .demo-banner { max-width: 100%; }
+  .score-picker, .sample-accounts, .queue-actions { max-width: 100%; }
+}
