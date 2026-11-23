@@ -6,12 +6,12 @@
   "communityApi": "",
   "modules": {
     "reviews": true,
-    "claims": false,
-    "groupPortal": false,
-    "lawGuides": false,
-    "lookingFor": false,
-    "events": false,
-    "badges": false,
-    "favorites": false
+    "claims": true,
+    "groupPortal": true,
+    "lawGuides": true,
+    "lookingFor": true,
+    "events": true,
+    "badges": true,
+    "favorites": true
   }
 }

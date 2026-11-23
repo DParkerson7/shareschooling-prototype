@@ -49,7 +49,7 @@
     catch (err) { host.append(SS.h("p", {}, err.message)); return; }
     const form = SS.h("form", { class: "content-card" });
     form.append(SS.h("h2", {}, "Settings"));
-    form.append(SS.h("p", { class: "muted" }, "Friends-test defaults in data/site.json leave reviews on and the other modules off. This preview starts with them on so you can look. Turning one off hides it and keeps the rows."));
+    form.append(SS.h("p", { class: "muted" }, "All eight modules are on in data/site.json for this review. Turning one off hides it and keeps the rows."));
     const modules = SS.h("fieldset", {}, [SS.h("legend", {}, "Modules")]);
     Object.keys(settings.modules || {}).forEach((key) => {
       const box = SS.h("input", { type: "checkbox", name: "module-" + key });

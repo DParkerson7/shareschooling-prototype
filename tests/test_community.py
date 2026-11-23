@@ -191,7 +191,7 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(reply.status_code, 200, reply.get_json())
         public = self.client.get(f"/api/public/listings/{MHEC}").get_json()
         self.assertEqual(public["reviews"][0]["reply"]["body"], "Thank you. New families can visit one Thursday.")
-        self.assertIsNone(public["claimLabel"])
+        self.assertEqual(public["claimLabel"], "Claimed by the organization.")
         own = self._auth(org, "POST", "/api/reviews", {"listingId": MHEC, "ratings": {"welcoming": 5}, "body": "We are wonderful."})
         self.assertEqual(own.status_code, 400)
 

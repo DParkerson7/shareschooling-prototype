@@ -1006,8 +1006,8 @@ def page(path, title, desc, body, state_code=None, county_name="", extra_head=""
     if demo_mode():
         demo_banner = (
             '<div class="demo-banner" role="note">Community preview: sample families and groups in this browser, '
-            "not a live database. Reviews are the friends-test default. The other modules are on in this preview "
-            "so you can check the look. Nothing here is charged, and the map is the same pilot map.</div>"
+            "not a live database. All eight community modules are on so you can review them. "
+            "Nothing here is charged, and the map is the same pilot map.</div>"
         )
     robots = "" if site.get("allowSearchEngines") else '\n  <meta name="robots" content="noindex, nofollow">'
     footer_heading = "Get ShareSchooling updates"
