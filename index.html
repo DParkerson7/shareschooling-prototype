@@ -13,15 +13,18 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;display=swap">
   <link rel="stylesheet" href="css/theme.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/community.css">
 </head>
 <body data-root="">
   <a class="skip-link" href="#main">Skip to main content</a>
   <div class="test-banner" role="note">Test site: listings are drafts gathered from public pages and not yet confirmed by the organizations.</div>
+  <div class="demo-banner" role="note">Community preview: sample families and groups in this browser, not a live database. Reviews are the friends-test default. The other modules are on in this preview so you can check the look. Nothing here is charged, and the map is the same pilot map.</div>
   <header class="site-header">
     <div class="inner">
       <a class="logo" href="index.html">Share<span>Schooling</span></a>
+      <div class="account-slot" data-account-slot></div>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-      <nav id="site-nav" class="site-nav" aria-label="Main"><ul><li><a href="index.html" aria-current="page">Find local help</a></li><li><a href="online.html">Online options</a></li><li><a href="about.html">About</a></li><li><a href="book.html">The Book</a></li><li><a href="list-your-resource.html">List your co-op or tutor</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+      <nav id="site-nav" class="site-nav" aria-label="Main"><ul><li><a href="index.html" aria-current="page">Find local help</a></li><li><a href="online.html">Online options</a></li><li><a href="about.html">About</a></li><li><a href="book.html">The Book</a></li><li><a href="list-your-resource.html">List your co-op or tutor</a></li><li><a href="looking-for/index.html">Looking for</a></li><li><a href="saved/index.html">Saved</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
     </div>
   </header>
   <div class="page-layout">
@@ -94,6 +97,8 @@
       </div>
     </div>
   </footer>
+  
+  <script type="application/json" id="community-config">{"api": "", "demo": true, "built": {"reviews": true, "claims": true, "groupPortal": true, "lawGuides": true, "lookingFor": true, "events": true, "badges": true, "favorites": true}, "flagDefaults": {"reviews": true, "claims": false, "groupPortal": false, "lawGuides": false, "lookingFor": false, "events": false, "badges": false, "favorites": false}, "page": {"kind": "page"}}</script>
   <script src="js/site.js"></script>
 </body>
 </html>

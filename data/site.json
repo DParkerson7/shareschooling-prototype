@@ -2,5 +2,16 @@
   "siteName": "ShareSchooling",
   "baseUrl": "https://dparkerson7.github.io/shareschooling-prototype/",
   "showDrafts": true,
-  "allowSearchEngines": false
+  "allowSearchEngines": false,
+  "communityApi": "",
+  "modules": {
+    "reviews": true,
+    "claims": false,
+    "groupPortal": false,
+    "lawGuides": false,
+    "lookingFor": false,
+    "events": false,
+    "badges": false,
+    "favorites": false
+  }
 }

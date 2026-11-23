@@ -67,6 +67,43 @@ def present(value):
 data = json.loads((ROOT / "data/listings.json").read_text())
 geo = json.loads((ROOT / "data/map.json").read_text())
 site = json.loads((ROOT / "data/site.json").read_text())
+COMMUNITY_MODULES = (
+    "reviews", "claims", "groupPortal", "lawGuides", "lookingFor", "events", "badges", "favorites",
+)
+
+
+def module_flags():
+    raw = site.get("modules") or {}
+    return {key: bool(raw.get(key)) for key in COMMUNITY_MODULES}
+
+
+def demo_mode():
+    """No API yet: show every module with sample data so the test site can be reviewed."""
+    return not str(site.get("communityApi") or "").strip()
+
+
+def community_on(name):
+    if demo_mode():
+        return True
+    return module_flags().get(name, False)
+
+
+def show_community():
+    return demo_mode() or any(module_flags().values())
+
+
+def community_config(kind, **extra):
+    payload = {
+        "api": str(site.get("communityApi") or "").strip(),
+        "demo": demo_mode(),
+        "built": {key: community_on(key) for key in COMMUNITY_MODULES},
+        "flagDefaults": module_flags(),
+        "page": {"kind": kind, **extra},
+    }
+    return json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
+
+
+PAGE_COMMUNITY = {"kind": "page"}
 BASE = site["baseUrl"].rstrip("/") + "/"
 
 CATS = data["categories"]
@@ -124,6 +161,7 @@ for l in LISTINGS:
 
 
 def sort_listings(items):
+    # Featured is a hand-set label. Portal status, claims, and ratings are not sort keys.
     return sorted(items, key=lambda l: (not l.get("featured"), l["_needs_note"], l["name"].lower()))
 
 
@@ -592,6 +630,8 @@ def interactive_map(county, listings, title, emphasize=None, small=False, previe
       <h3 id="map-preview-title" data-preview-name></h3>
       <p class="pc-meta" data-preview-meta></p>
       <p class="pc-loc" data-preview-loc></p>
+      <p class="pc-reviews" data-preview-reviews hidden></p>
+      <p class="pc-save" data-preview-save hidden></p>
       <div class="pc-foot">
         <a class="preview-details" data-preview-link href="#">View details</a>
         <div class="pager" data-preview-pager hidden>
@@ -790,6 +830,9 @@ def card(l, view_state=None):
         f'<p class="desc">{esc(l["description"])}</p>'
         f'<ul class="tags">{"".join(tags)}</ul>'
         + (f'<p class="confirm-note">{CONFIRM_NOTE}</p>' if l["_needs_note"] else "")
+        + ('<p class="review-line" data-review-summary hidden></p>' if community_on("reviews") else "")
+        + ('<p class="updated-line" data-updated hidden></p>' if community_on("claims") else "")
+        + ('<p class="save-row"><button type="button" class="link-button save-btn" data-save hidden>Save</button></p>' if community_on("favorites") else "")
         + f'<p class="foot"><span>Last verified: {esc(fmt_date(l.get("lastChecked")))}</span><span data-distance></span></p>'
         '</article></li>')
 
@@ -937,14 +980,35 @@ def item_list(name, listings):
 PAGES = []  # (path, html)
 
 
-def page(path, title, desc, body, state_code=None, county_name="", extra_head=""):
+def page(path, title, desc, body, state_code=None, county_name="", extra_head="", community=None):
     depth = path.count("/")
     root = "../" * depth
     url_path = path[:-len("index.html")] if path.endswith("index.html") else path
     canonical = BASE + url_path
     CURRENT_ATTR = ' aria-current="page"'
     current = path if depth == 0 else ("index.html" if depth else path)
-    nav = "".join(f'<li><a href="{root}{href}"{CURRENT_ATTR if href == current else ""}>{label}</a></li>' for href, label in NAV)
+    links = list(NAV)
+    if show_community():
+        extras = []
+        if community_on("lookingFor"):
+            extras.append(("looking-for/index.html", "Looking for"))
+        if community_on("favorites"):
+            extras.append(("saved/index.html", "Saved"))
+        links = links[:-1] + extras + links[-1:]
+    nav = "".join(f'<li><a href="{root}{href}"{CURRENT_ATTR if href == current else ""}>{label}</a></li>' for href, label in links)
+    context = community or PAGE_COMMUNITY
+    community_head = ""
+    community_json = ""
+    demo_banner = ""
+    if show_community():
+        community_head = f'\n  <link rel="stylesheet" href="{root}css/community.css">'
+        community_json = f'\n  <script type="application/json" id="community-config">{community_config(context.get("kind", "page"), **{k: v for k, v in context.items() if k != "kind"})}</script>'
+    if demo_mode():
+        demo_banner = (
+            '<div class="demo-banner" role="note">Community preview: sample families and groups in this browser, '
+            "not a live database. Reviews are the friends-test default. The other modules are on in this preview "
+            "so you can check the look. Nothing here is charged, and the map is the same pilot map.</div>"
+        )
     robots = "" if site.get("allowSearchEngines") else '\n  <meta name="robots" content="noindex, nofollow">'
     footer_heading = "Get ShareSchooling updates"
     doc = f'''<!doctype html>
@@ -960,14 +1024,16 @@ def page(path, title, desc, body, state_code=None, county_name="", extra_head=""
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;display=swap">
   <link rel="stylesheet" href="{root}css/theme.css">
-  <link rel="stylesheet" href="{root}css/styles.css">{extra_head}
+  <link rel="stylesheet" href="{root}css/styles.css">{community_head}{extra_head}
 </head>
 <body data-root="{root}"{f' data-state="{esc(state_code)}"' if state_code else ""}{f' data-county="{esc(county_name)}"' if county_name else ""}>
   <a class="skip-link" href="#main">Skip to main content</a>
   <div class="test-banner" role="note">Test site: listings are drafts gathered from public pages and not yet confirmed by the organizations.</div>
+  {demo_banner}
   <header class="site-header">
     <div class="inner">
       <a class="logo" href="{root}index.html">Share<span>Schooling</span></a>
+      <div class="account-slot" data-account-slot></div>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav" aria-label="Main"><ul>{nav}</ul></nav>
     </div>
@@ -989,11 +1055,166 @@ def page(path, title, desc, body, state_code=None, county_name="", extra_head=""
       </div>
     </div>
   </footer>
+  {community_json}
   <script src="{root}js/site.js"></script>
 </body>
 </html>
 '''
     PAGES.append((path, doc.replace("{root}", root)))
+
+
+def law_guide(code):
+    path = ROOT / "data" / "law" / f"{code.lower()}.json"
+    if not path.exists():
+        return None
+    guide = json.loads(path.read_text())
+    if guide.get("status") != "approved":
+        return None
+    return guide
+
+
+def law_box(code, fallback):
+    name = STATES[code]["name"]
+    if not community_on("lawGuides"):
+        if not fallback:
+            return ""
+        return (
+            '<section class="placeholder-box" aria-labelledby="law-heading">'
+            '<h2 id="law-heading" style="font-size:1.2rem">State homeschool law basics</h2>'
+            f'<p style="margin:0">{esc(fallback)}</p></section>'
+        )
+    guide = law_guide(code)
+    if not guide:
+        sample = ""
+        if demo_mode() and (ROOT / "data" / "law" / "layout-sample.json").exists():
+            sample = '<p style="margin:0.75rem 0 0"><a href="{root}sample/homeschool-law/">Preview the page template (sample layout, not legal advice)</a></p>'
+        return (
+            '<section class="placeholder-box" aria-labelledby="law-heading">'
+            '<h2 id="law-heading" style="font-size:1.2rem">State homeschool law basics</h2>'
+            f'<p style="margin:0">A plain-language guide isn\'t ready for {esc(name)} yet.</p>{sample}</section>'
+        )
+    who = guide.get("who") or ""
+    checked = guide.get("lastChecked") or ""
+    return (
+        '<section class="placeholder-box" aria-labelledby="law-heading">'
+        '<h2 id="law-heading" style="font-size:1.2rem">State homeschool law basics</h2>'
+        f'<p style="margin:0">{esc(who)}</p>'
+        + (f'<p class="hint">Last checked {esc(fmt_date(checked))}.</p>' if checked else "")
+        + f'<p style="margin:0.75rem 0 0"><a href="{{root}}{code.lower()}/homeschool-law/">Read the full guide</a></p></section>'
+    )
+
+
+def county_community(state_code, county_name):
+    blocks = []
+    if community_on("lookingFor"):
+        blocks.append('<section class="community-block" data-module="lookingFor" data-looking-for hidden></section>')
+    if community_on("events"):
+        blocks.append('<section class="community-block" data-module="events" data-events hidden></section>')
+    if not blocks:
+        return ""
+    return '<div class="community-stack">' + "".join(blocks) + "</div>"
+
+
+def listing_community_blocks(listing):
+    parts = ['<div data-overlay-mount></div>'] if community_on("claims") else []
+    if community_on("reviews"):
+        parts.append(
+            f'<section class="community-block" id="family-reviews" data-module="reviews" data-listing-id="{esc(listing["id"])}" hidden>'
+            '<h2>Family reviews</h2><div data-reviews-root></div></section>'
+        )
+    if community_on("claims"):
+        parts.append(
+            '<section class="community-block" data-module="claims" data-listing-editor hidden>'
+            '<h2>Keep this listing current</h2><div data-claims-editor></div></section>'
+        )
+    return "".join(parts)
+
+
+def build_account_page():
+    page("account/index.html", "Sign in | ShareSchooling",
+         "Sign in or create a ShareSchooling family account.",
+         '''<h1>Your account</h1>
+<p class="intro">Families sign in to leave a review. The display name is a family name or a first name and last initial. It is not an email, and it is not a child's name.</p>
+<div class="community-block" data-account-page></div>''',
+         community={"kind": "account"})
+
+
+def build_admin_page():
+    page("admin/index.html", "Admin | ShareSchooling",
+         "Moderation queue and community settings.",
+         '''<h1>Admin</h1>
+<div class="community-block" data-admin-page></div>''',
+         community={"kind": "admin"})
+
+
+def build_looking_page():
+    page("looking-for/index.html", "Looking for | ShareSchooling",
+         "Families post what they are looking for. Posts are not map pins.",
+         '''<h1>Looking for</h1>
+<p class="intro">A family can post a need, such as a tutor or a class. Keep children's names and home addresses out of it.</p>
+<div class="community-block" data-module="lookingFor" data-looking-page></div>''',
+         community={"kind": "looking"})
+
+
+def build_saved_page():
+    page("saved/index.html", "Saved | ShareSchooling",
+         "Listings you saved on ShareSchooling.",
+         '''<h1>Saved</h1>
+<div class="community-block" data-module="favorites" data-saved-page></div>''',
+         community={"kind": "saved"})
+
+
+def build_portal_page():
+    page("portal/index.html", "Group portal (test) | ShareSchooling",
+         "A private test area for one group. No real charges.",
+         '''<h1>Group portal (test)</h1>
+<div class="community-block" data-module="groupPortal" data-portal-page></div>''',
+         community={"kind": "portal"})
+
+
+def build_law_pages():
+    folder = ROOT / "data" / "law"
+    if not folder.exists():
+        return
+    for path in sorted(folder.glob("*.json")):
+        guide = json.loads(path.read_text())
+        if guide.get("status") != "approved":
+            continue
+        code = str(guide.get("state") or "").lower()
+        if not code:
+            continue
+        title = guide.get("title") or "Homeschool guide"
+        steps = "".join(
+            f'<h2>{esc(step.get("heading") or "")}</h2><p>{esc(step.get("body") or "")}</p>'
+            for step in guide.get("steps") or []
+        )
+        sources = guide.get("sources") or []
+        if sources:
+            source_html = "<ul>" + "".join(
+                f'<li><a href="{esc(item.get("url") or "")}">{esc(item.get("name") or item.get("url") or "")}</a>'
+                + (f' <span class="hint">accessed {esc(item.get("accessed") or "")}</span>' if item.get("accessed") else "")
+                + "</li>"
+                for item in sources
+            ) + "</ul>"
+        else:
+            source_html = "<p>No sources are listed in this sample. Official pages belong here after they are checked.</p>"
+        checked = guide.get("lastChecked")
+        checked_html = f'<p><strong>Last checked {esc(fmt_date(checked))}.</strong></p>' if checked else ""
+        body = f'''<article class="prose community-block">
+<p class="confirm-note">{esc(guide.get("disclaimer") or "")}</p>
+<h1>{esc(title)}</h1>
+<h2>Who this is for</h2><p>{esc(guide.get("who") or "")}</p>
+{steps}
+<h2>Notice</h2><p>{esc(guide.get("notice") or "")}</p>
+<h2>Testing</h2><p>{esc(guide.get("testing") or "")}</p>
+<h2>Umbrella schools</h2><p>{esc(guide.get("umbrella") or "")}</p>
+<h2>Sources</h2>{source_html}
+{checked_html}
+<p><a href="{{root}}contact.html">Something look wrong?</a></p>
+</article>'''
+        page(f"{code}/homeschool-law/index.html", f"{title} | ShareSchooling",
+             (guide.get("disclaimer") or title)[:155], body,
+             community={"kind": "law", "state": guide.get("state")})
 
 
 # ---------------------------------------------------------------- pages
@@ -1087,10 +1308,7 @@ def build_pilot_state(code):
     </section>
   </div>
 </div>
-<section class="placeholder-box" aria-labelledby="law-heading">
-  <h2 id="law-heading" style="font-size:1.2rem">State homeschool law basics</h2>
-  <p style="margin:0">{esc(ps["lawBasics"])}</p>
-</section>
+{law_box(code, ps["lawBasics"])}
 <section aria-labelledby="statewide-heading">
   <h2 id="statewide-heading">Statewide resources</h2>
   {card_list(sw, code, "No statewide listings yet.")}
@@ -1102,7 +1320,8 @@ def build_pilot_state(code):
     jsonld = json_ld(item_list(f"Statewide homeschool resources in {st['name']}", sw))
     page(f"{code.lower()}/index.html", f"Homeschool co-ops, tutors & resources in {st['name']} | ShareSchooling",
          f"Homeschool help in {st['name']}: pilot listings for {region}, plus statewide associations and programs.",
-         body, state_code=code, extra_head="\n  " + jsonld)
+         body, state_code=code, extra_head="\n  " + jsonld,
+         community={"kind": "state", "state": code})
 
 
 def build_other_state(code):
@@ -1116,12 +1335,13 @@ def build_other_state(code):
     <p>We're starting with West Tennessee and DeSoto County, MS, and adding more places as we go. You're not alone in this.</p>
     <div class="btn-row"><a class="btn" href="{{root}}{suggest_href(code)}">Suggest a resource</a><a class="btn btn-secondary" href="{{root}}online.html">Browse online options</a></div>
     {signup_form(f"Tell me when {st['name']} launches", code)}
+    {law_box(code, None)}
   </section>
   <div class="panel">{outline_svg(st["d"], "Outline of " + st["name"])}</div>
 </div>'''
     page(f"{code.lower()}/index.html", f"Homeschool resources in {st['name']}: coming soon | ShareSchooling",
          f"ShareSchooling is coming to {st['name']}. Suggest a homeschool co-op, tutor or resource, or sign up to hear when it launches.",
-         body, state_code=code)
+         body, state_code=code, community={"kind": "state", "state": code})
 
 
 def neighbors_html(c):
@@ -1158,6 +1378,7 @@ def build_pilot_county(c):
 <p class="intro map-intro">{plural(nlocal, "local and regional listing")} serve {esc(c["label"])} across {ncats} categories, plus statewide resources for {esc(st["name"])} families.</p>
 {filter_bar(code, with_map=True, list_total=nlocal)}
 {explorer_block(c, shown, "Map of " + place)}
+{county_community(code, c["name"])}
 <div class="list-extra">
   <div class="map-layout">
     <div>
@@ -1174,7 +1395,8 @@ def build_pilot_county(c):
     jsonld = json_ld(item_list(f"Homeschool resources in {place}", listings))
     page(county_url(c) + "index.html", f"Homeschool co-ops, tutors & resources in {place} | ShareSchooling",
          f"Find homeschool co-ops, tutors, classes, field trips and support in {place}. {nlocal} local listings plus statewide resources.",
-         body, state_code=code, county_name=c["name"], extra_head="\n  " + jsonld)
+         body, state_code=code, county_name=c["name"], extra_head="\n  " + jsonld,
+         community={"kind": "county", "state": code, "county": c["name"]})
 
 
 def build_other_county(c):
@@ -1216,6 +1438,7 @@ def build_city(ci):
 <p class="intro map-intro">{len(here)} listings are based in {esc(ci["name"])}, and {len(rest)} more serve the rest of {esc(c["label"])}. Pins for {esc(ci["name"])} are solid color. Faded pins are elsewhere in {esc(c["label"])}.</p>
 {filter_bar(code, with_map=True, list_total=len(here) + len(rest))}
 {explorer_block(c, mapped, "Map of " + c["label"] + ", with " + ci["name"] + " highlighted", emphasize=ci["name"])}
+{county_community(code, c["name"])}
 <div class="list-extra">
   <div class="map-layout">{neighbors_html(c)}</div>
   <div class="results-layout" style="margin-top:1.5rem">
@@ -1230,7 +1453,8 @@ def build_city(ci):
     jsonld = json_ld(item_list(f"Homeschool resources in {place}", here + rest))
     page(city_url(ci) + "index.html", f"Homeschool co-ops, tutors & resources in {place} | ShareSchooling",
          f"Homeschool co-ops, tutors, classes and support in {place} and the rest of {c['label']}.",
-         body, state_code=code, county_name=c["name"], extra_head="\n  " + jsonld)
+         body, state_code=code, county_name=c["name"], extra_head="\n  " + jsonld,
+         community={"kind": "county", "state": code, "county": c["name"]})
 
 
 def build_listing(l):
@@ -1271,7 +1495,7 @@ def build_listing(l):
         row("Phone", f'<a href="tel:{esc(re.sub(r"[^0-9+]", "", l["phone"]))}">{esc(l["phone"])}</a>')
     row("Source", f'<a href="{esc(l["sourceUrl"])}" rel="noopener nofollow">{esc(l["sourceUrl"])}</a>' if present(l.get("sourceUrl")) else "")
     row("Last verified", esc(fmt_date(l.get("lastChecked"))))
-    row("Claim status", esc(l.get("claimStatus") or ""))
+    row("Claim status", f'<span data-claim-status>{esc(l.get("claimStatus") or "")}</span>')
     if l.get("status") == "Draft":
         row("Listing status", "Draft (not yet published)")
 
@@ -1314,7 +1538,7 @@ def build_listing(l):
     <h1 style="margin-top:0.5rem">{esc(l["name"])}</h1>
     <p class="cat" style="color:var(--color-primary-hover);font-weight:700">{esc(cat)}</p>
     {photo}
-    <p>{esc(l["description"])}</p>
+    <p data-public-description>{esc(l["description"])}</p>
     {long_desc}
     {f'<p class="confirm-note">{CONFIRM_NOTE}</p>' if l["_needs_note"] else ""}
     {f'<div class="contact-actions">{"".join(contact)}</div>' if contact else ""}
@@ -1324,6 +1548,7 @@ def build_listing(l):
       <button type="button" class="link-button" data-report>Report an issue</button>
     </div>
     <p class="form-message" data-report-message role="status"></p>
+    {listing_community_blocks(l)}
   </article>
   <aside class="panel" aria-label="Location">
     {side_map}
@@ -1354,7 +1579,8 @@ def build_listing(l):
     where = ", ".join(x for x in [l["_city"], code] if x)
     page(l["_url"] + "index.html", f"{l['name']}: {cat}{' in ' + where if where else ''} | ShareSchooling",
          l["description"][:155], body, state_code=code, county_name=county["name"] if county else "",
-         extra_head="\n  " + json_ld(org))
+         extra_head="\n  " + json_ld(org),
+         community={"kind": "listing", "listingId": l["id"], "name": l["name"]})
 
 
 def build_online():
@@ -1378,7 +1604,16 @@ def build_template_pages():
         desc = re.search(r"<!--\s*description:\s*(.*?)\s*-->", text).group(1)
         body = re.sub(r"<!--\s*(title|description):.*?-->\n?", "", text)
         body = body.replace("{{category_options}}", cat_opts).replace("{{county_options}}", county_opts)
-        page(f.name, f"{title} | ShareSchooling", desc, body)
+        if community_on("reviews"):
+            body = body.replace(
+                "[Placeholder: the claim process isn't built yet.]",
+                "Sign in, confirm that you represent the organization, and ask an admin to verify the claim. This test server does not send mail.",
+            )
+            body = body.replace(
+                '<p class="form-note" data-claim-note hidden></p>',
+                '<p class="form-note" data-claim-note hidden></p>\n  <div data-claim-flow></div>',
+            )
+        page(f.name, f"{title} | ShareSchooling", desc, body, community={"kind": "claim" if f.name == "list-your-resource.html" else "page"})
 
 
 # ---------------------------------------------------------------- write everything
@@ -1387,6 +1622,8 @@ def clean_old_output():
     for code in STATES:
         shutil.rmtree(ROOT / code.lower(), ignore_errors=True)
     shutil.rmtree(ROOT / "listing", ignore_errors=True)
+    for extra in ("account", "admin", "looking-for", "saved", "portal", "sample"):
+        shutil.rmtree(ROOT / extra, ignore_errors=True)
 
 
 def norm_place(text):
@@ -1436,6 +1673,31 @@ def main():
         build_listing(l)
     build_online()
     build_template_pages()
+    if community_on("reviews"):
+        build_account_page()
+        build_admin_page()
+    if community_on("lookingFor"):
+        build_looking_page()
+    if community_on("favorites"):
+        build_saved_page()
+    if community_on("groupPortal"):
+        build_portal_page()
+    if community_on("lawGuides"):
+        build_law_pages()
+    catalog = []
+    for listing in LISTINGS:
+        loc = listing.get("location") or {}
+        catalog.append({
+            "id": listing["id"],
+            "name": listing["name"],
+            "email": listing.get("email") or "",
+            "website": listing.get("website") or "",
+            "state": listing["_state"],
+            "county": loc.get("county") or "",
+            "city": listing["_city"],
+            "category": listing["category"],
+        })
+    (ROOT / "data" / "community-catalog.json").write_text(json.dumps(catalog, ensure_ascii=False, separators=(",", ":")))
 
     for path, doc in PAGES:
         out = ROOT / path

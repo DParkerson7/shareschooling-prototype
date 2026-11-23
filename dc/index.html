@@ -13,15 +13,18 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;display=swap">
   <link rel="stylesheet" href="../css/theme.css">
   <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/community.css">
 </head>
 <body data-root="../" data-state="DC">
   <a class="skip-link" href="#main">Skip to main content</a>
   <div class="test-banner" role="note">Test site: listings are drafts gathered from public pages and not yet confirmed by the organizations.</div>
+  <div class="demo-banner" role="note">Community preview: sample families and groups in this browser, not a live database. Reviews are the friends-test default. The other modules are on in this preview so you can check the look. Nothing here is charged, and the map is the same pilot map.</div>
   <header class="site-header">
     <div class="inner">
       <a class="logo" href="../index.html">Share<span>Schooling</span></a>
+      <div class="account-slot" data-account-slot></div>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-      <nav id="site-nav" class="site-nav" aria-label="Main"><ul><li><a href="../index.html" aria-current="page">Find local help</a></li><li><a href="../online.html">Online options</a></li><li><a href="../about.html">About</a></li><li><a href="../book.html">The Book</a></li><li><a href="../list-your-resource.html">List your co-op or tutor</a></li><li><a href="../contact.html">Contact</a></li></ul></nav>
+      <nav id="site-nav" class="site-nav" aria-label="Main"><ul><li><a href="../index.html" aria-current="page">Find local help</a></li><li><a href="../online.html">Online options</a></li><li><a href="../about.html">About</a></li><li><a href="../book.html">The Book</a></li><li><a href="../list-your-resource.html">List your co-op or tutor</a></li><li><a href="../looking-for/index.html">Looking for</a></li><li><a href="../saved/index.html">Saved</a></li><li><a href="../contact.html">Contact</a></li></ul></nav>
     </div>
   </header>
   <div class="page-layout">
@@ -51,6 +54,7 @@
   <button class="btn" type="submit">Sign up</button>
   <p class="form-message" role="status"></p>
 </form>
+    <section class="placeholder-box" aria-labelledby="law-heading"><h2 id="law-heading" style="font-size:1.2rem">State homeschool law basics</h2><p style="margin:0">A plain-language guide isn't ready for District of Columbia yet.</p><p style="margin:0.75rem 0 0"><a href="../sample/homeschool-law/">Preview the page template (sample layout, not legal advice)</a></p></section>
   </section>
   <div class="panel"><svg class="map-svg" viewBox="825.53 264.93 4.54 5.34" role="img" aria-label="Outline of District of Columbia" style="max-height:260px"><path class="area focus" d="M825.9,267L827,265.3L827.8,265.9L829.7,267.2L827.9,269.9L827.6,268.9L827,267.6L825.9,267Z"/><g class="interstates" aria-hidden="true"><path class="interstate" d="M828.38,268.10L828.15,269.53"/><path class="interstate" d="M828.40,268.08L828.14,269.53"/><path class="interstate" d="M828.39,267.94L827.87,267.81"/><path class="interstate" d="M828.41,267.96L827.90,267.80"/><path class="interstate" d="M827.59,267.94L827.95,267.77L827.79,267.30"/><path class="interstate" d="M827.80,267.29L827.96,267.77L827.61,267.94"/></g><text class="road-label" x="828.27" y="268.81" text-anchor="middle" font-size="0.16" stroke-width="0.05">I-295</text></svg></div>
 </div>
@@ -84,6 +88,8 @@
       </div>
     </div>
   </footer>
+  
+  <script type="application/json" id="community-config">{"api": "", "demo": true, "built": {"reviews": true, "claims": true, "groupPortal": true, "lawGuides": true, "lookingFor": true, "events": true, "badges": true, "favorites": true}, "flagDefaults": {"reviews": true, "claims": false, "groupPortal": false, "lawGuides": false, "lookingFor": false, "events": false, "badges": false, "favorites": false}, "page": {"kind": "state", "state": "DC"}}</script>
   <script src="../js/site.js"></script>
 </body>
 </html>

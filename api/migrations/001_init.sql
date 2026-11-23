@@ -1,0 +1,107 @@
+-- ShareSchooling community store.
+-- One row per record. The JSON document is the record; the id is the primary key.
+-- Applied once. Later changes belong in a new file in this folder.
+-- Do not put passwords, the database URL, or TOKEN_SECRET in this file.
+
+CREATE TABLE IF NOT EXISTS schema_migrations (
+  name TEXT PRIMARY KEY,
+  applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS app_settings (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  data JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS accounts (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS reviews (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS replies (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS flags (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS claims (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS overrides (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS portals (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS members (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS invites (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS children (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS offerings (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS enrollments (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS payments (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS announcements (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS deliveries (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS rotation (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS looking_posts (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS looking_replies (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS events (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS favorites (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS watches (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS history (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);
+CREATE TABLE IF NOT EXISTS rate_limits (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL
+);

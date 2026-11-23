@@ -723,6 +723,9 @@
       });
       syncRail();
       if (previewOpen && !placingCard) positionPreview();
+      const detail = { layer, px, pins: list };
+      stage._community = detail;
+      document.dispatchEvent(new CustomEvent("ss-map-rendered", { detail }));
     }
     function drawRoadLabels(groups) {
       const holder = svg.querySelector("[data-road-labels]");
@@ -861,6 +864,7 @@
       const meta = [item.city && item.state ? `${item.city}, ${item.state}` : item.city || item.state, item.ages, item.faith].filter(Boolean);
       $("[data-preview-meta]", preview).textContent = meta.join(" · ");
       $("[data-preview-loc]", preview).textContent = `${item.exact ? "Exact location" : "Approximate (city only)"}${item.delivery ? " · " + item.delivery : ""}`;
+      document.dispatchEvent(new CustomEvent("ss-preview-filled", { detail: { id: item.id, preview } }));
       const details = $("[data-preview-link]", preview);
       details.href = root + item.url;
       const pager = $("[data-preview-pager]", preview);
@@ -1339,8 +1343,12 @@
     const claim = params.get("claim");
     if (claim) {
       const note = $("[data-claim-note]");
-      note.hidden = false;
-      note.textContent = `You're claiming the listing "${claim}". [Placeholder: the claim process isn't built yet.]`;
+      if (note) {
+        note.hidden = false;
+        note.dataset.listingId = claim;
+        if (document.getElementById("community-config")) note.textContent = "";
+        else note.textContent = `You're claiming the listing "${claim}". [Placeholder: the claim process isn't built yet.]`;
+      }
     }
 
     // TODO: send submissions somewhere David approves. For now they stay in the browser.
@@ -1398,5 +1406,33 @@
       download.download = "shareschooling-submission.json";
       showMessage(message, ["Thanks! This test site doesn't send submissions yet, so nothing was sent. You can keep a copy of what you entered (marked Draft): ", download]);
     });
+  }
+
+  /* Community modules load after the map. A script error there must not stop the map. */
+  const communityConfig = document.getElementById("community-config");
+  if (communityConfig) {
+    let cfg = {};
+    try { cfg = JSON.parse(communityConfig.textContent || "{}"); } catch (err) { cfg = {}; }
+    window.SS_CONFIG = cfg;
+    const built = cfg.built || {};
+    const files = ["filter.js", "demo-data.js", "client.js", "account.js"];
+    if (built.reviews || built.badges) files.push("reviews.js");
+    if (built.claims) files.push("claims.js");
+    if (built.groupPortal) files.push("portal.js");
+    if (built.lookingFor) files.push("looking.js");
+    if (built.events) files.push("events.js");
+    if (built.favorites) files.push("favorites.js");
+    if (built.reviews) files.push("admin.js");
+    files.push("boot.js");
+    let index = 0;
+    const loadNext = () => {
+      if (index >= files.length) return;
+      const script = document.createElement("script");
+      script.src = root + "js/community/" + files[index++];
+      script.onload = loadNext;
+      script.onerror = loadNext;
+      document.body.appendChild(script);
+    };
+    loadNext();
   }
 })();
